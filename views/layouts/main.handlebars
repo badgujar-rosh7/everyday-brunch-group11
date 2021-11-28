@@ -6,19 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
     <link rel="stylesheet" href="./public/css/backgrounds.css" />
+    <link rel="stylesheet" href="./public/css/index.css" />
     <link rel="stylesheet" href="./public/css/buttons.css" />
     <link rel="stylesheet" href="./public/css/navigation.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <body>
 
     
     <!-- Start of Navigation -->
 
-    <section class="section navigation-section">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <section class="navigation-section">
+        <nav class="navbar navbar-expand-lg navbar-dark black-section-background fixed-top brunch-nav">
             <div class="container">
-                <a class="navbar-brand" href="#">Navbar</a>
+                <a class="brunch-logo me-2" href="#"><img src="./public/images/Everyday_Brunch.gif" class="rounded img-fluid" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -28,9 +37,18 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#">Menu</a>
                     </li>
-                    <li class="nav-item dropdown">
+                     <li class="nav-item">
+                    <a class="nav-link" href="#">Sides</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#">Beverages</a>
+                    </li>
+                     <li class="nav-item">
+                    <a class="nav-link" href="#">Desserts</a>
+                    </li>
+                    {{!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Dropdown
                     </a>
@@ -43,7 +61,7 @@
                     </li>
                     <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
+                    </li> --}}
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -58,12 +76,19 @@
 
     {{{body}}}
 
-    <section class="section footer-section">
+    <section class="footer-section black-section-background text-white">
         <div class="container">
-                <div class="d-flex justify-content-around">
-                    <div>Category1</div>
-                    <div>Category2</div>
-                    <div>Category3</div>
+                <div class="d-flex justify-content-around pt-5 pb-5">
+                    <div><a class="main-label">Menu</a></div>
+                    <div><a class="main-label">Sides</a></div>
+                    <div><a class="main-label">Beverages</a></div>
+                    <div><a class="main-label">Desserts</a></div>
+                </div>
+                <div class="d-flex justify-content-around pb-5">
+                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-twitter"></i><span class="social-label">Twitter</span></div>
+                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-instagram"></i><span class="social-label">Instagram</span></div>
+                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-facebook"></i><span class="social-label">Facebook</span></div>
+                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-linkedin"></i><span class="social-label">LinkedIn</span></div>
                 </div>
             </div>
         </div>
@@ -71,5 +96,47 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.slider-nav').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: false,
+                autoplaySpeed: 2000,
+                responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+            });
+        });
+    </script>
+
 </body>
 </html>
