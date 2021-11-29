@@ -16,4 +16,5 @@ const getCollectionFn = (collection) => {
 module.exports = {
     menu: getCollectionFn('menu'),
     reviews: getCollectionFn('reviews'),
+    users: getCollectionFn('users'),
 };

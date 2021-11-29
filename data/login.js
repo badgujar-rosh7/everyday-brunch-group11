@@ -14,13 +14,13 @@ const ErrorCode = {
 async function checkUser(username, password) {
     let comparePass = false;
     try {
-        const validateArgs = await errorcheck.validateArgumentsCheckuser(
+        const validateArgs = errorcheck.validateArgumentsCheckuser(
             arguments.length
         );
-        const validateUsername = await errorcheck.validateUsername(username);
-        const validatePassword = await errorcheck.validatePassword(password);
+        const validateUsername = errorcheck.validateUsername(username);
+        const validatePassword = errorcheck.validatePassword(password);
 
-        let usernameLower = username.toLowerCase();
+        let usernameLower = username.trim().toLowerCase();
         const userColl = await usercollection();
         const finduser = await userColl.findOne({ username: usernameLower });
         if (finduser) {
