@@ -8,7 +8,7 @@
     margin: 12px;
 }
 
-.card.category-card, .card.category-card .card-img-top{
+.card.category-card, .card.category-card .card-img-top,.menu-card-box .card,.menu-card-box .card .menu-img{
     border-radius: 25px;
 }
 
@@ -103,7 +103,7 @@
     color: red;
 }
 
-.section.slider-section{
+.section.slider-section,.section.menu-section{
     margin-top: 70px;
 }
 
@@ -111,9 +111,59 @@
     padding: 15px 0px;
 }
 
+.menu-img{
+    height: 200px;
+}
+
+.btn.quantity-btn{
+    width: 25px;
+    height: 25px;
+    line-height: 0px;
+    padding: 0px;
+}
+
+.form-control-sm.quantity-txtbox{
+    width: 25px;
+    height: 25px;
+    padding: 0px;
+    font-size: 14px;
+    min-height: 0px;
+}
+
+.menu-info{
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-info .card-title{
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.menu-quantity .quantity-txtbox{
+    margin: 0px 10px;
+}
+
+
+.btn.cart-btn{
+    font-size: 16px;
+    line-height: 18px;
+    border-radius: 5rem;
+}
+
+.menu-card-box .card{
+    margin: 3rem 0rem;
+    box-shadow: 0px 5px 20px 2px #000000;
+}
+
+.like-btn{
+    transform: translate(-30px,175px);
+    font-size: 25px;
+    color: red;
+    position: absolute;
+}
 
 @media(min-width:1024px){
-        
     .main-label,.social-label,.navigation-section .nav-link{
         font-size: 21px;
         line-height: 21px;
@@ -121,4 +171,37 @@
         color: white;
         cursor: pointer;
     }
+}
+
+
+.card-container {
+    cursor: pointer;
+    height: 100%;
+    perspective: 600;
+    position: relative;
+    width: 100%;
+}
+
+.cardbox{
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: all 1s ease-in-out;
+    width: 100%;
+}
+/* 
+.cardbox:hover {
+    transform: rotateY(180deg);
+} */
+
+.cardbox .card{
+    backface-visibility: hidden;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+}
+
+
+
+.cardbox .mycard1{
+  transform: rotateY(180deg);
 }
