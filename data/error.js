@@ -54,6 +54,34 @@ const validatePassword = (pass) => {
     }
     return pass.trim();
 };
+const validateFirstname = (name) => {
+    name = name.trim();
+    isArgumentString(name, 'Firstname');
+    isStringEmpty(name, 'Firstname');
+    checkspace(name);
+    let validnameregex = /[a-zA-Z]/g;
+    if (!validnameregex.test(name)) {
+        throwError(
+            ErrorCode.BAD_REQUEST,
+            'Invalid first name. Expected alphabets only'
+        );
+    }
+    return name.trim();
+};
+const validateLastname = (name) => {
+    name = name.trim();
+    isArgumentString(name, 'Lastname');
+    isStringEmpty(name, 'Lastname');
+    checkspace(name);
+    let validnameregex = /[a-zA-Z]/g;
+    if (!validnameregex.test(name)) {
+        throwError(
+            ErrorCode.BAD_REQUEST,
+            'Invalid last name. Expected alphabets only'
+        );
+    }
+    return name.trim();
+};
 const isArgumentString = (str, variableName) => {
     if (typeof str !== 'string') {
         throwError(
@@ -117,8 +145,8 @@ module.exports = {
     validateUsername,
     checkspace,
     validatePassword,
-    // validateFirstname,
-    // validateLastname,
+    validateFirstname,
+    validateLastname,
     // validateEmail,
     // validateDob,
     // validateCity,
