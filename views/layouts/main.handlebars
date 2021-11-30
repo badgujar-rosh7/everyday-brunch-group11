@@ -138,10 +138,30 @@
         });
     </script>
     <script>
-        function myFunction() {
-        document.querySelectorAll(".card-container .cardbox").style.transform = "rotateY(180deg)";
-        }
+        function flip(event){
+	        var element = event.currentTarget;
+            if (element.className === "cardbox") {
+                if(element.style.transform == "rotateY(180deg)") {
+                    element.style.transform = "rotateY(0deg)";
+                }
+                else {
+                    element.style.transform = "rotateY(180deg)";
+                }
+            }
+                        
+            var frontHeight = $('.mycard').outerHeight();
+            var backHeight = $('.mycard1').outerHeight();
 
+            if (frontHeight > backHeight) {
+                $('.cardbox, .mycard1').height(frontHeight);
+            }
+            else if (frontHeight > backHeight) {
+                $('.cardbox, .mycard').height(backHeight);
+            }
+            else {
+                $('.cardbox').height(backHeight);
+            }
+        };
     </script>
    
 

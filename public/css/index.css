@@ -153,7 +153,6 @@
 
 .menu-card-box .card{
     margin: 3rem 0rem;
-    box-shadow: 0px 5px 20px 2px #000000;
 }
 
 .like-btn{
@@ -163,21 +162,11 @@
     position: absolute;
 }
 
-@media(min-width:1024px){
-    .main-label,.social-label,.navigation-section .nav-link{
-        font-size: 21px;
-        line-height: 21px;
-        text-decoration: none;
-        color: white;
-        cursor: pointer;
-    }
-}
-
 
 .card-container {
     cursor: pointer;
     height: 100%;
-    perspective: 600;
+    perspective: 1000px;
     position: relative;
     width: 100%;
 }
@@ -188,20 +177,27 @@
     transition: all 1s ease-in-out;
     width: 100%;
 }
-/* 
-.cardbox:hover {
-    transform: rotateY(180deg);
-} */
 
-.cardbox .card{
+.card.mycard,.card.mycard1{
     backface-visibility: hidden;
     position: absolute;
     overflow: hidden;
     width: 100%;
 }
+.card.mycard:hover,.card.mycard1:hover{
+    box-shadow: 0px 5px 20px 2px #000000;
+}
 
-
-
-.cardbox .mycard1{
+.mycard1{
   transform: rotateY(180deg);
+}
+
+@media(min-width:1024px){
+    .main-label,.social-label,.navigation-section .nav-link{
+        font-size: 21px;
+        line-height: 21px;
+        text-decoration: none;
+        color: white;
+        cursor: pointer;
+    }
 }
