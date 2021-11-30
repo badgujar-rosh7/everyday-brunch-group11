@@ -1,11 +1,9 @@
 const path = require('path');
 
-
 const constructorMethod = (app) => {
- 
-  app.get('/', (req, res) => {
-    res.render('pages/index');
-  });
+    app.get('/', (req, res) => {
+        res.render('pages/index');
+    });
 
   app.get('/menu', (req, res) => {
     res.render('pages/menu');
