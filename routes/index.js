@@ -5,9 +5,13 @@ const constructorMethod = (app) => {
         res.render('pages/index');
     });
 
-    app.use('*', (req, res) => {
-        res.redirect('/');
-    });
+  app.get('/menu', (req, res) => {
+    res.render('pages/menu');
+  });
+
+  app.use('*', (req, res) => {
+    res.status(404).json({"Error" : "Resource Not Found"});
+  });
 };
 
 module.exports = constructorMethod;
