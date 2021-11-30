@@ -169,20 +169,31 @@
     perspective: 1000px;
     position: relative;
     width: 100%;
+    padding: 0% 10%;
 }
 
 .cardbox{
-    position: absolute;
+    /* position: absolute; */
+    position: relative;
     transform-style: preserve-3d;
     transition: all 1s ease-in-out;
     width: 100%;
 }
 
+.card.mycard{
+    position: relative;
+}
+
+.card.mycard1{
+    position: absolute;
+    top: -50px;
+}
+
 .card.mycard,.card.mycard1{
     backface-visibility: hidden;
-    position: absolute;
     overflow: hidden;
     width: 100%;
+    bottom: 0;
 }
 .card.mycard:hover,.card.mycard1:hover{
     box-shadow: 0px 5px 20px 2px #000000;
@@ -191,6 +202,13 @@
 .mycard1{
   transform: rotateY(180deg);
 }
+
+@media(min-width:1024px){
+    .card-container {
+        padding: 0%;
+    }
+}
+
 
 @media(min-width:1024px){
     .main-label,.social-label,.navigation-section .nav-link{
