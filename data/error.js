@@ -1,3 +1,7 @@
+var validator = require('validator');
+var moment = require('moment');
+moment().format();
+
 const ErrorCode = {
     BAD_REQUEST: 400,
     NOT_FOUND: 404,
@@ -15,7 +19,7 @@ const validateArgumentsCheckuser = (totalArguments) => {
     }
 };
 const validateArgumentsCreateUser = (totalArguments) => {
-    const TOTAL_MANDATORY_ARGUMENTS = 2;
+    const TOTAL_MANDATORY_ARGUMENTS = 8;
 
     if (totalArguments !== TOTAL_MANDATORY_ARGUMENTS) {
         throwError(
@@ -82,6 +86,61 @@ const validateLastname = (name) => {
     }
     return name.trim();
 };
+const validateEmail = (email) => {
+    email = email.trim();
+    isArgumentString(email, 'Email');
+    isStringEmpty(email, 'Email');
+    if (!validator.isEmail(email)) {
+        throwError(ErrorCode.BAD_REQUEST, 'Invalid Email provided');
+    }
+    return email.trim();
+};
+const validateDob = (dob) => {
+    dob = dob.trim();
+    isArgumentString(dob, 'DateofBirth');
+    isStringEmpty(dob, 'DateofBirth');
+    const date = moment(dob, 'MM-DD-YYYY').isValid();
+    if (!date) {
+        throwError(
+            ErrorCode.BAD_REQUEST,
+            'Invalid Date Format in provided variable. Expected in MM/DD/YYYY format'
+        );
+    }
+    // let TODAY = new Date(Date.now());
+    // let EIGHTEEN_YEARS_BACK = new Date(
+    //     new Date(TODAY).getDate() +
+    //         '/' +
+    //         new Date(TODAY).getMonth() +
+    //         '/' +
+    //         (new Date(TODAY).getFullYear() - 18)
+    // );
+    // let USER_INPUT = new Date(dob);
+    // // Validate Now
+    // let result = EIGHTEEN_YEARS_BACK > USER_INPUT; // true if over 18, false if less than 18
+
+    return dob.trim();
+};
+const validateCity = (city) => {
+    city = city.trim();
+    isArgumentString(city, 'City');
+    isStringEmpty(city, 'City');
+    let regex = /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/;
+    if (!regex.test(city)) {
+        throwError(ErrorCode.BAD_REQUEST, 'Invalid City format provided');
+    }
+    return city.trim();
+};
+const validateState = (state) => {
+    state = state.trim();
+    isArgumentString(state, 'state');
+    isStringEmpty(state, 'state');
+    let regex = /(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])/mu;
+    if (!regex.test(state)) {
+        throwError(ErrorCode.BAD_REQUEST, 'Invalid State format provided');
+    }
+    return state.trim();
+};
+
 const isArgumentString = (str, variableName) => {
     if (typeof str !== 'string') {
         throwError(
@@ -102,12 +161,12 @@ const isStringEmpty = (str, variableName) => {
         );
     }
 };
-const checkspace = (string) => {
+const checkspace = (string, variableName) => {
     let checkspace = /(\s)/g;
     if (checkspace.test(string))
         throwError(
             ErrorCode.BAD_REQUEST,
-            'Error: Invalid argument passed, spaces not allowed'
+            `Error: Invalid argument passed, spaces not allowed `
         );
 };
 const validateObjectId = (id) => {
@@ -147,8 +206,8 @@ module.exports = {
     validatePassword,
     validateFirstname,
     validateLastname,
-    // validateEmail,
-    // validateDob,
-    // validateCity,
-    // validateState,
+    validateEmail,
+    validateDob,
+    validateCity,
+    validateState,
 };
