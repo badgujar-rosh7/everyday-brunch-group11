@@ -12,12 +12,12 @@ const ErrorCode = {
 };
 
 async function createUser(
-    // firstname,
-    // lastname,
-    // email,
-    // dob,
-    // city,
-    // state,
+    firstname,
+    lastname,
+    email,
+    dob,
+    city,
+    state,
     username,
     password
 ) {
@@ -25,23 +25,30 @@ async function createUser(
         const validateArgs = errorcheck.validateArgumentsCreateUser(
             arguments.length
         );
-        const validateUsername = errorcheck.validateUsername(username);
-        const validatePassword = errorcheck.validatePassword(password);
+        const validatedfirstname = errorcheck.validateFirstname(firstname);
+        const validatedlastname = errorcheck.validateLastname(lastname);
+        const validatedEmail = errorcheck.validateEmail(email);
+        const validatedDob = errorcheck.validateDob(dob);
+        const validatedcity = errorcheck.validateCity(city);
+        const validatedState = errorcheck.validateState(state);
+        const validatedUsername = errorcheck.validateUsername(username);
+        const validatedPassword = errorcheck.validatePassword(password);
 
-        let usernameLower = username.trim().toLowerCase();
         const userColl = await usercollection();
-        const finduser = await userColl.findOne({ username: usernameLower });
+        const finduser = await userColl.findOne({
+            username: validatedUsername,
+        });
 
         if (finduser === null) {
-            const hashPass = await bcrypt.hash(password, saltRounds);
+            const hashPass = await bcrypt.hash(validatedPassword, saltRounds);
             const newUser = {
-                firstName: firstname,
-                lastName: lastname,
-                email: email,
-                DateOfBirth: dob,
-                City: city,
-                State: state,
-                username: usernameLower,
+                firstName: validatedfirstname,
+                lastName: validatedlastname,
+                email: validatedEmail,
+                DateOfBirth: validatedDob,
+                City: validatedcity,
+                State: validatedState,
+                username: validatedUsername,
                 password: hashPass,
                 favorite_item: [],
                 reviews: [],
