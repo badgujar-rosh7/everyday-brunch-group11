@@ -1,16 +1,17 @@
 const express = require('express');
-const { engine } = require('express-handlebars');
+//const { engine } = require('express-handlebars');
 const app = express();
 const static = express.static(__dirname + '/public');
 const configRoutes = require('./routes');
-
+const exphbs = require('express-handlebars');
 
 
 app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.engine('handlebars', engine({ extname: '.handlebars',defaultLayout: 'main' }));
+//app.engine('handlebars', engine({ extname: '.handlebars',defaultLayout: 'main' }));
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 configRoutes(app);
