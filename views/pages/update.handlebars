@@ -1,0 +1,23 @@
+<form ref='uploadForm' id='uploadForm' method="post" action="./updateMenu" encType="multipart/form-data">
+    <input type="text" id="itemCategory" name="itemCategory" value="{{itemCategory}}">
+        <input type="text" id="itemTitle" name="itemTitle" value="{{itemTitle}}">
+            <input type="text" id="itemDescription" name="itemDescription" value="{{itemDescription}}">
+                <input type="text" id="itemPrice" name="itemPrice" value="{{itemPrice}}">
+                    <input type="text" id="itemCalories" name="itemCalories" value="{{itemCalories}}">
+                        <input type="text" id="itemKeywords" name="itemKeywords" value="{{itemKeywords}}">
+                            <input type="file" name="menuFile">
+                            <input type="text" id="itemId" name="itemId" value="{{_id}}">
+
+        <input type="text" id="itemCategoryold" name="itemCategoryold" value="{{itemCategory}}" hidden>
+        <input type="text" id="itemTitleold" name="itemTitleold" value="{{itemTitle}}" hidden>
+        <input type="text" id="itemDescriptionold" name="itemDescriptionold" value="{{itemDescription}}" hidden>
+        <input type="text" id="itemPriceold" name="itemPriceold" value="{{itemPrice}}" hidden>
+        <input type="text" id="itemCaloriesold" name="itemCaloriesold" value="{{itemCalories}}" hidden>
+        <input type="text" id="itemKeywordsold" name="itemKeywordsold" value="{{itemKeywords}}" hidden>
+        
+        <input type="submit" value="submit"/>
+</form>
+<div><p>This is the image you previously uploaded</p>
+    <img src="../../public/img/Menu/{{itemImage}}">
+    <p>IF YOU WISH TO CHANGE THEN UPLOAD A NEW IMAGE IN THE GIVEN FIELD</p>
+    </div>

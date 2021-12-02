@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <th>Category</th>
+    <th>title</th>
+    <th>Options</th>
+  </tr>
+  {{#each json}}
+  <tr>
+    <td>{{itemCategory}}</td>
+    <td>{{itemTitle}}</td>
+    <td><form method="post" action="./update"><input type="text" name="updateid" value="{{this._id}}" hidden><button type="submit">update
+        
+    </button></form>
+    <form method="post" action="./deleteitem"><input type="text" name="deleteid" value="{{this._id}}" hidden><button type="submit">delete
+        
+    </button></form>
+    </td>
+  </tr>
+  {{/each}}
+</table>
