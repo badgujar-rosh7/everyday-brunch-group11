@@ -28,6 +28,16 @@ const validateArgumentsCreateUser = (totalArguments) => {
         );
     }
 };
+const validateArgumentsCreateReview = (totalArguments) => {
+    const TOTAL_MANDATORY_ARGUMENTS = 4;
+
+    if (totalArguments !== TOTAL_MANDATORY_ARGUMENTS) {
+        throwError(
+            ErrorCode.BAD_REQUEST,
+            'Error: All fields need to have valid values.'
+        );
+    }
+};
 
 const validateUsername = (name) => {
     name = name.trim();
@@ -196,6 +206,7 @@ const throwCatchError = (error) => {
 module.exports = {
     validateArgumentsCheckuser,
     validateArgumentsCreateUser,
+    validateArgumentsCreateReview,
     isArgumentString,
     isStringEmpty,
     validateObjectId,
