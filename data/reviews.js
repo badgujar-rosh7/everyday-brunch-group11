@@ -2,6 +2,7 @@ const { object, ObjectId } = require('mongodb');
 const errorcheck = require('./error');
 const mongoCollections = require('../config/mongoCollections');
 const usercollection = mongoCollections.users;
+const userdata = require('./userdata');
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -14,20 +15,77 @@ module.exports = {
             const validateArgs = errorcheck.validateArgumentsCreateReview(
                 arguments.length
             );
+            const validateUserId = errorcheck.validateUserId(userId);
+            const parsedObjectId = errorcheck.validateObjectId(validateUserId);
+            const validatedReview = errorcheck.validateReview(review);
+            const validatedRating = errorcheck.validateRating(rating);
+            const validatedDate = errorcheck.validateDate(dateofReview);
             let newReview = {
                 review_id: ObjectId(),
-                reviewer_id: userId,
-                item_id: foodId,
-                dateofReview: dateofReview,
-                rating: rating,
-                review: review,
+                reviewer_id: parsedObjectId,
+                dateofReview: validatedDate,
+                rating: validatedRating,
+                review: validatedReview,
             };
+            const userColl = await usercollection();
+            const updatedInfo = await userColl.updateOne(
+                { _id: ObjectId(validateUserId) },
+                { $push: { reviews: newReview } }
+            );
+            if (updatedInfo.modifiedCount !== 1) {
+                throwError(
+                    ErrorCode.INTERNAL_SERVER_ERROR,
+                    'Error: Could not add review.'
+                );
+            }
+            return { Review_inserted: true };
         } catch (error) {
             throwCatchError(error);
         }
     },
-    async getReviewsByUserId(userId) {},
-    async getReviewsByItemId(foodId) {},
+    async getAllReviewsByUserId(userId) {
+        try {
+            const user = await userdata.getUserById(userId);
+
+            if (user.hasOwnProperty('reviews') && user.reviews.length < 1) {
+                throwError(ErrorCode.NOT_FOUND, 'Error: No reviews found.');
+            }
+
+            let result = user.reviews;
+
+            result.forEach((element) => {
+                element.review_id = element.review_id.toString();
+            });
+            return result;
+        } catch (error) {
+            throwCatchError(error);
+        }
+    },
+
+    async getReviewByReviewId(reviewId) {
+        const userColl = await usercollection();
+        const reviewResult = await userColl.findOne(
+            {
+                'reviews.review_id': ObjectId(reviewId),
+            },
+            {
+                projection: {
+                    _id: 0,
+                    'reviews.$': 1,
+                },
+            }
+        );
+
+        if (!reviewResult) {
+            throwError(ErrorCode.NOT_FOUND, 'Error: No review with that id.');
+        }
+
+        const [review] = reviewResult.reviews;
+
+        review.review_id = review.review_id.toString();
+
+        return review;
+    },
 };
 const throwError = (code = 404, message = 'Not found') => {
     throw { code, message };
