@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 var validator = require('validator');
 var moment = require('moment');
 moment().format();
@@ -8,6 +9,7 @@ const ErrorCode = {
     INTERNAL_SERVER_ERROR: 500,
 };
 
+/*****************************************************************************************/
 const validateArgumentsCheckuser = (totalArguments) => {
     const TOTAL_MANDATORY_ARGUMENTS = 2;
 
@@ -18,6 +20,7 @@ const validateArgumentsCheckuser = (totalArguments) => {
         );
     }
 };
+/*****************************************************************************************/
 const validateArgumentsCreateUser = (totalArguments) => {
     const TOTAL_MANDATORY_ARGUMENTS = 8;
 
@@ -28,6 +31,7 @@ const validateArgumentsCreateUser = (totalArguments) => {
         );
     }
 };
+/*****************************************************************************************/
 const validateArgumentsCreateReview = (totalArguments) => {
     const TOTAL_MANDATORY_ARGUMENTS = 4;
 
@@ -38,40 +42,41 @@ const validateArgumentsCreateReview = (totalArguments) => {
         );
     }
 };
-
+/*****************************************************************************************/
 const validateUsername = (name) => {
-    name = name.trim();
     isArgumentString(name, 'username');
     isStringEmpty(name, 'username');
+    name = name.trim();
     checkspace(name);
     let checkvaliduser = /[A-Za-z0-9]{4,}/g;
     if (!checkvaliduser.test(name)) {
         throwError(
             ErrorCode.BAD_REQUEST,
-            'Invalid Username or Password provided'
+            'Invalid Format for username provided'
         );
     }
     return name.trim();
 };
-
+/*****************************************************************************************/
 const validatePassword = (pass) => {
-    pass = pass.trim();
     isArgumentString(pass, 'pass');
     isStringEmpty(pass, 'pass');
+    pass = pass.trim();
     checkspace(pass);
     let checkvalidpass = /[A-Za-z0-9\W]{6,}/g;
     if (!checkvalidpass.test(pass)) {
         throwError(
             ErrorCode.BAD_REQUEST,
-            'Invalid Username or Password provided'
+            'Invalid format for Password provided'
         );
     }
     return pass.trim();
 };
+/*****************************************************************************************/
 const validateFirstname = (name) => {
-    name = name.trim();
     isArgumentString(name, 'Firstname');
     isStringEmpty(name, 'Firstname');
+    name = name.trim();
     checkspace(name);
     let validnameregex = /[a-zA-Z]/g;
     if (!validnameregex.test(name)) {
@@ -82,10 +87,11 @@ const validateFirstname = (name) => {
     }
     return name.trim();
 };
+/*****************************************************************************************/
 const validateLastname = (name) => {
-    name = name.trim();
     isArgumentString(name, 'Lastname');
     isStringEmpty(name, 'Lastname');
+    name = name.trim();
     checkspace(name);
     let validnameregex = /[a-zA-Z]/g;
     if (!validnameregex.test(name)) {
@@ -96,19 +102,21 @@ const validateLastname = (name) => {
     }
     return name.trim();
 };
+/*****************************************************************************************/
 const validateEmail = (email) => {
-    email = email.trim();
     isArgumentString(email, 'Email');
     isStringEmpty(email, 'Email');
+    email = email.trim();
     if (!validator.isEmail(email)) {
         throwError(ErrorCode.BAD_REQUEST, 'Invalid Email provided');
     }
     return email.trim();
 };
+/*****************************************************************************************/
 const validateDob = (dob) => {
-    dob = dob.trim();
     isArgumentString(dob, 'DateofBirth');
     isStringEmpty(dob, 'DateofBirth');
+    dob = dob.trim();
     const date = moment(dob, 'MM-DD-YYYY').isValid();
     if (!date) {
         throwError(
@@ -130,27 +138,73 @@ const validateDob = (dob) => {
 
     return dob.trim();
 };
+/*****************************************************************************************/
+const validateDate = (date) => {
+    isArgumentString(date, 'Current date');
+    isStringEmpty(date, 'Current date');
+    date = date.trim();
+    const dateformat = moment(date, 'MM-DD-YYYY').isValid();
+    if (!dateformat) {
+        throwError(
+            ErrorCode.BAD_REQUEST,
+            'Invalid Date Format in provided variable. Expected in MM/DD/YYYY format'
+        );
+    }
+    return date.trim();
+};
+/*****************************************************************************************/
 const validateCity = (city) => {
-    city = city.trim();
     isArgumentString(city, 'City');
     isStringEmpty(city, 'City');
+    city = city.trim();
     let regex = /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/;
     if (!regex.test(city)) {
         throwError(ErrorCode.BAD_REQUEST, 'Invalid City format provided');
     }
     return city.trim();
 };
+/*****************************************************************************************/
 const validateState = (state) => {
-    state = state.trim();
     isArgumentString(state, 'state');
     isStringEmpty(state, 'state');
+    state = state.trim();
     let regex = /(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])/mu;
     if (!regex.test(state)) {
         throwError(ErrorCode.BAD_REQUEST, 'Invalid State format provided');
     }
     return state.trim();
 };
+/*****************************************************************************************/
+const validateUserId = (UserId) => {
+    isArgumentString(UserId, 'id');
+    isStringEmpty(UserId, 'id');
 
+    return UserId.trim();
+};
+/*****************************************************************************************/
+const validateRating = (rating) => {
+    if (!rating) throwError(ErrorCode.BAD_REQUEST, 'Rating not Provided');
+    if (typeof rating !== 'number') {
+        throwError(
+            ErrorCode.BAD_REQUEST,
+            'Invalid Rating format provided, Only Numbers allowed'
+        );
+    }
+    if (rating < 0 || rating > 5)
+        throwError(
+            ErrorCode.BAD_REQUEST,
+            'Invalid Rating provided, Ratings Only range between 1 to 5'
+        );
+    return rating;
+};
+/*****************************************************************************************/
+const validateReview = (review) => {
+    isArgumentString(review, 'review');
+    isStringEmpty(review, 'review');
+
+    return review.trim();
+};
+/*****************************************************************************************/
 const isArgumentString = (str, variableName) => {
     if (typeof str !== 'string') {
         throwError(
@@ -161,6 +215,7 @@ const isArgumentString = (str, variableName) => {
         );
     }
 };
+/*****************************************************************************************/
 const isStringEmpty = (str, variableName) => {
     if (!str.trim() || str.length < 1) {
         throwError(
@@ -171,6 +226,7 @@ const isStringEmpty = (str, variableName) => {
         );
     }
 };
+/*****************************************************************************************/
 const checkspace = (string, variableName) => {
     let checkspace = /(\s)/g;
     if (checkspace.test(string))
@@ -179,6 +235,7 @@ const checkspace = (string, variableName) => {
             `Error: Invalid argument passed, spaces not allowed `
         );
 };
+/*****************************************************************************************/
 const validateObjectId = (id) => {
     //should match 24 length Hex string
     const objectIdRegex = /^[a-fA-F0-9]{24}$/;
@@ -189,9 +246,11 @@ const validateObjectId = (id) => {
 
     return ObjectId(id);
 };
+/*****************************************************************************************/
 const throwError = (code = 404, message = 'Not found') => {
     throw { code, message };
 };
+/*****************************************************************************************/
 const throwCatchError = (error) => {
     if (error.code && error.message) {
         throwError(error.code, error.message);
@@ -202,6 +261,7 @@ const throwCatchError = (error) => {
         'Error: Internal server error.'
     );
 };
+/*****************************************************************************************/
 
 module.exports = {
     validateArgumentsCheckuser,
@@ -221,4 +281,8 @@ module.exports = {
     validateDob,
     validateCity,
     validateState,
+    validateDate,
+    validateUserId,
+    validateRating,
+    validateReview,
 };
