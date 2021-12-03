@@ -17,4 +17,7 @@ module.exports = {
     menu: getCollectionFn('menu'),
     reviews: getCollectionFn('reviews'),
     users: getCollectionFn('users'),
+    category: getCollectionFn('category'),
+    menu: getCollectionFn('menu'),
+    advertise: getCollectionFn('advertise')
 };
