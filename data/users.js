@@ -171,6 +171,70 @@ return true
 }
 }
 
+
+async function getAllCategory(){
+  const categoryCollection = await categorys();
+  let getCategorys=await categoryCollection.find({}).toArray()
+
+  return getCategorys;
+
+}
+
+async function getMenuByCategory(category){
+  const MenuCollection = await menus();
+  let CategoryMenu=await MenuCollection.find({itemCategory:category}).toArray();
+
+  return CategoryMenu;
+}
+
+async function deleteCategory(id){
+
+  let idd=ObjectId(id)
+  const categoryCollection = await categorys();
+ 
+const deleteresult= await categoryCollection.deleteOne({_id:idd})
+
+if (deleteresult.deletedCount === 0) {
+  return false
+}
+else{
+return true
+}
+
+}
+
+
+async function deleteAdvertise(id){
+
+  let idd=ObjectId(id)
+  const AdvertiseCollection = await advertises();
+ 
+const deleteresult= await AdvertiseCollection.deleteOne({_id:idd})
+
+if (deleteresult.deletedCount === 0) {
+  return false
+}
+else{
+return true
+}
+
+}
+
+async function getAdvertise(){
+
+  let idd=ObjectId(id)
+  const AdvertiseCollection = await advertises();
+ 
+const getresult= await AdvertiseCollection.find({}).toArray()
+
+if(getresult.length>0){
+  return getresult
+} else{
+  return false
+}
+
+}
+
 module.exports={
     addCategory,
     addMenu,
@@ -179,6 +243,11 @@ module.exports={
     getAllMenu,
     getMenuItem,
     updateMenu,
-    deleteMenuItem
+    deleteMenuItem,
+    getAllCategory,
+    getMenuByCategory,
+    deleteAdvertise,
+    deleteCategory,
+    getAdvertise
 }
 
