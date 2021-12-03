@@ -9,120 +9,6 @@ let { ObjectId } = require('mongodb');
 const { menu } = require('../config/mongoCollections');
 const saltrounds=16;
 
-async function createUser(username, password) {
-
-
-    if((!username) || username.trim().length==0){
-  
-        throw "provide valid username"
-      }
-      if((!password) || password.trim().length==0){
-        
-        throw "provide valid password"
-      
-      }
-      username=username.trim();
-      password=password.trim();
-      if(/\s/g.test(username)){
-        throw "username cannot contain space in between"
-     
-      }
-      const regex=/^[a-z0-9]+$/i;
-      const result=regex.test(username);
-      if(!result){
-        throw "username should contain only alphabets and numbers only"
-     
-      }
-      if(username.length<4) {
-        throw "username should be atleast 4 characters long"
-      }
-      if(/\s/g.test(password)){
-        throw  "password cannot contain space in between"
-       
-      }
-      if(password.length<6){
-         throw "password should be atleast 6 characters long"
-      }
-
-
-////////////////////////////////////////////////
-const hash = await bcrypt.hash(password, saltrounds);
-const userCollection = await users();
-let newuser = {
-username:username.toLowerCase(),
-password:hash
-};
-
-const rest = await userCollection.findOne( {username: username.toLowerCase()} );
-if (rest === null) {
-const insertInfo = await userCollection.insertOne(newuser);
-if (insertInfo.insertedCount === 0) {
- return {userInserted:false}
-} else {
-return {userInserted: true}
-}
-} else {
-    throw 'Select another username. Username already exists'
-}
-}
-
-
-async function checkUser(username, password) {
- 
-    if((!username) || username.trim().length==0){
-  
-        throw "provide valid username"
-      }
-      if((!password) || password.trim().length==0){
-        
-        throw "provide valid password"
-      
-      }
-      username=username.trim();
-      password=password.trim();
-      if(/\s/g.test(username)){
-        throw "username cannot contain space in between"
-     
-      }
-      const regex=/^[a-z0-9]+$/i;
-      const result=regex.test(username);
-      if(!result){
-        throw "username should contain only alphabets and numbers only"
-     
-      }
-      if(username.length<4) {
-        throw "username should be atleast 4 characters long"
-      }
-      if(/\s/g.test(password)){
-        throw  "password cannot contain space in between"
-       
-      }
-      if(password.length<6){
-         throw "password should be atleast 6 characters long"
-      }
-
-    ///////////////////////////////////
-const userCollection = await users();
-const rest = await userCollection.findOne( {username: username.toLowerCase()} );
-
-if (rest) {
-    //compare password
-    //bcrypt.compare
-    let match = await bcrypt.compare(password, rest.password);
-
-    if(match){
-        return {authenticated: true}
-    } else {
-        throw "Provide Valid username or password"  
-    }
-} else {
-    throw "Provide Valid username or password"  
-}
-
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 async function addCategory(category) {
   const categoryCollection = await categorys();
 let newcategory = {
@@ -286,8 +172,6 @@ return true
 }
 
 module.exports={
-    createUser,
-    checkUser,
     addCategory,
     addMenu,
     search,
