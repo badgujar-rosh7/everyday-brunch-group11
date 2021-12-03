@@ -9,8 +9,9 @@ const fileUpload = require('express-fileupload');
 
 
 
-router.get('/AddCategory' ,async (req,res)=>{
-//render the page
+router.get('/ViewCategory' ,async (req,res)=>{
+let getCategory=await userData.getAllCategory();
+console.log(getCategory)
 });
 
 
@@ -170,7 +171,7 @@ router.get('/ViewMenu', async(req,res) =>{
    
      });
     
-    router.post('/deleteitem', async(req,res)=>{
+    router.post('/deleteitem', async(req,res)=>{ //menu item delete
         let id=req.body['deleteid'];
 
         let deleted = await userData.deleteMenuItem(id);
@@ -178,4 +179,11 @@ router.get('/ViewMenu', async(req,res) =>{
             res.redirect('./ViewMenu')
         }
     });
+
+    router.post('/ViewMenuCategory' ,async (req,res)=>{
+        let category=req.body['category']
+        let getCategory=await userData.getMenuByCategory(category);
+        console.log(getCategory)
+        //can get Menu items as per Category
+        });
 module.exports=router;

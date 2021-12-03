@@ -9,120 +9,6 @@ let { ObjectId } = require('mongodb');
 const { menu } = require('../config/mongoCollections');
 const saltrounds=16;
 
-async function createUser(username, password) {
-
-
-    if((!username) || username.trim().length==0){
-  
-        throw "provide valid username"
-      }
-      if((!password) || password.trim().length==0){
-        
-        throw "provide valid password"
-      
-      }
-      username=username.trim();
-      password=password.trim();
-      if(/\s/g.test(username)){
-        throw "username cannot contain space in between"
-     
-      }
-      const regex=/^[a-z0-9]+$/i;
-      const result=regex.test(username);
-      if(!result){
-        throw "username should contain only alphabets and numbers only"
-     
-      }
-      if(username.length<4) {
-        throw "username should be atleast 4 characters long"
-      }
-      if(/\s/g.test(password)){
-        throw  "password cannot contain space in between"
-       
-      }
-      if(password.length<6){
-         throw "password should be atleast 6 characters long"
-      }
-
-
-////////////////////////////////////////////////
-const hash = await bcrypt.hash(password, saltrounds);
-const userCollection = await users();
-let newuser = {
-username:username.toLowerCase(),
-password:hash
-};
-
-const rest = await userCollection.findOne( {username: username.toLowerCase()} );
-if (rest === null) {
-const insertInfo = await userCollection.insertOne(newuser);
-if (insertInfo.insertedCount === 0) {
- return {userInserted:false}
-} else {
-return {userInserted: true}
-}
-} else {
-    throw 'Select another username. Username already exists'
-}
-}
-
-
-async function checkUser(username, password) {
- 
-    if((!username) || username.trim().length==0){
-  
-        throw "provide valid username"
-      }
-      if((!password) || password.trim().length==0){
-        
-        throw "provide valid password"
-      
-      }
-      username=username.trim();
-      password=password.trim();
-      if(/\s/g.test(username)){
-        throw "username cannot contain space in between"
-     
-      }
-      const regex=/^[a-z0-9]+$/i;
-      const result=regex.test(username);
-      if(!result){
-        throw "username should contain only alphabets and numbers only"
-     
-      }
-      if(username.length<4) {
-        throw "username should be atleast 4 characters long"
-      }
-      if(/\s/g.test(password)){
-        throw  "password cannot contain space in between"
-       
-      }
-      if(password.length<6){
-         throw "password should be atleast 6 characters long"
-      }
-
-    ///////////////////////////////////
-const userCollection = await users();
-const rest = await userCollection.findOne( {username: username.toLowerCase()} );
-
-if (rest) {
-    //compare password
-    //bcrypt.compare
-    let match = await bcrypt.compare(password, rest.password);
-
-    if(match){
-        return {authenticated: true}
-    } else {
-        throw "Provide Valid username or password"  
-    }
-} else {
-    throw "Provide Valid username or password"  
-}
-
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 async function addCategory(category) {
   const categoryCollection = await categorys();
 let newcategory = {
@@ -285,9 +171,71 @@ return true
 }
 }
 
+
+async function getAllCategory(){
+  const categoryCollection = await categorys();
+  let getCategorys=await categoryCollection.find({}).toArray()
+
+  return getCategorys;
+
+}
+
+async function getMenuByCategory(category){
+  const MenuCollection = await menus();
+  let CategoryMenu=await MenuCollection.find({itemCategory:category}).toArray();
+
+  return CategoryMenu;
+}
+
+async function deleteCategory(id){
+
+  let idd=ObjectId(id)
+  const categoryCollection = await categorys();
+ 
+const deleteresult= await categoryCollection.deleteOne({_id:idd})
+
+if (deleteresult.deletedCount === 0) {
+  return false
+}
+else{
+return true
+}
+
+}
+
+
+async function deleteAdvertise(id){
+
+  let idd=ObjectId(id)
+  const AdvertiseCollection = await advertises();
+ 
+const deleteresult= await AdvertiseCollection.deleteOne({_id:idd})
+
+if (deleteresult.deletedCount === 0) {
+  return false
+}
+else{
+return true
+}
+
+}
+
+async function getAdvertise(){
+
+  let idd=ObjectId(id)
+  const AdvertiseCollection = await advertises();
+ 
+const getresult= await AdvertiseCollection.find({}).toArray()
+
+if(getresult.length>0){
+  return getresult
+} else{
+  return false
+}
+
+}
+
 module.exports={
-    createUser,
-    checkUser,
     addCategory,
     addMenu,
     search,
@@ -295,6 +243,11 @@ module.exports={
     getAllMenu,
     getMenuItem,
     updateMenu,
-    deleteMenuItem
+    deleteMenuItem,
+    getAllCategory,
+    getMenuByCategory,
+    deleteAdvertise,
+    deleteCategory,
+    getAdvertise
 }
 
