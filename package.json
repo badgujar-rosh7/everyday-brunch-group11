@@ -1,32 +1,39 @@
 {
-  "name": "everyday-brunch-group11",
-  "version": "1.0.0",
-  "description": "everyday-brunch-group11",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/badgujar-rosh7/everyday-brunch-group11.git"
-  },
-  "author": "Roahan,Akshay,Tanay,Yong,Charlet",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/badgujar-rosh7/everyday-brunch-group11/issues"
-  },
-  "homepage": "https://github.com/badgujar-rosh7/everyday-brunch-group11#readme",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "exphbs": "^1.2.0",
-    "express": "^4.17.1",
-    "express-handlebars": "^5.3.5",
-    "express-session": "^1.17.2",
-    "handlebars": "^4.7.7",
-    "i": "^0.3.7",
-    "init": "^0.1.2",
-    "mongodb": "^3.7.3",
-    "xss": "^1.0.10"
-  }
+    "name": "everyday-brunch-group11",
+    "version": "1.0.0",
+    "description": "everyday-brunch-group11",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/badgujar-rosh7/everyday-brunch-group11.git"
+    },
+    "author": "Roahan,Akshay,Tanay,Yong,Charlet",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/badgujar-rosh7/everyday-brunch-group11/issues"
+    },
+    "homepage": "https://github.com/badgujar-rosh7/everyday-brunch-group11#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "exphbs": "^1.2.0",
+        "express": "^4.17.1",
+        "express-handlebars": "^5.3.5",
+        "express-session": "^1.17.2",
+        "handlebars": "^4.7.7",
+        "init": "^0.1.2",
+        "moment": "^2.29.1",
+        "mongodb": "^3.7.3",
+        "validator": "^13.7.0",
+        "xss": "^1.0.10",
+        "express-fileupload": "^1.2.1",
+        "multer": "^1.4.3",
+        "nodemailer": "^6.7.2",
+        "sharp": "^0.29.3",
+        "stripe": "^8.191.0",
+        "uuid": "^3.3.2"
+    }
 }
