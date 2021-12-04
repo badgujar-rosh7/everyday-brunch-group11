@@ -38,7 +38,11 @@ module.exports = {
             let user = await userCollection.findOne({
                 _id: ObjectId(userId.trim()),
             });
-            if (user === null) throw 'No user found with that id.';
+            if (user === null)
+                throwError(
+                    ErrorCode.NOT_FOUND,
+                    'Error: No User Found with given Id.'
+                );
             user._id = user._id.toString();
 
             return user;
