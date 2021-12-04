@@ -8,7 +8,6 @@ const ErrorCode = {
     NOT_FOUND: 404,
     INTERNAL_SERVER_ERROR: 500,
 };
-
 /*****************************************************************************************/
 const validateArgumentsCheckuser = (totalArguments) => {
     const TOTAL_MANDATORY_ARGUMENTS = 2;
@@ -128,8 +127,7 @@ const validateDob = (dob) => {
     isArgumentString(dob, 'DateofBirth');
     isStringEmpty(dob, 'DateofBirth');
     dob = dob.trim();
-    const date = moment(dob, 'MM-DD-YYYY').isValid();
-    if (!date) {
+    if (!moment(dob, 'MM/DD/YYYY', true).isValid()) {
         throwError(
             ErrorCode.BAD_REQUEST,
             'Invalid Date Format in provided variable. Expected in MM/DD/YYYY format'
@@ -170,9 +168,12 @@ const validateState = (state) => {
     isArgumentString(state, 'state');
     isStringEmpty(state, 'state');
     state = state.trim();
-    let regex = /(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])/mu;
+    let regex = /^(AK|AL|AR|AZ|CA|CO|CT|DC|DE|FL|GA|HI|IA|ID|IL|IN|KS|KY|LA|MA|MD|ME|MI|MN|MO|MS|MT|NB|NC|ND|NH|NJ|NM|NV|NY|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VA|VT|WA|WI|WV|WY)$/i;
     if (!regex.test(state)) {
-        throwError(ErrorCode.BAD_REQUEST, 'Invalid State format provided');
+        throwError(
+            ErrorCode.BAD_REQUEST,
+            'Invalid State format provided, Expected Only Initials Like NJ,NY'
+        );
     }
     return state.trim();
 };
