@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const loginData = data.login;
 const errorcheck = data.error;
+const xss = require('xss');
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -14,7 +15,8 @@ router.get('/', async (req, res) => {
 });
 router.post('/', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const username = xss(req.body.username.trim());
+        const password = xss(req.body.password.trim());
         const validatedUsername = errorcheck.validateUsername(username);
         const validatedPassword = errorcheck.validatePassword(password);
         const checkuser = await loginData.checkUser(

@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const path = require('path');
 const reviewData = data.reviews;
+const xss = require('xss');
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -11,7 +12,10 @@ const ErrorCode = {
 };
 router.post('/newreview', async (req, res) => {
     try {
-        const { userId, review, rating } = req.body;
+        const userId = xss(req.body.userId.trim());
+        const review = xss(req.body.review.trim());
+        const rating = xss(req.body.rating.trim());
+
         const current_datetime = new Date();
         const formatted_date =
             current_datetime.getMonth() +
