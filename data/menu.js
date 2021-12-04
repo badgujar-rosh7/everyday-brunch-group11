@@ -103,7 +103,7 @@ async function getAllMenu(){
   const MenuCollection = await menus();
 
   const findresult = await MenuCollection.find({}).toArray();
-  //console.log(findresult)
+  //console.log(findresult);
 return findresult;
 }
 

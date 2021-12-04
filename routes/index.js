@@ -4,27 +4,12 @@ const userRoutes = require('./users');
 const reviewsRoutes = require('./reviews');
 const loginRoutes = require('./login');
 const signupRoutes = require('./signup');
+const menuRoutes = require('./menu');
 
 const constructorMethod = (app) => {
     app.get('/', (req, res) => {
         res.render('pages/index');
-    });
-
-    app.get('/menu', (req, res) => {
-        res.render('pages/menu', { pageHeading: 'Menu' });
-    });
-
-    app.get('/sides', (req, res) => {
-        res.render('pages/menu', { pageHeading: 'Sides' });
-    });
-
-    app.get('/beverages', (req, res) => {
-        res.render('pages/menu', { pageHeading: 'Beverages' });
-    });
-
-    app.get('/desserts', (req, res) => {
-        res.render('pages/menu', { pageHeading: 'Desserts' });
-    });
+    });  
 
     app.get('/cart', (req, res) => {
         res.render('pages/cart');
@@ -32,8 +17,7 @@ const constructorMethod = (app) => {
 
     /////////////////////////////////////////////////////Roshan
     app.use('/admin', adminRoutes);
-
-    /////////////////////////////////////////////////Roshan
+    app.use('/menu', menuRoutes);
 
     /*******************************************************************************Tanay*/
     app.use('/users', userRoutes);
