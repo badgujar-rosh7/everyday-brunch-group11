@@ -6,11 +6,19 @@ const searchRoutes = require('./search');
 const loginRoutes = require('./login');
 const signupRoutes = require('./signup');
 const menuRoutes = require('./menu');
+const categoryRoutes = require('./category');
+const data = require('../data');
+const { category } = require('../config/mongoCollections');
+
+const userData = data.menu;
 
 const constructorMethod = (app) => {
-    app.get('/', (req, res) => {
-        res.render('pages/index');
-    });  
+    app.get('/', async(req, res) => {
+        let getCategory = await userData.getAllCategory();
+        console.log(getCategory)
+        res.render('pages/index',{getCategory});
+    }); 
+    
 
     app.get('/cart', (req, res) => {
         res.render('pages/cart');
@@ -19,9 +27,10 @@ const constructorMethod = (app) => {
     /////////////////////////////////////////////////////Roshan
     app.use('/admin', adminRoutes);
     app.use('/search', searchRoutes);
-
+    app.use('/category', categoryRoutes)
     /////////////////////////////////////////////////Roshan
     app.use('/menu', menuRoutes);
+
 
     /*******************************************************************************Tanay*/
     app.use('/users', userRoutes);
