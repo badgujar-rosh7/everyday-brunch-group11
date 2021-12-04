@@ -46,6 +46,49 @@ module.exports = {
             throwCatchError(error);
         }
     },
+    async deleteUser(userId) {},
+    async updateUser(userId, firstname, lastname, dob, city, state) {
+        try {
+            const validateArgs = errorcheck.validateArgumentsUpdateUser(
+                arguments.length
+            );
+            const validatedUserId = errorcheck.validateUserId(userId);
+            const validatedfirstname = errorcheck.validateFirstname(firstname);
+            const validatedlastname = errorcheck.validateLastname(lastname);
+            const validatedDob = errorcheck.validateDob(dob);
+            const validatedcity = errorcheck.validateCity(city);
+            const validatedState = errorcheck.validateState(state);
+
+            const user = await this.getUserById(validatedUserId);
+            const updatedUser = {
+                firstName: validatedfirstname,
+                lastName: validatedlastname,
+                email: user.email,
+                DateOfBirth: validatedDob,
+                City: validatedcity,
+                State: validatedState,
+                username: user.username,
+                password: user.password,
+                favorite_item: user.favorite_item,
+                reviews: user.reviews,
+            };
+            const userColl = await usercollection();
+            const updatedInfo = await userColl.updateOne(
+                { _id: ObjectId(user._id) },
+                { $set: updatedUser }
+            );
+            if (updatedInfo.modifiedCount !== 1) {
+                throwError(
+                    ErrorCode.INTERNAL_SERVER_ERROR,
+                    'Error: Could not update User.'
+                );
+            }
+
+            return await this.getUserById(validatedUserId);
+        } catch (error) {
+            throwCatchError(error);
+        }
+    },
 };
 const throwError = (code = 404, message = 'Not found') => {
     throw { code, message };
