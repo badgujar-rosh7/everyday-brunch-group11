@@ -77,7 +77,12 @@
                     </li> --}}
                 </ul>
                 <form class="d-flex" method="post" action="/search">
-                    <a class="btn btn-primary cart-btn me-2" href="/cart" role="button"><img src="./public/images/cart.png" class="rounded img-fluid" /></a>
+                    <a class="btn btn-primary cart-btn me-4 position-relative" href="/cart" role="button">
+                        <img src="./public/images/cart.png" class="rounded img-fluid" />
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    </a>
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
