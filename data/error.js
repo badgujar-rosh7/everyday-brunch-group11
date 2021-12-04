@@ -264,7 +264,13 @@ const throwCatchError = (error) => {
     );
 };
 /*****************************************************************************************/
+const validateReviewId = (reviewId) => {
+    isArgumentString(reviewId, 'id');
+    isStringEmpty(reviewId, 'id');
 
+    return reviewId.trim();
+};
+/*****************************************************************************************/
 module.exports = {
     validateArgumentsCheckuser,
     validateArgumentsCreateUser,
@@ -288,4 +294,5 @@ module.exports = {
     validateRating,
     validateReview,
     validateArgumentsUpdateUser,
+    validateReviewId,
 };
