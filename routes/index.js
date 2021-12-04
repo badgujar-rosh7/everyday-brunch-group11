@@ -2,6 +2,7 @@ const path = require('path');
 const adminRoutes = require('./admin');
 const userRoutes = require('./users');
 const reviewsRoutes = require('./reviews');
+const searchRoutes = require('./search');
 const loginRoutes = require('./login');
 const signupRoutes = require('./signup');
 const menuRoutes = require('./menu');
@@ -17,6 +18,9 @@ const constructorMethod = (app) => {
 
     /////////////////////////////////////////////////////Roshan
     app.use('/admin', adminRoutes);
+    app.use('/search', searchRoutes);
+
+    /////////////////////////////////////////////////Roshan
     app.use('/menu', menuRoutes);
 
     /*******************************************************************************Tanay*/

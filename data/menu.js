@@ -60,15 +60,17 @@ return {menuInserted: true}
 }
 
 async function search(searchTerm){
-
+console.log(searchTerm)
   const MenuCollection = await menus();
 
   const findresult = await MenuCollection.find( 
     {itemKeywords: {$regex:searchTerm,$options:'$i'}}).toArray();
    // console.log(findresult)
-    if(findresult.length=0){
+    if(findresult.length==0){
+      console.log("no")
       throw "No Result found"
     } else {
+      console.log(findresult)
       return findresult
     }
 }
