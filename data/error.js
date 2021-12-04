@@ -43,6 +43,17 @@ const validateArgumentsCreateReview = (totalArguments) => {
     }
 };
 /*****************************************************************************************/
+const validateArgumentsUpdateUser = (totalArguments) => {
+    const TOTAL_MANDATORY_ARGUMENTS = 6;
+
+    if (totalArguments !== TOTAL_MANDATORY_ARGUMENTS) {
+        throwError(
+            ErrorCode.BAD_REQUEST,
+            'Error: All fields need to have valid values.'
+        );
+    }
+};
+/*****************************************************************************************/
 const validateUsername = (name) => {
     isArgumentString(name, 'username');
     isStringEmpty(name, 'username');
@@ -124,18 +135,9 @@ const validateDob = (dob) => {
             'Invalid Date Format in provided variable. Expected in MM/DD/YYYY format'
         );
     }
-    // let TODAY = new Date(Date.now());
-    // let EIGHTEEN_YEARS_BACK = new Date(
-    //     new Date(TODAY).getDate() +
-    //         '/' +
-    //         new Date(TODAY).getMonth() +
-    //         '/' +
-    //         (new Date(TODAY).getFullYear() - 18)
-    // );
-    // let USER_INPUT = new Date(dob);
-    // // Validate Now
-    // let result = EIGHTEEN_YEARS_BACK > USER_INPUT; // true if over 18, false if less than 18
-
+    if (moment().diff(moment(dob, 'MMDDYYYY'), 'years') < 13) {
+        throwError(ErrorCode.BAD_REQUEST, 'Age cannot be less than 13 years');
+    }
     return dob.trim();
 };
 /*****************************************************************************************/
@@ -262,7 +264,13 @@ const throwCatchError = (error) => {
     );
 };
 /*****************************************************************************************/
+const validateReviewId = (reviewId) => {
+    isArgumentString(reviewId, 'id');
+    isStringEmpty(reviewId, 'id');
 
+    return reviewId.trim();
+};
+/*****************************************************************************************/
 module.exports = {
     validateArgumentsCheckuser,
     validateArgumentsCreateUser,
@@ -285,4 +293,6 @@ module.exports = {
     validateUserId,
     validateRating,
     validateReview,
+    validateArgumentsUpdateUser,
+    validateReviewId,
 };

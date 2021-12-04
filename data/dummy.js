@@ -1,7 +1,7 @@
 const connection = require('../config/mongoConnection');
 const signup = require('./signup');
 const login = require('./login');
-const userdata = require('./userdata');
+const userdata = require('./users');
 const reviewdata = require('./reviews');
 const main = async () => {
     ///////////////////////////////////////////////////////////////////////////////////

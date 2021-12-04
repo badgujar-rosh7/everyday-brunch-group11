@@ -2,21 +2,28 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const path = require('path');
-const usersData = data.user;
-const sharp=require('sharp')
-const fs = require('fs')
-const fileUpload = require('express-fileupload');
+const userData = data.user;
 
 router.get('/', async (req, res) => {
-    try{
-        const menuData = await usersData.getAllMenu();
-        //console.log(menuData);
-        res.render('pages/menu',{pageHeading:"Menu",data:menuData});
+    try {
+        const getAllUsers = await userData.getAllUsers();
+        res.json(getAllUsers);
+    } catch (error) {
+        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
+            serverResponse: error.message || 'Internal server error.',
+        });
     }
-    catch(e){
-        res.render('pages/errors');
-    }
-});  
+});
 
+router.get('/:id', async (req, res) => {
+    try {
+        let getUserById = await userData.getUserById(req.params.id);
+        res.json(getUserById);
+    } catch (error) {
+        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
+            serverResponse: error.message || 'Internal server error.',
+        });
+    }
+});
 
 module.exports = router;

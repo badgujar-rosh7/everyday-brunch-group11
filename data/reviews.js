@@ -2,7 +2,7 @@ const { object, ObjectId } = require('mongodb');
 const errorcheck = require('./error');
 const mongoCollections = require('../config/mongoCollections');
 const usercollection = mongoCollections.users;
-const userdata = require('./userdata');
+const userdata = require('./menu');
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -85,6 +85,38 @@ module.exports = {
         review.review_id = review.review_id.toString();
 
         return review;
+    },
+    async removeReviewById(reviewId) {
+        try {
+            const validatedId = errorcheck.validateReviewId(reviewId);
+
+            const parsedObjectId = errorcheck.validateObjectId(validatedId);
+
+            const userColl = await usercollection();
+
+            const restaurantWithReview = await userColl.findOne({
+                'reviews.review_id': parsedObjectId,
+            });
+            const deleteReview = await restColl.updateMany(
+                {},
+                { $pull: { reviews: { review_id: ObjectId(validatedId) } } }
+            );
+            if (!restaurantWithReview) {
+                throwError(
+                    ErrorCode.NOT_FOUND,
+                    'Error: No review with that id.'
+                );
+            }
+            if (deleterev.modifiedCount !== 0)
+                throwError(
+                    ErrorCode.INTERNAL_SERVER_ERROR,
+                    'Error: Could not delete review.'
+                );
+
+            return { reviewId: reviewId, deleted: true };
+        } catch (error) {
+            throwCatchError(error);
+        }
     },
 };
 const throwError = (code = 404, message = 'Not found') => {

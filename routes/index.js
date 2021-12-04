@@ -1,39 +1,31 @@
 const path = require('path');
-const adminRoutes=require('./admin');
-const usersRoutes=require('./users');
+const adminRoutes = require('./admin');
+const userRoutes = require('./users');
+const reviewsRoutes = require('./reviews');
+const menuRoutes = require('./menu');
 
 const constructorMethod = (app) => {
     app.get('/', (req, res) => {
         res.render('pages/index');
     });  
 
-  
+    app.get('/cart', (req, res) => {
+        res.render('pages/cart');
+    });
 
-  // app.get('/sides', (req, res) => {
-  //   res.render('pages/menu',{pageHeading:"Sides"});
-  // });
+    /////////////////////////////////////////////////////Roshan
+    app.use('/admin', adminRoutes);
+    app.use('/menu', menuRoutes);
 
-  // app.get('/beverages', (req, res) => {
-  //   res.render('pages/menu',{pageHeading:"Beverages"});
-  // });
+    /*******************************************************************************Tanay*/
+    app.use('/users', userRoutes);
+    app.use('/reviews', reviewsRoutes);
+    /*******************************************************************************Tanay*/
 
-  // app.get('/desserts', (req, res) => {
-  //   res.render('pages/menu',{pageHeading:"Desserts"});
-  // });
-
-  app.get('/cart', (req, res) => {
-    res.render('pages/cart');
-  });
-
-/////////////////////////////////////////////////////Roshan
-app.use('/admin', adminRoutes);
-app.use('/menu', usersRoutes);
-
-/////////////////////////////////////////////////Roshan
-
-  app.use('*', (req, res) => {
-    res.status(404).json({"Error" : "Resource Not Found"});
-  });
+    //
+    app.use('*', (req, res) => {
+        res.status(404).json({ Error: 'Resource Not Found' });
+    });
 };
 
 module.exports = constructorMethod;

@@ -1,252 +1,130 @@
 const mongoCollections = require('../config/mongoCollections');
-const users = mongoCollections.users;
-const categorys = mongoCollections.category;
-const menus = mongoCollections.menu;
-const advertises = mongoCollections.advertise;
-const uuid = require('uuid');
-const bcrypt = require('bcryptjs');
-let { ObjectId } = require('mongodb');
-const { menu } = require('../config/mongoCollections');
-const saltrounds=16;
+const usercollection = mongoCollections.users;
+const errorcheck = require('./error');
+var validator = require('validator');
+const { ObjectId } = require('mongodb');
 
-async function addCategory(category) {
-  const categoryCollection = await categorys();
-let newcategory = {
-category:category
+const ErrorCode = {
+    BAD_REQUEST: 400,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR: 500,
 };
+module.exports = {
+    async getAllUsers() {
+        try {
+            if (arguments.length !== 0) {
+                throwError(
+                    ErrorCode.BAD_REQUEST,
+                    "Error: This function doesn't require to pass parameters."
+                );
+            }
+            const userColl = await usercollection();
+            const allUsers = await userColl.find({}).toArray();
+            for (let x of allUsers) {
+                x._id = x._id.toString();
+            }
+            return allUsers;
+        } catch (error) {
+            throwCatchError(error);
+        }
+    },
+    async getUserById(userId) {
+        try {
+            const isString = errorcheck.isArgumentString(userId);
+            const isStringEmpty = errorcheck.isStringEmpty(userId);
+            const checkobject = errorcheck.validateObjectId(userId);
 
-const findresult = await categoryCollection.findOne( {category: category.toLowerCase()} );
-if (findresult === null) {
-const insertInfo = await categoryCollection.insertOne(newcategory);
-if (insertInfo.insertedCount === 0) {
- return {categoryInserted:false}
-} else {
-return {categoryInserted: true}
-}
-} else {
-    throw 'Category already exists'
-}
-}
+            const userCollection = await usercollection();
+            let user = await userCollection.findOne({
+                _id: ObjectId(userId.trim()),
+            });
+            if (user === null) throw 'No user found with that id.';
+            user._id = user._id.toString();
 
+            return user;
+        } catch (error) {
+            throwCatchError(error);
+        }
+    },
+    async deleteUser(userId) {
+        try {
+            const isString = errorcheck.isArgumentString(userId);
+            const isStringEmpty = errorcheck.isStringEmpty(userId);
+            const checkobject = errorcheck.validateObjectId(userId);
 
-async function addMenu(itemCategory,itemTitle,itemDescription,itemPrice,itemCalories,itemImage,itemKeywords) {
+            const user = await this.getUserById(userId);
+            const userColl = await usercollection();
+            const deletedInfo = await userColl.deleteOne({
+                _id: ObjectId(user._id),
+            });
 
-  const MenuCollection = await menus();
+            if (deletedInfo.deletedCount !== 1) {
+                throwError(
+                    ErrorCode.INTERNAL_SERVER_ERROR,
+                    `Could not delete user with id ${userId}`
+                );
+            }
+            return {
+                userId: userId,
+                deleted: true,
+            };
+        } catch (error) {
+            throwCatchError(error);
+        }
+    },
+    async updateUser(userId, firstname, lastname, dob, city, state) {
+        try {
+            const validateArgs = errorcheck.validateArgumentsUpdateUser(
+                arguments.length
+            );
+            const validatedUserId = errorcheck.validateUserId(userId);
+            const validatedfirstname = errorcheck.validateFirstname(firstname);
+            const validatedlastname = errorcheck.validateLastname(lastname);
+            const validatedDob = errorcheck.validateDob(dob);
+            const validatedcity = errorcheck.validateCity(city);
+            const validatedState = errorcheck.validateState(state);
 
-let newMenuItem = {
-itemCategory:itemCategory,
-itemTitle:itemTitle,
-itemDescription:itemDescription,
-itemPrice:itemPrice,
-itemCalories:itemCalories,
-itemImage:itemImage,
-itemKeywords:itemKeywords
+            const user = await this.getUserById(validatedUserId);
+            const updatedUser = {
+                firstName: validatedfirstname,
+                lastName: validatedlastname,
+                email: user.email,
+                DateOfBirth: validatedDob,
+                City: validatedcity,
+                State: validatedState,
+                username: user.username,
+                password: user.password,
+                favorite_item: user.favorite_item,
+                reviews: user.reviews,
+            };
+            const userColl = await usercollection();
+            const updatedInfo = await userColl.updateOne(
+                { _id: ObjectId(user._id) },
+                { $set: updatedUser }
+            );
+            if (updatedInfo.modifiedCount !== 1) {
+                throwError(
+                    ErrorCode.INTERNAL_SERVER_ERROR,
+                    'Error: Could not update User.'
+                );
+            }
+
+            return await this.getUserById(validatedUserId);
+        } catch (error) {
+            throwCatchError(error);
+        }
+    },
 };
-
-const findresult = await MenuCollection.findOne( 
-  {itemCategory: itemCategory,
-  itemTitle:itemTitle  
-  } );
-  if (findresult === null) {
-  const insertInfo = await MenuCollection.insertOne(newMenuItem);
-if (insertInfo.insertedCount === 0) {
- return {menuInserted:false}
-} else {
-return {menuInserted: true}
-}
-} else {
-    throw 'Menu already exists'
-}
-}
-
-async function search(searchTerm){
-
-  const MenuCollection = await menus();
-
-  const findresult = await MenuCollection.find( 
-    {itemKeywords: {$regex:searchTerm,$options:'$i'}}).toArray();
-   // console.log(findresult)
-    if(findresult.length=0){
-      throw "No Result found"
-    } else {
-      return findresult
+const throwError = (code = 404, message = 'Not found') => {
+    throw { code, message };
+};
+const throwCatchError = (error) => {
+    if (error.code && error.message) {
+        throwError(error.code, error.message);
     }
-}
 
-async function addAdvertise(advertiseTitle,advertiseDescription,advertiseImage) {
-
-  const AdvertiseCollection = await advertises();
-
-let newAdvertiseItem = {
-advertiseTitle:advertiseTitle,
-advertiseDescription:advertiseDescription,
-advertiseImage:advertiseImage
+    throwError(
+        ErrorCode.INTERNAL_SERVER_ERROR,
+        'Error: Internal server error.'
+    );
 };
-
-const findresult = await AdvertiseCollection.findOne( 
-  {
-  advertiseTitle:advertiseTitle  
-  } );
-if (findresult === null) {
-const insertInfo = await AdvertiseCollection.insertOne(newAdvertiseItem);
-if (insertInfo.insertedCount === 0) {
- return {advertiseInserted:false}
-} else {
-return {advertiseInserted: true}
-}
-} else {
-    throw 'Advertise already exists'
-}
-}
-
-async function getAllMenu(){
-  const MenuCollection = await menus();
-  const findresult = await MenuCollection.find({}).toArray();
-  //console.log(findresult);
-  return findresult;
-}
-
-async function getMenuItem(id){
-
-  let idd=ObjectId(id);
-  const MenuCollection = await menus();
-  const findresult = await MenuCollection.findOne({_id:idd});
-  return findresult;
-}
-
-// async function updateMenu(itemCategory,itemTitle,itemDescription,itemPrice,itemCalories,itemImage,itemKeywords,itemId) {
-
-// const MenuCollection = await menus();
-// let newMenuItem={}
-// if(itemImage){
-//  newMenuItem = {
-// itemCategory:itemCategory,
-// itemTitle:itemTitle,
-// itemDescription:itemDescription,
-// itemPrice:itemPrice,
-// itemCalories:itemCalories,
-// itemImage:itemImage,
-// itemKeywords:itemKeywords
-// };
-// } else{
-//    newMenuItem = {
-//     itemCategory:itemCategory,
-//     itemTitle:itemTitle,
-//     itemDescription:itemDescription,
-//     itemPrice:itemPrice,
-//     itemCalories:itemCalories,
-//     itemKeywords:itemKeywords
-//     };
-// }
-// let itemIdd=ObjectId(itemId);
-// console.log(itemIdd)
-// const updatedInfo = await MenuCollection.updateOne(
-//   { _id:itemIdd },
-//   { $set: newMenuItem }
-// );
-
-// if (updatedInfo.modifiedCount === 0) {
-//   return {menuupdated:false}
-// } else {
-//  return {menuupdated:true}
-// }
-
-// }
-
-async function deleteMenuItem(id){
-
-let idd=ObjectId(id)
-
-const MenuCollection = await menus();
-
-const deleteresult= await MenuCollection.deleteOne({_id:idd})
-
-if (deleteresult.deletedCount === 0) {
-  return false
-}
-else{
-return true
-
-}
-}
-
-
-async function getAllCategory(){
-  const categoryCollection = await categorys();
-  let getCategorys=await categoryCollection.find({}).toArray()
-
-  return getCategorys;
-
-}
-
-async function getMenuByCategory(category){
-  const MenuCollection = await menus();
-  let CategoryMenu=await MenuCollection.find({itemCategory:category}).toArray();
-
-  return CategoryMenu;
-}
-
-async function deleteCategory(id){
-
-  let idd=ObjectId(id)
-  const categoryCollection = await categorys();
- 
-const deleteresult= await categoryCollection.deleteOne({_id:idd})
-
-if (deleteresult.deletedCount === 0) {
-  return false
-}
-else{
-return true
-}
-
-}
-
-
-async function deleteAdvertise(id){
-
-  let idd=ObjectId(id)
-  const AdvertiseCollection = await advertises();
- 
-const deleteresult= await AdvertiseCollection.deleteOne({_id:idd})
-
-if (deleteresult.deletedCount === 0) {
-  return false
-}
-else{
-return true
-}
-
-}
-
-async function getAdvertise(){
-
-  let idd=ObjectId(id)
-  const AdvertiseCollection = await advertises();
- 
-const getresult= await AdvertiseCollection.find({}).toArray()
-
-if(getresult.length>0){
-  return getresult
-} else{
-  return false
-}
-
-}
-
-module.exports={
-    addCategory,
-    addMenu,
-    search,
-    addAdvertise,
-    getAllMenu,
-    getMenuItem,
-    // updateMenu,
-    deleteMenuItem,
-    getAllCategory,
-    getMenuByCategory,
-    deleteAdvertise,
-    deleteCategory,
-    getAdvertise
-}
-
