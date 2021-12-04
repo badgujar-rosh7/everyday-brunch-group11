@@ -2,6 +2,8 @@ const path = require('path');
 const adminRoutes = require('./admin');
 const userRoutes = require('./users');
 const reviewsRoutes = require('./reviews');
+const loginRoutes = require('./login');
+const signupRoutes = require('./signup');
 const menuRoutes = require('./menu');
 
 const constructorMethod = (app) => {
@@ -20,6 +22,8 @@ const constructorMethod = (app) => {
     /*******************************************************************************Tanay*/
     app.use('/users', userRoutes);
     app.use('/reviews', reviewsRoutes);
+    app.use('/login', loginRoutes);
+    app.use('/signup', signupRoutes);
     /*******************************************************************************Tanay*/
 
     //
