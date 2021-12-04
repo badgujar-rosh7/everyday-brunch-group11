@@ -60,6 +60,7 @@
                     <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Reviews</a>
                     </li>
+                   
                     {{!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Dropdown
@@ -76,6 +77,7 @@
                     </li> --}}
                 </ul>
                 <form class="d-flex" method="post" action="/search">
+                    <a class="btn btn-primary cart-btn me-2" href="/cart" role="button"><img src="./public/images/cart.png" class="rounded img-fluid" /></a>
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
