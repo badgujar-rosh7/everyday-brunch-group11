@@ -47,8 +47,8 @@ const findresult = await MenuCollection.findOne(
   {itemCategory: itemCategory,
   itemTitle:itemTitle  
   } );
-if (findresult === null) {
-const insertInfo = await MenuCollection.insertOne(newMenuItem);
+  if (findresult === null) {
+  const insertInfo = await MenuCollection.insertOne(newMenuItem);
 if (insertInfo.insertedCount === 0) {
  return {menuInserted:false}
 } else {
@@ -101,58 +101,57 @@ return {advertiseInserted: true}
 
 async function getAllMenu(){
   const MenuCollection = await menus();
-
   const findresult = await MenuCollection.find({}).toArray();
-  //console.log(findresult)
-return findresult;
+  //console.log(findresult);
+  return findresult;
 }
 
 async function getMenuItem(id){
 
-  let idd=ObjectId(id)
+  let idd=ObjectId(id);
   const MenuCollection = await menus();
   const findresult = await MenuCollection.findOne({_id:idd});
-return findresult;
+  return findresult;
 }
 
-async function updateMenu(itemCategory,itemTitle,itemDescription,itemPrice,itemCalories,itemImage,itemKeywords,itemId) {
+// async function updateMenu(itemCategory,itemTitle,itemDescription,itemPrice,itemCalories,itemImage,itemKeywords,itemId) {
 
-const MenuCollection = await menus();
-let newMenuItem={}
-if(itemImage){
- newMenuItem = {
-itemCategory:itemCategory,
-itemTitle:itemTitle,
-itemDescription:itemDescription,
-itemPrice:itemPrice,
-itemCalories:itemCalories,
-itemImage:itemImage,
-itemKeywords:itemKeywords
-};
-} else{
-   newMenuItem = {
-    itemCategory:itemCategory,
-    itemTitle:itemTitle,
-    itemDescription:itemDescription,
-    itemPrice:itemPrice,
-    itemCalories:itemCalories,
-    itemKeywords:itemKeywords
-    };
-}
-let itemIdd=ObjectId(itemId)
-console.log(itemIdd)
-const updatedInfo = await MenuCollection.updateOne(
-  { _id:itemIdd },
-  { $set: newMenuItem }
-);
+// const MenuCollection = await menus();
+// let newMenuItem={}
+// if(itemImage){
+//  newMenuItem = {
+// itemCategory:itemCategory,
+// itemTitle:itemTitle,
+// itemDescription:itemDescription,
+// itemPrice:itemPrice,
+// itemCalories:itemCalories,
+// itemImage:itemImage,
+// itemKeywords:itemKeywords
+// };
+// } else{
+//    newMenuItem = {
+//     itemCategory:itemCategory,
+//     itemTitle:itemTitle,
+//     itemDescription:itemDescription,
+//     itemPrice:itemPrice,
+//     itemCalories:itemCalories,
+//     itemKeywords:itemKeywords
+//     };
+// }
+// let itemIdd=ObjectId(itemId);
+// console.log(itemIdd)
+// const updatedInfo = await MenuCollection.updateOne(
+//   { _id:itemIdd },
+//   { $set: newMenuItem }
+// );
 
-if (updatedInfo.modifiedCount === 0) {
-  return {menuupdated:false}
-} else {
- return {menuupdated:true}
-}
+// if (updatedInfo.modifiedCount === 0) {
+//   return {menuupdated:false}
+// } else {
+//  return {menuupdated:true}
+// }
 
-}
+// }
 
 async function deleteMenuItem(id){
 
@@ -242,7 +241,7 @@ module.exports={
     addAdvertise,
     getAllMenu,
     getMenuItem,
-    updateMenu,
+    // updateMenu,
     deleteMenuItem,
     getAllCategory,
     getMenuByCategory,

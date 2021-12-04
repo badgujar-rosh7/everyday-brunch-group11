@@ -1,26 +1,25 @@
 const path = require('path');
-const adminRoutes=require('./admin')
+const adminRoutes=require('./admin');
+const usersRoutes=require('./users');
 
 const constructorMethod = (app) => {
     app.get('/', (req, res) => {
         res.render('pages/index');
-    });
+    });  
 
-  app.get('/menu', (req, res) => {
-    res.render('pages/menu',{pageHeading:"Menu"});
-  });
+  
 
-  app.get('/sides', (req, res) => {
-    res.render('pages/menu',{pageHeading:"Sides"});
-  });
+  // app.get('/sides', (req, res) => {
+  //   res.render('pages/menu',{pageHeading:"Sides"});
+  // });
 
-  app.get('/beverages', (req, res) => {
-    res.render('pages/menu',{pageHeading:"Beverages"});
-  });
+  // app.get('/beverages', (req, res) => {
+  //   res.render('pages/menu',{pageHeading:"Beverages"});
+  // });
 
-  app.get('/desserts', (req, res) => {
-    res.render('pages/menu',{pageHeading:"Desserts"});
-  });
+  // app.get('/desserts', (req, res) => {
+  //   res.render('pages/menu',{pageHeading:"Desserts"});
+  // });
 
   app.get('/cart', (req, res) => {
     res.render('pages/cart');
@@ -28,6 +27,7 @@ const constructorMethod = (app) => {
 
 /////////////////////////////////////////////////////Roshan
 app.use('/admin', adminRoutes);
+app.use('/menu', usersRoutes);
 
 /////////////////////////////////////////////////Roshan
 
