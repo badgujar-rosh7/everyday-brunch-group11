@@ -44,11 +44,11 @@ async function createUser(
             const newUser = {
                 firstName: validatedfirstname,
                 lastName: validatedlastname,
-                email: validatedEmail,
+                email: validatedEmail.toLowerCase(),
                 DateOfBirth: validatedDob,
                 City: validatedcity,
                 State: validatedState,
-                username: validatedUsername,
+                username: validatedUsername.toLowerCase(),
                 password: hashPass,
                 favorite_item: [],
                 reviews: [],
