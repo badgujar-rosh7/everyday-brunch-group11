@@ -76,13 +76,14 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li> --}}
                 </ul>
-                <form class="d-flex" method="post" action="/search">
-                    <a class="btn btn-primary cart-btn me-4 position-relative" href="/cart" role="button">
+                    <a class="btn btn-primary cart-btn me-4 position-relative" href="/cartpage" role="button">
                         <img src="./public/images/cart.png" class="rounded img-fluid" />
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="counter">{{counterValue}}
                             <span class="visually-hidden">unread messages</span>
                         </span>
                     </a>
+                     <form class="d-flex" method="post" action="/search">
+               
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
@@ -155,10 +156,59 @@
     // instead of a settings object
   ]
             });
+
+        ///////////////////////////counter code that should run everytime
+ var requestConfig = {
+					method: 'get',
+					url: '/getCounter',
+
+				};
+
+                $.ajax(requestConfig).then(function(responseMessage) {
+					if(responseMessage.success){
+                        $('#counter').text(responseMessage.count)
+                    }
+					//                alert("Data Saved: " + msg);
+				});
+
+
         });
     </script>
     <script>
        
+        function AddToCart(event){
+            event.preventDefault();
+	        let element = event.currentTarget;
+            let idd=element.id
+            let quantity=$(`.${idd}`).val();
+            alert(quantity)
+            let price=$(`#${idd}`).text()
+            alert(price)
+            price=price.replace('$','')
+            price=price.replace(' ','')
+            alert(price)
+            var requestConfig = {
+					method: 'POST',
+					url: '/cart',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						itemId:idd,
+						quantity: quantity,
+                        price:price
+					})
+				};
+
+				$.ajax(requestConfig).then(function(responseMessage) {
+					if(responseMessage.success){
+                        $('#counter').text(responseMessage.count)
+                    }
+					//                alert("Data Saved: " + msg);
+				});
+
+        }
+
+
+
         function flip(event){
 	        var element = event.currentTarget;
             if (element.className === "cardbox") {

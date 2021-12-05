@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const static = express.static(__dirname + '/public');
-
+const session = require('express-session');
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 
@@ -14,6 +14,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
+
+app.use(
+    session({
+      name: 'AuthCookie',
+      secret: "secretKey",
+      saveUninitialized: true,
+      resave: false,
+      cookie: { maxAge: 600000 },
+    })
+  );
+
 
 configRoutes(app);
 
