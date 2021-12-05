@@ -6,26 +6,32 @@
       <h5>
       <div class="f5 ph20 pb-5 mt-body">Log into your Everyday Brunch account</div>
       <div >
-        <form>
+        <form method="POST" action="/login">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" id="username" aria-describedby="emailHelp" required>
+            {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
           </div>
           <div class="pt10">
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password" required>
           </div>
           <div class="mt-5 d-grid gap-2 col-7 mx-auto">
-            <button class="btn btn-primary" type="button">Log In</button>
+            <button class="btn btn-primary" type="submit">Log In</button>
           </div>
         </form>
+
       </div>
+      <br>
+      {{#if hasErrors}}
+       <p class="error">{{error}}</p>
+       {{/if}}
+       <br>
       <div class="mt-5 mb-3">
         <span class="mr5">Don't have an account?</span>
         <span>
-          <a class="js-toggle-to-sign-up blue-text-link" href="/signup">Sign Up</a>
+          <a class="js-toggle-to-sign-up blue-text-link" href="/users/signup">Sign Up</a>
         </span>
       </div>
     </h5>

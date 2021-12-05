@@ -38,43 +38,9 @@ router.get('/profile', async (req, res) => {
 router.get('/myprofile', async (req, res) => {});
 router.post('/myprofile', async (req, res) => {});
 router.get('/signup', async (req, res) => {
-    res.render('pages/signup');
+    res.render('pages/signupform');
 });
-router.post('/signup', async (req, res) => {
-    const firstname = xss(req.body.firstname.trim());
-    const lastname = xss(req.body.lastname.trim());
-    const email = xss(req.body.email.trim());
-    let dob = xss(req.body.dateOfBirth.trim());
-    const city = xss(req.body.city.trim());
-    const state = xss(req.body.state.trim());
-    const username = xss(req.body.username.trim());
-    const password = xss(req.body.password.trim());
 
-    dob = moment(dob).format('MM/DD/YYYY');
-    console.log(dob);
-    try {
-        const createUser = await signupData.createUser(
-            firstname,
-            lastname,
-            email,
-            dob,
-            city,
-            state,
-            username,
-            password
-        );
-        res.redirect('/login');
-    } catch (error) {
-        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).render(
-            'pages/signup',
-            {
-                title: 'Signup',
-                hasErrors: true,
-                error: error.message || 'Internal Server Error',
-            }
-        );
-    }
-});
 router.get('/logout', async (req, res) => {
     if (!req.session.user) {
         res.redirect('/');
