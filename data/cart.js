@@ -28,7 +28,7 @@ details:{
 order_id:null
 };
 
-const findresult = await cartCollection.findOne( {itemid: id,userId:userID} );
+const findresult = await cartCollection.findOne( {itemid: id,userId:userID,order_id:null} );
 if (findresult === null) {
 const insertInfo = await cartCollection.insertOne(newcart);
 if (insertInfo.insertedCount === 0) {
@@ -46,7 +46,7 @@ return {cartInserted: true}
         totalcost:cost
     }
     const updatedInfo = await cartCollection.updateOne(
-        { itemid:id,userId:userID },
+        { itemid:id,userId:userID,order_id:null },
         { $set:updatecart }
       );
       if (updatedInfo.modifiedCount === 0) {
@@ -60,16 +60,56 @@ return {cartInserted: true}
 async function getCounter(userID){
     //console.log(userID)
     const cartCollection = await carts();
-    const findresult = await cartCollection.find( {userId:userID} ).toArray();
+    const findresult = await cartCollection.find( {userId:userID,order_id:null} ).toArray();
     //console.log(findresult.length)
     return findresult.length
 }
 
 async function getCartUser(userId) {
     const cartCollection = await carts();
-    const findresult = await cartCollection.find( {userId:userId} ).toArray();
+    const findresult = await cartCollection.find( {userId:userId,order_id:null} ).toArray();
             return findresult
     
+}
+
+async function deleteCartItem(deleteid) {
+    const cartCollection = await carts();
+    
+let idd=ObjectId(deleteid)
+
+const deleteresult= await cartCollection.deleteOne({_id:idd,order_id:null})
+console.log(deleteresult)
+if (deleteresult.deletedCount === 0) {
+  return false
+}
+else{
+return true
+
+}
+}
+
+
+async function updateCartItem(Id,quantity,userID){
+    const cartCollection = await carts();
+
+    let idd=ObjectId(Id)
+   // console.log(idd)
+const findresult = await cartCollection.findOne( {_id: idd,userId:userID,order_id:null} );
+let totcost=findresult.totalcost
+totcost=(parseFloat(quantity) * parseFloat(findresult.priceOfItem))
+    updateCart={
+        quantity:quantity,
+        totalcost:totcost
+    }
+    const updatedInfo = await cartCollection.updateOne(
+        { _id:idd,userId:userID,order_id:null },
+        { $set:updateCart }
+      );
+      if (updatedInfo.modifiedCount === 0) {
+        return {cartupdate:false}
+      } else {
+       return {cartupdated:true}
+      }
 }
 
 
@@ -78,5 +118,7 @@ async function getCartUser(userId) {
 module.exports={
     createCartItem,
     getCounter,
-    getCartUser
+    getCartUser,
+    deleteCartItem,
+    updateCartItem
 }
