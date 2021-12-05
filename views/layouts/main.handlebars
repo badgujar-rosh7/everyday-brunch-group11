@@ -177,7 +177,78 @@
         });
     </script>
     <script>
+        function reduce(event){
+            
+            let element = event.currentTarget;
+            let idd=element.id
+            let newvalue;
+           let currentvalue= $(`.${idd}`).val()
+           if(currentvalue==1){
+               newvalue=1
+           }else {
+
+            newvalue=currentvalue - 1
+               $(`.${idd}`).val(newvalue)
+               alert("new")
+           }
+                        var requestConfig = {
+					method: 'POST',
+					url: '/cart/update',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						updateid:idd,
+						quantity: newvalue,
+					})
+				};
+
+				$.ajax(requestConfig).then(function(responseMessage) {
+                    console.log(responseMessage)
+				if(responseMessage.success){
+                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+                }else {
+                                        location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+
+                }
+    //                    $('#counter').text(responseMessage.count)
+  //                  } else {
+//                        window.location.replace("http://localhost:3000/login?error=1");
+                        
+                    //}
+					//                alert("Data Saved: " + msg);
+				});
+          
+        }   
        
+       function increase(event){
+           
+            let element = event.currentTarget;
+            let idd=element.id
+           let currentvalue= $(`.${idd}`).val()
+           let newvalue=parseInt(currentvalue) + parseInt(1)
+
+               $(`.${idd}`).val(newvalue)
+
+                 var requestConfig = {
+					method: 'POST',
+					url: '/cart/update',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						updateid:idd,
+						quantity: newvalue,
+					})
+				};
+
+				$.ajax(requestConfig).then(function(responseMessage) {
+                    //console.log(responseMessage)
+				if(responseMessage.success){
+                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+                } else{
+                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+                }
+        
+           });
+          
+       }
         function AddToCart(event){
             event.preventDefault();
 	        let element = event.currentTarget;
@@ -236,24 +307,33 @@
         };
     </script>
     <script>
-        $(document).ready(function(){
-            $(".logout-btn").hide();
+        function increment(event){
+            //alert(77)
+            let element = event.currentTarget;
+            let idd=element.id
+           // alert(idd)
+           let currentvalue= $(`.${idd}`).val()
+           let newvalue=parseInt(currentvalue) + parseInt(1)
+
+               $(`.${idd}`).val(newvalue)
+        }
+         function decrement(event){
             
-          $(".user-profile-btn").hide(); 
-        });
-        $(".login-btn").click(function() {
-          $(".logout-btn").show();
-          $(".user-profile-btn").show();  
-          $(".login-btn").hide(); 
-           $(".cart-btn").show(); 
-        });
-        $(".logout-btn").click(function() {
-          $(".login-btn").show(); 
-          $(".logout-btn").hide();
-          $(".user-profile-btn").hide(); 
-          
-        });
-    </script>
+            let element = event.currentTarget;
+            let idd=element.id
+            let newvalue;
+           let currentvalue= $(`.${idd}`).val()
+           if(currentvalue==1){
+               newvalue=1
+           }else {
+
+            newvalue=currentvalue - 1
+              
+             
+           }
+            $(`.${idd}`).val(newvalue)
+         }
+    </script> 
     
    
 
