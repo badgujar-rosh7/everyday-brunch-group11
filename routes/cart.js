@@ -10,18 +10,19 @@ router.post('/', async (req, res) => {
     let quantity=req.body.quantity
     let price=req.body.price
   //  req.session.userid='78787878'
-  if(req.session.userid){
-    let userID=req.session.userid  //this id will come form session after users loggedin
-    console.log(userID)
+  if(req.session.user){
+    let userID=req.session.user.userId  //this id will come form session after users loggedin
+    
     let createCart= await cartData.createCartItem(itemId,quantity,price,userID)
 if(createCart.cartInserted){
-    let counterValue = await cartData.getCounter(req.session.userid)
+    let counterValue = await cartData.getCounter(req.session.user.userId)
     res.json({ success: true,count:counterValue });
 } else{
     res.json({ success: true,count:0 }); ///not added to cart due to some error
 }
   } else{
       //got to login page and ask user to login
+      res.json({ success: false,count:0 })
   }
 });
 

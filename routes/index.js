@@ -36,13 +36,16 @@ const constructorMethod = (app) => {
     app.use('/category', categoryRoutes);
     app.use('/cart', cartRoutes);
     app.get('/getCounter', async (req, res) => {
-        if (req.session.userid) {
-            let counterValue = await cartData.getCounter(req.session.userid);
+        //console.log(req.session.user.userId)
+        if (req.session.user) {
+            let counterValue = await cartData.getCounter(req.session.user.userId);
             res.json({ success: true, count: counterValue });
         } else {
             res.json({ success: true, count: 0 });
         }
     });
+
+    app.use('/cartpage', cartDetailRoutes);
     /////////////////////////////////////////////////Roshan
     app.use('/menu', menuRoutes);
 
