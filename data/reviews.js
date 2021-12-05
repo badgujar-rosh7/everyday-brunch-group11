@@ -47,6 +47,11 @@ module.exports = {
         try {
             const user = await userdata.getUserById(userId);
 
+            if (!user)
+                throwError(
+                    ErrorCode.NOT_FOUND,
+                    'Error: No reviews found with given Id.'
+                );
             if (user.hasOwnProperty('reviews') && user.reviews.length < 1) {
                 throwError(ErrorCode.NOT_FOUND, 'Error: No reviews found.');
             }
@@ -77,7 +82,10 @@ module.exports = {
         );
 
         if (!reviewResult) {
-            throwError(ErrorCode.NOT_FOUND, 'Error: No review with that id.');
+            throwError(
+                ErrorCode.NOT_FOUND,
+                'Error: No review found with given id.'
+            );
         }
 
         const [review] = reviewResult.reviews;

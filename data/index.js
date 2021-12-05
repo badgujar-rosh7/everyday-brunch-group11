@@ -5,6 +5,7 @@ const reviewdata = require('./reviews');
 const userData = require('./users');
 const cartData = require('./cart');
 
+const errorData = require('./error');
 module.exports = {
     login: logindata,
     signup: signupdata,
@@ -12,4 +13,5 @@ module.exports = {
     reviews: reviewdata,
     menu: menuData,
     cart: cartData,
+    error: errorData,
 };
