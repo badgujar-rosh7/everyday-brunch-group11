@@ -7,27 +7,45 @@ const loginRoutes = require('./login');
 const signupRoutes = require('./signup');
 const menuRoutes = require('./menu');
 const categoryRoutes = require('./category');
+const cartRoutes = require('./cart');
+const cartDetailRoutes = require('./cartdetails');
 const data = require('../data');
 const { category } = require('../config/mongoCollections');
 
 const userData = data.menu;
+const cartData = data.cart;
 
 const constructorMethod = (app) => {
     app.get('/', async(req, res) => {
         let getCategory = await userData.getAllCategory();
-        console.log(getCategory)
+        req.session.userid='78787878'
+        // let counterValue;
+        // if(req.session.userid){
+        //     counterValue = await cartData.getCounter(req.session.userid);
+        // } else{
+        //     counterValue=0
+        // }
+        
+       
         res.render('pages/index',{getCategory});
     }); 
     
 
-    app.get('/cart', (req, res) => {
-        res.render('pages/cart');
-    });
+    app.use('/cartpage', cartDetailRoutes);
 
     /////////////////////////////////////////////////////Roshan
     app.use('/admin', adminRoutes);
     app.use('/search', searchRoutes);
-    app.use('/category', categoryRoutes)
+    app.use('/category', categoryRoutes);
+    app.use('/cart',cartRoutes);
+    app.get('/getCounter', async(req,res)=>{
+        if(req.session.userid){
+        let counterValue = await cartData.getCounter(req.session.userid)
+        res.json({success:true,count:counterValue})
+        } else {
+            res.json({success:true,count:0})
+        }
+    })
     /////////////////////////////////////////////////Roshan
     app.use('/menu', menuRoutes);
 

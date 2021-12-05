@@ -9,6 +9,7 @@ router.get('/', async (req, res) => {
                 const menuData = await userData.getAllMenu();
                 //console.log(menuData);
                 let getCategory = await userData.getAllCategory();
+                
                 res.render('pages/menu',{pageHeading:"Menu",data:menuData,getCategory});
             }
             catch(e){
