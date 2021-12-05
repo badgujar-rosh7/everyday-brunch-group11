@@ -213,6 +213,18 @@
     width: 70%;
 }
 
+.empty-cart-card{
+    background-image: url(/public/images/empty-cart.png);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-size: contain;
+
+}
+
+.pb-400{
+    padding-bottom: 400px;
+}
+
 @media(min-width:1024px){
     .card-container {
         padding: 0%;
