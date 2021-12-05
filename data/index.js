@@ -3,6 +3,7 @@ const signupdata = require('./signup');
 const menuData = require('./menu');
 const reviewdata = require('./reviews');
 const userData = require('./users');
+const cartData = require('./cart');
 
 module.exports = {
     login: logindata,
@@ -10,4 +11,5 @@ module.exports = {
     user: userData,
     reviews: reviewdata,
     menu: menuData,
+    cart: cartData,
 };
