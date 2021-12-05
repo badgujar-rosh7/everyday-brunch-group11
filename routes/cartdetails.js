@@ -20,5 +20,11 @@ router.get('/',async(req,res)=>{
     res.render('pages/cart',{NoCart:'You must be logged-in to able to use the cart'}) 
     }
 })
+router.get('/', async (req, res) => {
+    if (req.session.userid) {
+        // console.log(req.session.userid)
+    }
+    res.render('pages/cart');
+});
 
-module.exports=router;
+module.exports = router;

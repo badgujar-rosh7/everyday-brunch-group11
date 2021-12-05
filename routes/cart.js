@@ -4,7 +4,6 @@ const data = require('../data');
 const path = require('path');
 const cartData = data.cart;
 
-
 router.post('/', async (req, res) => {
     let itemId=req.body.itemId
     let quantity=req.body.quantity
@@ -26,6 +25,4 @@ if(createCart.cartInserted){
   }
 });
 
-
-
-module.exports=router;
+module.exports = router;
