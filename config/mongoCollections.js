@@ -18,5 +18,6 @@ module.exports = {
     users: getCollectionFn('users'),
     category: getCollectionFn('category'),
     menu: getCollectionFn('menu'),
+    cart: getCollectionFn('cart'),
     advertise: getCollectionFn('advertise'),
 };

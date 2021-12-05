@@ -10,6 +10,12 @@ const ErrorCode = {
     INTERNAL_SERVER_ERROR: 500,
 };
 module.exports = {
+    async getUserId(username) {
+        let userData = {};
+        const userColl = await usercollection();
+        userData = await userColl.findOne({ username: username });
+        return userData._id;
+    },
     async getAllUsers() {
         try {
             if (arguments.length !== 0) {

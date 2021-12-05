@@ -11,7 +11,31 @@ const ErrorCode = {
 };
 
 module.exports = {
-    async addFavorite() {},
+    async addFavorite(userId, foodId) {
+        try {
+            const validatedUserId = errorcheck.validateUserId(userId);
+            const validatedFoodId = errorcheck.validateUserId(foodId);
+
+            const addFav = {
+                userId: validatedUserId,
+                foodId: validatedFoodId,
+            };
+            const userColl = await usercollection();
+            const updatedInfo = await userColl.updateOne(
+                { _id: ObjectId(validatedUserId) },
+                { $push: { favorite_item: addFav } }
+            );
+            if (updatedInfo.modifiedCount !== 1) {
+                throwError(
+                    ErrorCode.INTERNAL_SERVER_ERROR,
+                    'Error: Could not add review.'
+                );
+            }
+            return { addedtoFavorite: true };
+        } catch (error) {
+            throwCatchError(error);
+        }
+    },
     async removeFavorite() {},
 };
 

@@ -67,8 +67,7 @@ console.log(searchTerm)
     {itemKeywords: {$regex:searchTerm,$options:'$i'}}).toArray();
    // console.log(findresult)
     if(findresult.length==0){
-      console.log("no")
-      throw "No Result found"
+      return findresult
     } else {
       console.log(findresult)
       return findresult

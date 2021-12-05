@@ -51,9 +51,6 @@
                         {{/each}}
                         </ul> 
                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="/">About Us</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/">Advertisements</a>
                     </li>
@@ -76,16 +73,22 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li> --}}
                 </ul>
-                <form class="d-flex" method="post" action="/search">
-                    <a class="btn btn-primary cart-btn me-4 position-relative" href="/cart" role="button">
-                        <img src="./public/images/cart.png" class="rounded img-fluid" />
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
+                    <a class="btn btn-primary cart-btn me-4 position-relative" href="/cartpage" role="button">
+                        <img src="./public/images/cart.png" class="rounded img-fluid cart-img" />
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="counter">{{counterValue}}
                             <span class="visually-hidden">unread messages</span>
                         </span>
                     </a>
+                     <form class="d-flex" method="post" action="/search">
+               
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Search</button>
+                    <button class="btn btn-outline-light me-2" type="submit">Search</button>
                 </form>
+                <button class="btn btn-outline-primary login-btn me-2" type="submit"><a class="login-link" href="/login">login</a></button>
+                <button class="btn btn-outline-primary logout-btn" type="submit">logout</button>
+                <a class="btn position-relative user-profile-btn" href="" role="button">
+                    <img src="./public/images/user_profile.png" class="rounded img-fluid user-img" />
+                </a>
                 </div>
             </div>
         </nav>
@@ -155,10 +158,132 @@
     // instead of a settings object
   ]
             });
+
+        ///////////////////////////counter code that should run everytime
+ var requestConfig = {
+					method: 'get',
+					url: '/getCounter',
+
+				};
+
+                $.ajax(requestConfig).then(function(responseMessage) {
+					if(responseMessage.success){
+                        $('#counter').text(responseMessage.count)
+                    }
+					//                alert("Data Saved: " + msg);
+				});
+
+
         });
     </script>
     <script>
+        function reduce(event){
+            
+            let element = event.currentTarget;
+            let idd=element.id
+            let newvalue;
+           let currentvalue= $(`.${idd}`).val()
+           if(currentvalue==1){
+               newvalue=1
+           }else {
+
+            newvalue=currentvalue - 1
+               $(`.${idd}`).val(newvalue)
+               alert("new")
+           }
+                        var requestConfig = {
+					method: 'POST',
+					url: '/cart/update',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						updateid:idd,
+						quantity: newvalue,
+					})
+				};
+
+				$.ajax(requestConfig).then(function(responseMessage) {
+                    console.log(responseMessage)
+				if(responseMessage.success){
+                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+                }else {
+                                        location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+
+                }
+    //                    $('#counter').text(responseMessage.count)
+  //                  } else {
+//                        window.location.replace("http://localhost:3000/login?error=1");
+                        
+                    //}
+					//                alert("Data Saved: " + msg);
+				});
+          
+        }   
        
+       function increase(event){
+           
+            let element = event.currentTarget;
+            let idd=element.id
+           let currentvalue= $(`.${idd}`).val()
+           let newvalue=parseInt(currentvalue) + parseInt(1)
+
+               $(`.${idd}`).val(newvalue)
+
+                 var requestConfig = {
+					method: 'POST',
+					url: '/cart/update',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						updateid:idd,
+						quantity: newvalue,
+					})
+				};
+
+				$.ajax(requestConfig).then(function(responseMessage) {
+                    //console.log(responseMessage)
+				if(responseMessage.success){
+                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+                } else{
+                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+                }
+        
+           });
+          
+       }
+        function AddToCart(event){
+            event.preventDefault();
+	        let element = event.currentTarget;
+            let idd=element.id
+            let quantity=$(`.${idd}`).val();
+            let price=$(`#${idd}`).text()
+            
+            price=price.replace('$','')
+            price=price.replace(' ','')
+            
+            var requestConfig = {
+					method: 'POST',
+					url: '/cart',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						itemId:idd,
+						quantity: quantity,
+                        price:price
+					})
+				};
+
+				$.ajax(requestConfig).then(function(responseMessage) {
+					if(responseMessage.success){
+                        $('#counter').text(responseMessage.count)
+                    } else {
+                        window.location.replace("http://localhost:3000/login?error=1");
+                        
+                    }
+					//                alert("Data Saved: " + msg);
+				});
+
+        }
+
+
+
         function flip(event){
 	        var element = event.currentTarget;
             if (element.className === "cardbox") {
@@ -181,6 +306,34 @@
             }
         };
     </script>
+    <script>
+        function increment(event){
+            //alert(77)
+            let element = event.currentTarget;
+            let idd=element.id
+           // alert(idd)
+           let currentvalue= $(`.${idd}`).val()
+           let newvalue=parseInt(currentvalue) + parseInt(1)
+
+               $(`.${idd}`).val(newvalue)
+        }
+         function decrement(event){
+            
+            let element = event.currentTarget;
+            let idd=element.id
+            let newvalue;
+           let currentvalue= $(`.${idd}`).val()
+           if(currentvalue==1){
+               newvalue=1
+           }else {
+
+            newvalue=currentvalue - 1
+              
+             
+           }
+            $(`.${idd}`).val(newvalue)
+         }
+    </script> 
     
    
 

@@ -14,8 +14,8 @@ router.get('/', async (req, res) => {
     const menuData = await userData.getMenuByCategory(name);
     //console.log(menuData);
     let getCategory = await userData.getAllCategory();
-    //res.render('pages/menu',{pageHeading:`Menu for ${name}`,data:menuData,getCategory});
-        res.json({menuData})
+    res.render('pages/menu',{pageHeading:`Menu for ${name}`,data:menuData,getCategory});
+        //res.json({menuData})
 });
 
 module.exports=router;

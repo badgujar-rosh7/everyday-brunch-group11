@@ -4,40 +4,64 @@ const userRoutes = require('./users');
 const reviewsRoutes = require('./reviews');
 const searchRoutes = require('./search');
 const loginRoutes = require('./login');
-const signupRoutes = require('./signup');
 const menuRoutes = require('./menu');
 const categoryRoutes = require('./category');
+const cartRoutes = require('./cart');
+const cartDetailRoutes = require('./cartdetails');
 const data = require('../data');
 const { category } = require('../config/mongoCollections');
 
 const userData = data.menu;
+const cartData = data.cart;
 
 const constructorMethod = (app) => {
-    app.get('/', async(req, res) => {
+    app.get('/', async (req, res) => {
         let getCategory = await userData.getAllCategory();
-        console.log(getCategory)
-        res.render('pages/index',{getCategory});
-    }); 
-    
+        req.session.userid = '78787878';
+        // let counterValue;
+        // if(req.session.userid){
+        //     counterValue = await cartData.getCounter(req.session.userid);
+        // } else{
+        //     counterValue=0
+        // }
 
-    app.get('/cart', (req, res) => {
-        res.render('pages/cart');
+        res.render('pages/index', { getCategory });
     });
+
+    app.use('/cartpage', cartDetailRoutes);
 
     /////////////////////////////////////////////////////Roshan
     app.use('/admin', adminRoutes);
     app.use('/search', searchRoutes);
-    app.use('/category', categoryRoutes)
+    app.use('/category', categoryRoutes);
+    app.use('/cart', cartRoutes);
+    app.get('/getCounter', async (req, res) => {
+        //console.log(req.session.user.userId)
+        if (req.session.user) {
+            let counterValue = await cartData.getCounter(req.session.user.userId);
+            res.json({ success: true, count: counterValue });
+        } else {
+            res.json({ success: true, count: 0 });
+        }
+    });
+
+    app.use('/cartpage', cartDetailRoutes);
     /////////////////////////////////////////////////Roshan
     app.use('/menu', menuRoutes);
-
 
     /*******************************************************************************Tanay*/
     app.use('/users', userRoutes);
     app.use('/reviews', reviewsRoutes);
     app.use('/login', loginRoutes);
-    app.use('/signup', signupRoutes);
     /*******************************************************************************Tanay*/
+
+    app.get('/login', async (req, res) => {
+        res.render('pages/loginform');
+    });
+
+    app.get('/signup', async (req, res) => {
+        res.render('pages/signupform');
+    });
 
     //
     app.use('*', (req, res) => {

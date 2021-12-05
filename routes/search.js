@@ -11,6 +11,9 @@ router.post('/', async(req,res)=>{
     if(searchResult.length>0){
         // render result page-------res.json({searchResult})
         res.render('pages/searchresult',{searchResult,pageHeading:`Search Result For: ${searchTerm}`})
+    } else {
+        ///no result page
+        res.render('pages/searchresult',{searchResult,pageHeading:`NO Result For: ${searchTerm}`})
     }
 
 });
