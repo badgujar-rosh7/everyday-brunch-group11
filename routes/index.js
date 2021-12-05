@@ -4,7 +4,6 @@ const userRoutes = require('./users');
 const reviewsRoutes = require('./reviews');
 const searchRoutes = require('./search');
 const loginRoutes = require('./login');
-const signupRoutes = require('./signup');
 const menuRoutes = require('./menu');
 const categoryRoutes = require('./category');
 const cartRoutes = require('./cart');
@@ -16,20 +15,18 @@ const userData = data.menu;
 const cartData = data.cart;
 
 const constructorMethod = (app) => {
-    app.get('/', async(req, res) => {
+    app.get('/', async (req, res) => {
         let getCategory = await userData.getAllCategory();
-        req.session.userid='78787878'
+        req.session.userid = '78787878';
         // let counterValue;
         // if(req.session.userid){
         //     counterValue = await cartData.getCounter(req.session.userid);
         // } else{
         //     counterValue=0
         // }
-        
-       
-        res.render('pages/index',{getCategory});
-    }); 
-    
+
+        res.render('pages/index', { getCategory });
+    });
 
     app.use('/cartpage', cartDetailRoutes);
 
@@ -37,24 +34,22 @@ const constructorMethod = (app) => {
     app.use('/admin', adminRoutes);
     app.use('/search', searchRoutes);
     app.use('/category', categoryRoutes);
-    app.use('/cart',cartRoutes);
-    app.get('/getCounter', async(req,res)=>{
-        if(req.session.userid){
-        let counterValue = await cartData.getCounter(req.session.userid)
-        res.json({success:true,count:counterValue})
+    app.use('/cart', cartRoutes);
+    app.get('/getCounter', async (req, res) => {
+        if (req.session.userid) {
+            let counterValue = await cartData.getCounter(req.session.userid);
+            res.json({ success: true, count: counterValue });
         } else {
-            res.json({success:true,count:0})
+            res.json({ success: true, count: 0 });
         }
-    })
+    });
     /////////////////////////////////////////////////Roshan
     app.use('/menu', menuRoutes);
-
 
     /*******************************************************************************Tanay*/
     app.use('/users', userRoutes);
     app.use('/reviews', reviewsRoutes);
     app.use('/login', loginRoutes);
-    app.use('/signup', signupRoutes);
     /*******************************************************************************Tanay*/
 
     //
