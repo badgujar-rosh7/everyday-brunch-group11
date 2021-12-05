@@ -183,12 +183,11 @@
 	        let element = event.currentTarget;
             let idd=element.id
             let quantity=$(`.${idd}`).val();
-            alert(quantity)
             let price=$(`#${idd}`).text()
-            alert(price)
+            
             price=price.replace('$','')
             price=price.replace(' ','')
-            alert(price)
+            
             var requestConfig = {
 					method: 'POST',
 					url: '/cart',
@@ -203,6 +202,9 @@
 				$.ajax(requestConfig).then(function(responseMessage) {
 					if(responseMessage.success){
                         $('#counter').text(responseMessage.count)
+                    } else {
+                        window.location.replace("http://localhost:3000/login?error=1");
+                        
                     }
 					//                alert("Data Saved: " + msg);
 				});
@@ -236,7 +238,7 @@
     <script>
         $(document).ready(function(){
             $(".logout-btn").hide();
-            $(".cart-btn").hide();
+            
           $(".user-profile-btn").hide(); 
         });
         $(".login-btn").click(function() {
@@ -249,7 +251,7 @@
           $(".login-btn").show(); 
           $(".logout-btn").hide();
           $(".user-profile-btn").hide(); 
-          $(".cart-btn").hide();  
+          
         });
     </script>
     

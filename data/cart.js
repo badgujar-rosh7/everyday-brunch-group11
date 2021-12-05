@@ -1,13 +1,16 @@
 const mongoCollections = require('../config/mongoCollections');
 //const categorys = mongoCollections.category;
 const carts = mongoCollections.cart;
-//const menus = mongoCollections.menu;
+const menus = mongoCollections.menu;
 const uuid = require('uuid');
 let { ObjectId } = require('mongodb');
+let { getMenuItem } = require('./menu');
 
 
 async function createCartItem(id,quantity,price,userID) {
   const cartCollection = await carts();
+  const MenuCollection = await menus();
+let menudetails= await getMenuItem(id)
   let total=parseInt(quantity) * parseFloat(price);
   price=parseFloat(price)
 let newcart = {
@@ -16,6 +19,12 @@ quantity:quantity,
 userId:userID,
 totalcost:total,
 priceOfItem:price,
+details:{
+    title:menudetails.itemTitle,
+    description:menudetails.itemDescription,
+    cal:menudetails.itemCalories,
+    image:menudetails.itemImage
+},
 order_id:null
 };
 
@@ -49,20 +58,25 @@ return {cartInserted: true}
 }
 
 async function getCounter(userID){
-    console.log(userID)
+    //console.log(userID)
     const cartCollection = await carts();
     const findresult = await cartCollection.find( {userId:userID} ).toArray();
-    console.log(findresult.length)
+    //console.log(findresult.length)
     return findresult.length
 }
 
-
-
+async function getCartUser(userId) {
+    const cartCollection = await carts();
+    const findresult = await cartCollection.find( {userId:userId} ).toArray();
+            return findresult
+    
+}
 
 
 
 
 module.exports={
     createCartItem,
-    getCounter
+    getCounter,
+    getCartUser
 }

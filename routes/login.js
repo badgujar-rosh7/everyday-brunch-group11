@@ -12,10 +12,17 @@ const ErrorCode = {
     INTERNAL_SERVER_ERROR: 500,
 };
 router.get('/', async (req, res) => {
+    let error=req.query.error;
     if (req.session.user) {
         res.redirect('/');
     } else {
-        res.render('pages/loginform');
+        if(parseInt(error)===parseInt(1)){
+            res.render('pages/loginform',{cart:'You need to be Logged-in before adding items to cart'});  
+
+        //res.render('pages/loginform');
+        } else{
+            res.render('pages/loginform'); 
+        }
     }
 });
 router.post('/', async (req, res) => {
