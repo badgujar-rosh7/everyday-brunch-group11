@@ -10,7 +10,7 @@ const ErrorCode = {
     INTERNAL_SERVER_ERROR: 500,
 };
 router.get('/', async (req, res) => {
-    res.render('pages/loginform');
+    res.render('pages/signupform');
 });
 router.post('/', async (req, res) => {
     try {
