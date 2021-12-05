@@ -55,6 +55,14 @@ const constructorMethod = (app) => {
     app.use('/login', loginRoutes);
     /*******************************************************************************Tanay*/
 
+    app.get('/login', async (req, res) => {
+        res.render('pages/loginform');
+    });
+
+    app.get('/signup', async (req, res) => {
+        res.render('pages/signupform');
+    });
+
     //
     app.use('*', (req, res) => {
         res.status(404).json({ Error: 'Resource Not Found' });
