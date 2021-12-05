@@ -76,8 +76,12 @@ router.post('/signup', async (req, res) => {
     }
 });
 router.get('/logout', async (req, res) => {
-    req.session.destroy();
-    res.json('Logged out');
+    if (!req.session.user) {
+        res.redirect('/');
+    } else {
+        req.session.destroy();
+        res.json('Logged out');
+    }
     // res.render('users/logged-out', {
     //     username: user.username,
     //     pageTitle: 'Logged out',
