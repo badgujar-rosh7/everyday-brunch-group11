@@ -51,9 +51,6 @@
                         {{/each}}
                         </ul> 
                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="/">About Us</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/">Advertisements</a>
                     </li>
@@ -77,7 +74,7 @@
                     </li> --}}
                 </ul>
                     <a class="btn btn-primary cart-btn me-4 position-relative" href="/cartpage" role="button">
-                        <img src="./public/images/cart.png" class="rounded img-fluid" />
+                        <img src="./public/images/cart.png" class="rounded img-fluid cart-img" />
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="counter">{{counterValue}}
                             <span class="visually-hidden">unread messages</span>
                         </span>
@@ -85,8 +82,13 @@
                      <form class="d-flex" method="post" action="/search">
                
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Search</button>
+                    <button class="btn btn-outline-light me-2" type="submit">Search</button>
                 </form>
+                <button class="btn btn-outline-primary login-btn" type="submit">login</button>
+                <button class="btn btn-outline-primary logout-btn" type="submit">logout</button>
+                <a class="btn position-relative user-profile-btn" href="" role="button">
+                    <img src="./public/images/user_profile.png" class="rounded img-fluid user-img" />
+                </a>
                 </div>
             </div>
         </nav>
@@ -230,6 +232,25 @@
                 $('.mycard').height(backHeight);
             }
         };
+    </script>
+    <script>
+        $(document).ready(function(){
+            $(".logout-btn").hide();
+            $(".cart-btn").hide();
+          $(".user-profile-btn").hide(); 
+        });
+        $(".login-btn").click(function() {
+          $(".logout-btn").show();
+          $(".user-profile-btn").show();  
+          $(".login-btn").hide(); 
+           $(".cart-btn").show(); 
+        });
+        $(".logout-btn").click(function() {
+          $(".login-btn").show(); 
+          $(".logout-btn").hide();
+          $(".user-profile-btn").hide(); 
+          $(".cart-btn").hide();  
+        });
     </script>
     
    

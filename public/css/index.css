@@ -209,6 +209,10 @@
     align-items: center;
 }
 
+.cart-img,.user-img{
+    width: 70%;
+}
+
 @media(min-width:1024px){
     .card-container {
         padding: 0%;
