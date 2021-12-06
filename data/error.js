@@ -143,7 +143,7 @@ const validateDate = (date) => {
     isArgumentString(date, 'Current date');
     isStringEmpty(date, 'Current date');
     date = date.trim();
-    const dateformat = moment(date, 'MM-DD-YYYY').isValid();
+    const dateformat = moment(date, 'MM/DD/YYYY').isValid();
     if (!dateformat) {
         throwError(
             ErrorCode.BAD_REQUEST,

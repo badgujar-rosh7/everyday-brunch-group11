@@ -1,20 +1,45 @@
-<table>
-  <tr>
-    <th>Category</th>
-    <th>title</th>
-    <th>Options</th>
-  </tr>
-  {{#each json}}
-  <tr>
-    <td>{{itemCategory}}</td>
-    <td>{{itemTitle}}</td>
-    <td><form method="post" action="./update"><input type="text" name="updateid" value="{{this._id}}" hidden><button type="submit">update
-        
-    </button></form>
-    <form method="post" action="./deleteitem"><input type="text" name="deleteid" value="{{this._id}}" hidden><button type="submit">delete
-        
-    </button></form>
-    </td>
-  </tr>
-  {{/each}}
-</table>
+
+<section class="section admin-section">
+  <div class="container">
+    <div class="row">
+        <h1 class="main-heading text-center mt-5 mb-5">Admin</h1>
+    </div>
+    <div class="accordion-item mb-5">
+        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+            Edit & Delete Item
+        </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+            <div class="accordion-body ">      
+              <table class="table table-striped table-dark table-hover">
+                <tr>
+                  <th>Category Name</th>
+                  <th>Food Item Name</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+                {{#each json}}
+                <tr>
+                  <td>{{itemCategory}}</td>
+                  <td>{{itemTitle}}</td>
+                  <td>
+                    <form method="post" action="./update">
+                      <input type="text" name="updateid" value="{{this._id}}" hidden>
+                      <button class="btn btn-success" type="submit"><span class='material-icons'>edit</span></button>
+                    </form>
+                  </td>
+                  <td>
+                    <form method="post" action="./deleteitem">
+                      <input type="text" name="deleteid" value="{{this._id}}" hidden>
+                      <button class="btn btn-danger" type="submit"><span class="material-icons">delete</span></button>
+                    </form>
+                  </td>
+                </tr>
+                {{/each}}
+              </table> 
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
