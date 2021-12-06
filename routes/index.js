@@ -33,7 +33,7 @@ const constructorMethod = (app) => {
     app.use('/cartpage', cartDetailRoutes);
 
     /////////////////////////////////////////////////////Roshan
-    app.use('/admin', adminRoutes);
+    app.use('/', adminRoutes);
     app.use('/search', searchRoutes);
     app.use('/category', categoryRoutes);
     app.use('/cart', cartRoutes);
@@ -68,9 +68,9 @@ const constructorMethod = (app) => {
     //     res.render('pages/signupform');
     // });
 
-    app.get('/admin', async (req, res) => {
-        res.render('pages/admin');
-    });
+    // app.get('/admin', async (req, res) => {
+    //     res.render('pages/admin');
+    // });
 
     //
     app.use('*', (req, res) => {

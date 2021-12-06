@@ -241,7 +241,7 @@
     padding-bottom: 400px;
 }
 
-.login-btn .login-link {
+.login-btn .login-link,.logout-btn .logout-link {
     text-decoration: none;
 }
 
