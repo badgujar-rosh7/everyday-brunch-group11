@@ -68,9 +68,9 @@ const constructorMethod = (app) => {
     //     res.render('pages/signupform');
     // });
 
-    // app.get('/admin', async (req, res) => {
-    //     res.render('pages/admin');
-    // });
+    app.get('/admin', async (req, res) => {
+        res.render('pages/admin');
+    });
 
     //
     app.use('*', (req, res) => {
