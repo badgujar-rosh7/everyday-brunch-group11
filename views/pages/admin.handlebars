@@ -21,7 +21,7 @@
                                             <form class="mb-3 mt-3 text-center">
                                                 <div class="form-group">
                                                     {{!-- <label for="exampleFormControlFile1">Example file input</label> --}}
-                                                    <input type="file" class="form-control-file w-50" id="exampleFormControlFile1">
+                                                    <input type="file" class="form-control-file w-50" id="exampleFormControlFile1" name="menuFile">
                                                 </div>
                                             </form>
                                         </div>
@@ -29,7 +29,7 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <div class="right-cart-box p-md-3 p-lg-5">
-                                                <h5 class="card-title cart-item-title mb-3 mb-md-4">{{details.title}}</h5>
+                                                <h5 class="card-title cart-item-title mb-3 mb-md-4" name="itemTitle"></h5>
                                                 <div class="row">
                                                     <div class="col-sm-5"> 
                                                         <div class="menu-quantity responsive-flexbox">
@@ -41,31 +41,35 @@
                                                             </div>
                                                         </div>
                                                         <p class="card-text cart-info {{_id}}{{_id}} d-flex"><strong>Price :</strong> 
-                                                            <input class="form-control form-control-md quantity-txtbox text-center {{_id}} ms-2" type="text" value="1" aria-label=".form-control-sm example">
+                                                            <input class="form-control form-control-md quantity-txtbox text-center {{_id}} ms-2" type="text" value="1" aria-label=".form-control-sm example" name="itemPrice">
                                                         </p>
                                                         <p class="card-text cart-info d-flex mb-3"><strong>Cal (Individual) :</strong> 
-                                                            <input class="form-control form-control-md quantity-txtbox text-center {{_id}} ms-2" type="text" value="1" aria-label=".form-control-sm example">
+                                                            <input class="form-control form-control-md quantity-txtbox text-center {{_id}} ms-2" type="text" value="1" aria-label=".form-control-sm example" name="itemCalories">
                                                         </p>
                                                     </div>
                                                     <div class="col-sm-7"> 
                                                         <div class="responsive-flexbox">
-                                                            <p class="card-text cart-info mb-3"><strong>Category :</strong>
+                                                            <p class="card-text cart-info mb-3"><strong>Category :</strong></p>
                                                             <div class="dropdown mb-3">
                                                                 <button class="btn btn-primary dropdown-toggle ms-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                                     Dropdown button
                                                                 </button>
                                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                                                    <li><a class="dropdown-item" href="#" name="itemCategory">Action</a></li>
                                                                     <li><a class="dropdown-item" href="#">Another action</a></li>
                                                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
+                                                        <div class="responsive-flexbox">
+                                                            <p class="card-text cart-info d-flex mb-3"><strong>Keywords :</strong> </p>
+                                                            <input class="form-control form-control-md quantity-txtbox text-center {{_id}} ms-2" type="text" value="1" aria-label=".form-control-sm example" name="itemKeywords">
+                                                        </div>
                                                     </div>
                                                     <div class="col-sm-12">
                                                         <div class="responsive-flexbox mb-3">
                                                             <p class="card-text cart-info"><strong>Description :</strong></p>
-                                                            <textarea class="desc-add-text ms-2" rows="2" cols="50" placeholder="What's up?" required></textarea>
+                                                            <textarea class="desc-add-text ms-2" rows="2" cols="50" placeholder="What's up?" name="itemDescription" required></textarea>
                                                         </div>
                                                         <button type="submit" class="btn btn-primary remove-btn mb-3 mt-3 me-5">Publish</button>
                                                         <button type="submit" class="btn btn-outline-danger remove-btn mb-3 mt-3">Remove</button>
