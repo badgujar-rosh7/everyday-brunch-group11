@@ -10,6 +10,8 @@ const cartRoutes = require('./cart');
 const cartDetailRoutes = require('./cartdetails');
 const data = require('../data');
 const { category } = require('../config/mongoCollections');
+const { signup } = require('../data');
+const signupRoutes = require('./signup');
 
 const userData = data.menu;
 const cartData = data.cart;
@@ -38,7 +40,9 @@ const constructorMethod = (app) => {
     app.get('/getCounter', async (req, res) => {
         //console.log(req.session.user.userId)
         if (req.session.user) {
-            let counterValue = await cartData.getCounter(req.session.user.userId);
+            let counterValue = await cartData.getCounter(
+                req.session.user.userId
+            );
             res.json({ success: true, count: counterValue });
         } else {
             res.json({ success: true, count: 0 });
@@ -53,15 +57,16 @@ const constructorMethod = (app) => {
     app.use('/users', userRoutes);
     app.use('/reviews', reviewsRoutes);
     app.use('/login', loginRoutes);
+    app.use('/signup', signupRoutes);
     /*******************************************************************************Tanay*/
 
-    app.get('/login', async (req, res) => {
-        res.render('pages/loginform');
-    });
+    // app.get('/login', async (req, res) => {
+    //     res.render('pages/loginform');
+    // });
 
-    app.get('/signup', async (req, res) => {
-        res.render('pages/signupform');
-    });
+    // app.get('/signup', async (req, res) => {
+    //     res.render('pages/signupform');
+    // });
 
     app.get('/admin', async (req, res) => {
         res.render('pages/admin');
