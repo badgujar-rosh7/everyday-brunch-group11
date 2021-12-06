@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const signupData = data.signup;
 const xss = require('xss');
+const moment = require('moment');
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -10,20 +11,21 @@ const ErrorCode = {
     INTERNAL_SERVER_ERROR: 500,
 };
 router.get('/', async (req, res) => {
-    res.render('pages/signupform');
+    res.render('pages/signup');
 });
-router.post('/', async (req, res) => {
+router.post('/signup', async (req, res) => {
+    const firstname = xss(req.body.firstname.trim());
+    const lastname = xss(req.body.lastname.trim());
+    const email = xss(req.body.email.trim());
+    let dob = xss(req.body.dateOfBirth.trim());
+    const city = xss(req.body.city.trim());
+    const state = xss(req.body.state.trim());
+    const username = xss(req.body.username.trim());
+    const password = xss(req.body.password.trim());
+
+    dob = moment(dob).format('MM/DD/YYYY');
+    console.log(dob);
     try {
-        const firstname = xss(req.body.firstname.trim());
-        const lastname = xss(req.body.lastname.trim());
-        const email = xss(req.body.email.trim());
-        const dob = xss(req.body.dob.trim());
-        const city = xss(req.body.city.trim());
-        const state = xss(req.body.state.trim());
-
-        const username = xss(req.body.username.trim());
-        const password = xss(req.body.password.trim());
-
         const createUser = await signupData.createUser(
             firstname,
             lastname,
@@ -34,11 +36,16 @@ router.post('/', async (req, res) => {
             username,
             password
         );
-        res.json(createUser);
+        res.redirect('/login');
     } catch (error) {
-        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
-            serverResponse: error.message || 'Internal server error.',
-        });
+        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).render(
+            'pages/signup',
+            {
+                title: 'Signup',
+                hasErrors: true,
+                error: error.message || 'Internal Server Error',
+            }
+        );
     }
 });
 module.exports = router;
