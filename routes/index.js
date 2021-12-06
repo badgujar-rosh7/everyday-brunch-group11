@@ -12,8 +12,8 @@ const data = require('../data');
 const { category } = require('../config/mongoCollections');
 const { signup } = require('../data');
 const signupRoutes = require('./signup');
-const paymentRoutes=require('./payment')
-const payRoutes=require('./paymentpage')
+const paymentRoutes = require('./payment');
+const payRoutes = require('./paymentpage');
 
 const userData = data.menu;
 const cartData = data.cart;
@@ -80,7 +80,6 @@ const constructorMethod = (app) => {
     app.use('*', (req, res) => {
         res.status(404).json({ Error: 'Resource Not Found' });
     });
-    
 };
 
 module.exports = constructorMethod;
