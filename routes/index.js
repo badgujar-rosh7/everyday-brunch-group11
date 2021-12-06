@@ -68,6 +68,10 @@ const constructorMethod = (app) => {
     //     res.render('pages/signupform');
     // });
 
+    app.get('/admin', async (req, res) => {
+        res.render('pages/admin');
+    });
+
     //
     app.use('*', (req, res) => {
         res.status(404).json({ Error: 'Resource Not Found' });

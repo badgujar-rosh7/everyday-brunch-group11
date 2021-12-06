@@ -9,7 +9,7 @@
                 {{#each data}}
                 <div class="col-sm-12 col-md-6 col-lg-3">
                     <div class="card-container">
-                        <div class="cardbox" >
+                        <div class="cardbox" onclick="flip(event)">
                             
                             <div class="card mycard">
                                 <div>
@@ -31,7 +31,6 @@
                                     </div>
                                     <a href="{{_id}}" class="btn btn-primary cart-btn" id="{{_id}}" onclick="AddToCart(event)" >Add to Cart</a>
                                     <a id="desc-btn" class="btn btn-outline-primary cart-btn">Description</a>
-                
                                 </div>
                             </div>
                             <div class="card mycard1">
