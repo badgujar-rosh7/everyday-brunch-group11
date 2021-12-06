@@ -1,40 +1,25 @@
-{{!loginform}}
-<section class="section loginform-section">
-  <div class="container">
-    <div class="main-text">
-      <h1 class="mt-title text-center mt-5 pt-5 pb-10">Log In<h1>
-      <h5>
-      <div class="f5 ph20 pb-5 mt-body">Log into your Everyday Brunch account</div>
-      <div >
-        <form method="POST" action="/login">
-          <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" name="username" class="form-control" id="username" aria-describedby="emailHelp" required>
-            {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
-          </div>
-          <div class="pt10">
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="password" required>
-          </div>
-          <div class="mt-5 d-grid gap-2 col-7 mx-auto">
-            <button class="btn btn-primary" type="submit">Log In</button>
-          </div>
-        </form>
 
-      </div>
-      <br>
-      {{#if hasErrors}}
-       <p class="error">{{error}}</p>
-       {{/if}}
-       <br>
-      <div class="mt-5 mb-3">
-        <span class="mr5">Don't have an account?</span>
-        <span>
-          <a class="js-toggle-to-sign-up blue-text-link" href="/signup">Sign Up</a>
-        </span>
-      </div>
-    </h5>
+  {{!-- Start of Login Form --}}
+
+<section class="section login-form pt-3 yellow-section-background">
+  <div class="container">
+    <div class="mt-5 mb-5">
+      <h1 class="main-heading text-center mt-5 mb-5">Log In</h1>
+      <p class="subheading card-title text-center mb-5">Log into your Everyday Brunch account</p>
+    </div>
+    <div class="form-floating mb-5">
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating mb-5">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+    <div class="text-center pt-5 pb-5 d-grid gap-2 col-6 mx-auto"> 
+    <button type="submit" class="btn btn-primary btn-lg mb-3">Log In</button>
+    <span class="fs-5">Don't have an account? <a class="js-toggle-to-sign-up blue-text-link" href="/signup">Sign Up</a></span>
     </div>
   </div>
-  {{!loginform}}
+</section>
+
+  {{!-- End of Login Form --}}
