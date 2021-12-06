@@ -167,6 +167,7 @@ const validateCity = (city) => {
 const validateState = (state) => {
     isArgumentString(state, 'state');
     isStringEmpty(state, 'state');
+
     state = state.trim();
     let regex = /^(AK|AL|AR|AZ|CA|CO|CT|DC|DE|FL|GA|HI|IA|ID|IL|IN|KS|KY|LA|MA|MD|ME|MI|MN|MO|MS|MT|NB|NC|ND|NH|NJ|NM|NV|NY|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VA|VT|WA|WI|WV|WY)$/i;
     if (!regex.test(state)) {
@@ -181,6 +182,7 @@ const validateState = (state) => {
 const validateUserId = (UserId) => {
     isArgumentString(UserId, 'id');
     isStringEmpty(UserId, 'id');
+    validateObjectId(UserId);
 
     return UserId.trim();
 };
