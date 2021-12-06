@@ -12,6 +12,7 @@ var Secret_Key = 'sk_test_51K0juZCsyI93mWA7U5FlUvzECuroJrru73V3MrVSWXfgVCY0xrANd
 const stripe = require('stripe')(Secret_Key) 
 
 
+var nodemailer = require('nodemailer');
 
     router.post('/', async(req, res)=>{ 
 
@@ -34,54 +35,56 @@ const stripe = require('stripe')(Secret_Key)
             }); 
         }) 
         .then((charge) => { 
-                req.session.user.paymentstatus=true;
+               // req.session.user.paymentstatus=true;
+                req.session.user.receipt=charge.receipt_url;
             //add entry to database
 
-    
-
-            ////////////////////
-    
-            ////mailing system
-            // let mailto=req.session.user.email
-            // var transporter = nodemailer.createTransport({
-            //   service: 'gmail',
-            //   auth: {
-            //     user: 'sudronikbusiness@gmail.com',
-            //     pass: '8454949819'
-            //   }
-            // });
-            
-            // var mailOptions = {
-            //   from: 'sudronikbusiness@gmail.com',
-            //   to: mailto,
-            //   subject: `order placed with `,
-            //   text: 'placed order. you can get your receipt here'
-            // };
-            
-            // transporter.sendMail(mailOptions, function(error, info){
-            //   if (error) {
-            //     console.log(error);
-            //   } else {
-            //     console.log('Email sent: ' + info.response);
-            //   }
-            // });
-            // //////
         }).then(()=>{
 
 
 
-            console.log("inside")
+            //console.log("inside")
             let order= cartData.UpdateOrderIdByUserId(req.session.user.userId,num);
 
 
 
         }).then(()=>{
-            console.log("ioioioioi")
+           // console.log("ioioioioi")
+            //console.log(req.session.user.email)
             let neworder= cartData.createOrder(req.session.user.userId,num);
-            console.log(neworder)
+            setTimeout(() => {
+                let mailto=`${req.session.user.email}`
+            var transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'sudronikbusiness@gmail.com',
+                pass: '8454949819'
+              }
+            });
+            
+            var mailOptions = {
+              from: 'sudronikbusiness@gmail.com',
+              to: mailto,
+              subject: 'Order placed: Everyday Brunch',
+              text: 'Thank For Ordering food with Everyday Brunch.\n We are delighted to have you with us. You can now view your order in the orders section.\n Also you can download your payment receipt from here:\n\n'+req.session.user.receipt
+            };
+            
+            transporter.sendMail(mailOptions, function(error, info){
+              if (error) {
+              //  console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
+           
+            
+                res.render('pages/index')
+            }, 9000);
         })
         .catch((err) => { 
-            res.send(err)    // If some error occurs 
+
+            res.render('pages/cart', {failedtitle:'Payment Failed, trying again in sometime'})
+  // If some error occurs 
         }); 
 
     
@@ -90,12 +93,7 @@ const stripe = require('stripe')(Secret_Key)
             res.send({error:'need to login to access this page'})
     }  
     
-     setTimeout(() => {
-
-
-        res.redirect('/')
-        
-    }, 9000);
+    
 
 
     }) 

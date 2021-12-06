@@ -2,6 +2,9 @@
 <section class="section cart-section">
     <div class="container">
         <h2 class="main-heading text-center pt-5 pb-5">My Cart</h2>
+        {{#if failedtitle}}
+        <h4 class="main-heading text-center pt-5 pb-5">{{failedtitle}}</h4>
+        {{/if}}
         {{#if cartdetails}}
         {{#each cartdetails}}
         <div class="card m-4 m-md-5">
