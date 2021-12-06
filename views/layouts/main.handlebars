@@ -206,7 +206,7 @@
 				if(responseMessage.success){
                     location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
                 }else {
-                                        location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
 
                 }
     //                    $('#counter').text(responseMessage.count)
@@ -254,11 +254,11 @@
 	        let element = event.currentTarget;
             let idd=element.id
             let quantity=$(`.${idd}`).val();
-            let price=$(`#${idd}`).text()
+            let price=$(`#${idd}${idd}${idd}`).text()
             
             price=price.replace('$','')
             price=price.replace(' ','')
-            
+           
             var requestConfig = {
 					method: 'POST',
 					url: '/cart',
@@ -282,7 +282,7 @@
 
         }
     </script>
-    <script>
+    {{!-- <script>
         function flip(event){
 	        var element = event.currentTarget;
             if (element.className === "cardbox") {
@@ -304,7 +304,7 @@
                 $('.mycard').height(backHeight);
             }
         };
-    </script>
+    </script> --}}
     <script>
         function increment(event){
             //alert(77)

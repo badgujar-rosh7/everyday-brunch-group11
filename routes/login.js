@@ -49,7 +49,8 @@ router.post('/', async (req, res) => {
                 );
             }
             const userId = await userdata.getUserId(validatedUsername);
-            req.session.user = { username: validatedUsername, userId: userId };
+            const userdetails=await userdata.getUserById(userId.toString())
+            req.session.user = { username: validatedUsername, userId: userId,email: userdetails.email};
             // req.session.user = user;
             return res.redirect('users/profile');
         }
