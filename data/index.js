@@ -4,6 +4,7 @@ const menuData = require('./menu');
 const reviewdata = require('./reviews');
 const userData = require('./users');
 const cartData = require('./cart');
+const favdata = require('./favorites');
 
 const errorData = require('./error');
 module.exports = {
@@ -14,4 +15,5 @@ module.exports = {
     menu: menuData,
     cart: cartData,
     error: errorData,
+    favorites: favdata,
 };

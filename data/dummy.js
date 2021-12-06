@@ -3,6 +3,7 @@ const signup = require('./signup');
 const login = require('./login');
 const userdata = require('./users');
 const reviewdata = require('./reviews');
+const favdata = require('./favorites');
 const main = async () => {
     ///////////////////////////////////////////////////////////////////////////////////
     //  Create User(signup)
@@ -45,25 +46,25 @@ const main = async () => {
     ///////////////////////////////////////////////////////////////////////////////////
     // Create New Review
 
-    try {
-        let current_datetime = new Date();
-        let formatted_date =
-            current_datetime.getMonth() +
-            1 +
-            '/' +
-            current_datetime.getDate() +
-            '/' +
-            current_datetime.getFullYear();
-        const createReview = await reviewdata.createReview(
-            '   61a54cdc255446d4845aa82e     ',
-            '    The food is healthy    ',
-            5,
-            formatted_date
-        );
-        console.log(createReview);
-    } catch (e) {
-        console.log(e);
-    }
+    // try {
+    //     let current_datetime = new Date();
+    //     let formatted_date =
+    //         current_datetime.getMonth() +
+    //         1 +
+    //         '/' +
+    //         current_datetime.getDate() +
+    //         '/' +
+    //         current_datetime.getFullYear();
+    //     const createReview = await reviewdata.createReview(
+    //         '   61a54cdc255446d4845aa82e     ',
+    //         '    The food is healthy    ',
+    //         5,
+    //         formatted_date
+    //     );
+    //     console.log(createReview);
+    // } catch (e) {
+    //     console.log(e);
+    // }
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Get review by userID
@@ -96,7 +97,36 @@ const main = async () => {
     //     console.log(e);
     // }
     ///////////////////////////////////////////////////////////////////////////////////
-
+    // //add to fav
+    // try {
+    //     const addFavorite = await favdata.addFavorite(
+    //         '61aafcba5e5aabcb3c0a0a17',
+    //         '61a86e32b4a16f125aa6f45c'
+    //     );
+    //     console.log(addFavorite);
+    // } catch (e) {
+    //     console.log(e);
+    // }
+    ///////////////////////////////////////////////////////////////////////////////////
+    //remove from fav
+    // try {
+    //     const deleteFavorite = await favdata.removeFavorite(
+    //         '61aafcba5e5aabcb3c0a0a17',
+    //         '61a86e32b4a16f125aa6f45a'
+    //     );
+    //     console.log(deleteFavorite);
+    // } catch (e) {
+    //     console.log(e);
+    // }
+    ///////////////////////////////////////////////////////////////////////////////////
+    try {
+        const getAllFavorite = await favdata.getAllfavorite(
+            '61ad9707aef7e5dfdf26bed5'
+        );
+        console.log(getAllFavorite);
+    } catch (e) {
+        console.log(e);
+    }
     const db = await connection();
     await db.serverConfig.close();
 };
