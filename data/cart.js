@@ -2,6 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 //const categorys = mongoCollections.category;
 const carts = mongoCollections.cart;
 const menus = mongoCollections.menu;
+const orders = mongoCollections.order;
 const uuid = require('uuid');
 let { ObjectId } = require('mongodb');
 let { getMenuItem } = require('./menu');
@@ -112,6 +113,51 @@ totcost=(parseFloat(quantity) * parseFloat(findresult.priceOfItem))
       }
 }
 
+async function UpdateOrderIdByUserId(userId,orderid) {
+const cartCollection = await carts();
+updateCart={
+  order_id:orderid
+}
+const updatedInfo = await cartCollection.updateMany(
+  {userId:userId,order_id:null },
+  { $set:updateCart }
+);
+
+if(updatedInfo.modifiedCount ===0){
+  return {updated:true}
+} else {
+    return {updated:false}
+}
+
+}
+
+async function createOrder(userId,orderid){
+  console.log("insert")
+  const orderCollection = await orders() ;
+  var today = new Date();
+
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+var dateTime = date+' '+time;
+  neworder={
+    order_id:orderid,
+    userId:userId,
+    date:dateTime
+  }
+  const insertInfo =  await orderCollection.insertOne(neworder);
+  if (insertInfo.insertedCount === 0) {
+  console.log("yes")
+  } else {
+    console.log("no")
+  }
+
+
+}
+
+
+
 
 
 
@@ -120,5 +166,7 @@ module.exports={
     getCounter,
     getCartUser,
     deleteCartItem,
-    updateCartItem
+    updateCartItem,
+    UpdateOrderIdByUserId,
+    createOrder
 }
