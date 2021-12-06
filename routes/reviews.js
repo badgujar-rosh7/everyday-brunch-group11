@@ -4,6 +4,7 @@ const data = require('../data');
 const path = require('path');
 const reviewData = data.reviews;
 const xss = require('xss');
+const errorcheck = data.error;
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -16,6 +17,10 @@ router.post('/newreview', async (req, res) => {
         const review = xss(req.body.review.trim());
         const rating = xss(req.body.rating.trim());
 
+        const validateduserId = errorcheck.validateUserId(userId);
+        const validatedreview = errorcheck.validateReview(review);
+        const validatedrating = errorcheck.validatedrating(rating);
+
         const current_datetime = new Date();
         const formatted_date =
             current_datetime.getMonth() +
@@ -25,9 +30,9 @@ router.post('/newreview', async (req, res) => {
             '/' +
             current_datetime.getFullYear();
         const createReview = await reviewData.createReview(
-            userId,
-            review,
-            rating,
+            validateduserId,
+            validatedreview,
+            validatedrating,
             formatted_date
         );
         res.json(createReview);
@@ -39,8 +44,9 @@ router.post('/newreview', async (req, res) => {
 });
 router.get('/:id', async (req, res) => {
     try {
+        const validateduserId = errorcheck.validateUserId(req.params.id);
         const reviewByUserId = await reviewData.getAllReviewsByUserId(
-            req.params.id
+            validateduserId
         );
         res.json(reviewByUserId);
     } catch (error) {
@@ -51,8 +57,9 @@ router.get('/:id', async (req, res) => {
 });
 router.get('/review/:id', async (req, res) => {
     try {
+        const validatedrevId = errorcheck.validateReviewId(req.params.id);
         const reviewByreviewId = await reviewData.getReviewByReviewId(
-            req.params.id
+            validatedrevId
         );
         res.json(reviewByreviewId);
     } catch (error) {
@@ -63,7 +70,8 @@ router.get('/review/:id', async (req, res) => {
 });
 router.get('/delete/:id', async (req, res) => {
     try {
-        let deleteReview = await reviewData.removeReviewById(req.params.id);
+        const validatedrevId = errorcheck.validateReviewId(req.params.id);
+        let deleteReview = await reviewData.removeReviewById(validatedrevId);
         res.json(deleteReview);
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({

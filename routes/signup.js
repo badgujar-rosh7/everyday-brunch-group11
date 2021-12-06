@@ -23,18 +23,27 @@ router.post('/signup', async (req, res) => {
     const username = xss(req.body.username.trim());
     const password = xss(req.body.password.trim());
 
-    dob = moment(dob).format('MM/DD/YYYY');
+    const validatedfirstname = errorcheck.validateFirstname(firstname);
+    const validatedlastname = errorcheck.validateLastname(lastname);
+    const validatedEmail = errorcheck.validateEmail(email);
+    const validatedDob = errorcheck.validateDob(dob);
+    const validatedcity = errorcheck.validateCity(city);
+    const validatedState = errorcheck.validateState(state);
+    const validatedUsername = errorcheck.validateUsername(username);
+    const validatedPassword = errorcheck.validatePassword(password);
+
+    validatedDob = moment(validatedDob).format('MM/DD/YYYY');
     console.log(dob);
     try {
         const createUser = await signupData.createUser(
-            firstname,
-            lastname,
-            email,
-            dob,
-            city,
-            state,
-            username,
-            password
+            validatedfirstname,
+            validatedlastname,
+            validatedEmail,
+            validatedDob,
+            validatedcity,
+            validatedState,
+            validatedUsername,
+            validatedPassword
         );
         res.redirect('/login');
     } catch (error) {
