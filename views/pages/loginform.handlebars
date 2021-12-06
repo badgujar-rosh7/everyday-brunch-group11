@@ -7,19 +7,31 @@
       <h1 class="main-heading text-center mt-5 mb-5">Log In</h1>
       <p class="subheading card-title text-center mb-5">Log into your Everyday Brunch account</p>
     </div>
-    <div class="form-floating mb-5">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating mb-5">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-    <div class="text-center pt-5 pb-5 d-grid gap-2 col-6 mx-auto"> 
-    <button type="submit" class="btn btn-primary btn-lg mb-3">Log In</button>
-    <span class="fs-5">Don't have an account? <a class="js-toggle-to-sign-up blue-text-link" href="/signup">Sign Up</a></span>
-    </div>
+    <form method="POST" action="/login" id="login-form">
+      <div class="form-group">
+        <div class="form-floating mb-5">
+          <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="username" required>
+          <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating mb-5">
+          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+          <label for="floatingPassword">Password</label>
+        </div>
+        <div class="text-center pt-5 pb-5 d-grid gap-2 col-6 mx-auto"> 
+          <button type="submit" class="btn btn-primary btn-lg mb-3">Log In</button>
+          <span class="fs-5">Don't have an account? <a class="js-toggle-to-sign-up blue-text-link" href="/signup">Sign Up</a></span>
+        </div>
+      </div>
+    </form>
   </div>
 </section>
+
+
+{{#if hasErrors}}
+    <p class="error">{{error}}</p>
+{{/if}}
+{{#if cart}}
+    <p class="error">{{cart}}</p> 
+{{/if}}
 
   {{!-- End of Login Form --}}
