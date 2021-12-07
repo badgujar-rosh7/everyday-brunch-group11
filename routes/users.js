@@ -6,6 +6,7 @@ const userData = data.user;
 const signupData = data.signup;
 const xss = require('xss');
 const moment = require('moment');
+const errorcheck = data.error;
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -27,6 +28,7 @@ router.get('/', async (req, res) => {
 router.get('/profile', async (req, res) => {
     let userId = xss(req.session.user.userId);
     try {
+        const validateduserId = errorcheck.validateUserId(req.params.id);
         let getUserById = await userData.getUserById(userId);
         res.json(getUserById);
     } catch (error) {
