@@ -24,14 +24,15 @@
       </div>
     </form>
   </div>
+  {{#if cart}}
+    <p class="error">**{{cart}}</p> 
+{{/if}}
 </section>
 
 
 {{#if hasErrors}}
     <p class="error">{{error}}</p>
 {{/if}}
-{{#if cart}}
-    <p class="error">{{cart}}</p> 
-{{/if}}
+
 
   {{!-- End of Login Form --}}

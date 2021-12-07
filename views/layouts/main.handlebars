@@ -86,6 +86,7 @@
                 </form>
                 <button class="btn btn-outline-primary login-btn me-2" type="submit"><a class="login-link" href="/login">login</a></button>
                 <button class="btn btn-outline-primary logout-btn" type="submit"><a class="logout-link" href="/users/logout">logout</a></button>
+                
                 <a class="btn position-relative user-profile-btn" href="" role="button">
                     <img src="./public/images/user_profile.png" class="rounded img-fluid user-img" />
                 </a>
@@ -252,6 +253,7 @@
         function AddToCart(event){
             event.preventDefault();
 	        let element = event.currentTarget;
+           
             let idd=element.id
             let quantity=$(`.${idd}`).val();
             let price=$(`#${idd}${idd}${idd}`).text()
@@ -272,8 +274,10 @@
 
 				$.ajax(requestConfig).then(function(responseMessage) {
 					if(responseMessage.success){
+
                         $('#counter').text(responseMessage.count)
                     } else {
+                        
                         window.location.replace("http://localhost:3000/login?error=1");
                         
                     }
