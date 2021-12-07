@@ -6,6 +6,7 @@ const orders = mongoCollections.order;
 const uuid = require('uuid');
 let { ObjectId } = require('mongodb');
 let { getMenuItem } = require('./menu');
+const menus = mongoCollections.menu;
 
 
 async function createCartItem(id,quantity,price,userID) {
@@ -144,7 +145,7 @@ var dateTime = date+' '+time;
   neworder={
     order_id:orderid,
     userId:userId,
-    date:dateTime
+    date:dateTime,
   }
   const insertInfo =  await orderCollection.insertOne(neworder);
   if (insertInfo.insertedCount === 0) {
@@ -156,6 +157,47 @@ var dateTime = date+' '+time;
 
 }
 
+async function getOrderByUserId(userId){
+  const orderCollection = await orders() ;
+
+  const findresult = await orderCollection.find( {userId:userId} ).toArray();
+
+  if(findresult.length>0){
+    return findresult
+  } else{
+    return false
+  }
+
+}
+
+async function getCartByOrderId(orderId){
+  const cartCollection = await carts();
+
+  const findresult = await cartCollection.find( {order_id:orderId} ).toArray();
+
+  if(findresult.length>0){
+    return findresult
+  } else{
+    return false
+  }
+
+}
+
+async function getItemDetailsById(itemid){
+  const MenuCollection = await menus();
+  let idd=ObjectId(itemid);
+
+  const findresult = await MenuCollection.findOne( {_id: idd});
+
+  if(findresult===null){
+    return false
+  } else{
+    return findresult;
+  }
+
+
+
+}
 
 
 
@@ -168,5 +210,8 @@ module.exports={
     deleteCartItem,
     updateCartItem,
     UpdateOrderIdByUserId,
-    createOrder
+    createOrder,
+    getOrderByUserId,
+    getCartByOrderId,
+    getItemDetailsById
 }
