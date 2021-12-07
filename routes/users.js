@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/profile', async (req, res) => {
-    let userId = req.session.user.userId;
+    let userId = xss(req.session.user.userId);
     try {
         let getUserById = await userData.getUserById(userId);
         res.render('pages/userprofile',{data:getUserById});
@@ -42,16 +42,12 @@ router.get('/signup', async (req, res) => {
     res.render('pages/signupform');
 });
 
-router.get('/logout', async (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/');
-    } else {
-        req.session.destroy();
-        res.json('Logged out');
-    }
-    // res.render('users/logged-out', {
-    //     username: user.username,
-    //     pageTitle: 'Logged out',
-    // });
-});
+// router.get('/logout', async (req, res) => {
+//     if (!req.session.user) {
+//         res.redirect('/');
+//     } else {
+//         req.session.destroy();
+//         res.render('pages/logout');
+//     }
+// });
 module.exports = router;
