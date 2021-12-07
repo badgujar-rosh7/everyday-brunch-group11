@@ -35,7 +35,7 @@ const constructorMethod = (app) => {
     app.use('/cartpage', cartDetailRoutes);
 
     /////////////////////////////////////////////////////Roshan
-    app.use('/', adminRoutes);
+    app.use('/admin', adminRoutes);
     app.use('/search', searchRoutes);
     app.use('/category', categoryRoutes);
     app.use('/cart', cartRoutes);

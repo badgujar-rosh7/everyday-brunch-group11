@@ -26,12 +26,14 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/profile', async (req, res) => {
-    let userId = xss(req.session.user.userId);
+    if (!req.session.user) {
+        res.redirect('/');
+    }
     try {
-        const validateduserId = errorcheck.validateUserId(req.params.id);
+        let userId = xss(req.session.user.userId);
+        const validateduserId = errorcheck.validateUserId(userId);
         let getUserById = await userData.getUserById(userId);
-        res.render('pages/userprofile',{data:getUserById});
-        //res.json(getUserById);
+        res.render('pages/userprofile', { data: getUserById });
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
             serverResponse: error.message || 'Internal server error.',
