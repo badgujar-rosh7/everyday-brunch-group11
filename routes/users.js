@@ -30,7 +30,8 @@ router.get('/profile', async (req, res) => {
     try {
         const validateduserId = errorcheck.validateUserId(req.params.id);
         let getUserById = await userData.getUserById(userId);
-        res.json(getUserById);
+        res.render('pages/userprofile',{data:getUserById});
+        //res.json(getUserById);
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
             serverResponse: error.message || 'Internal server error.',
