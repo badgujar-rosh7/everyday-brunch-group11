@@ -45,8 +45,10 @@ module.exports = {
     },
     async getAllReviewsByUserId(userId) {
         try {
+            if (!userId)
+                throwError(ErrorCode.NOT_FOUND, 'Error: Provide an userId');
+            const validateUserId = errorcheck.validateUserId(userId);
             const user = await userdata.getUserById(userId);
-
             if (!user)
                 throwError(
                     ErrorCode.NOT_FOUND,
@@ -68,31 +70,37 @@ module.exports = {
     },
 
     async getReviewByReviewId(reviewId) {
-        const userColl = await usercollection();
-        const reviewResult = await userColl.findOne(
-            {
-                'reviews.review_id': ObjectId(reviewId),
-            },
-            {
-                projection: {
-                    _id: 0,
-                    'reviews.$': 1,
+        try {
+            const validatedId = errorcheck.validateReviewId(reviewId);
+            const parsedObjectId = errorcheck.validateObjectId(validatedId);
+            const userColl = await usercollection();
+            const reviewResult = await userColl.findOne(
+                {
+                    'reviews.review_id': ObjectId(parsedObjectId),
                 },
-            }
-        );
-
-        if (!reviewResult) {
-            throwError(
-                ErrorCode.NOT_FOUND,
-                'Error: No review found with given id.'
+                {
+                    projection: {
+                        _id: 0,
+                        'reviews.$': 1,
+                    },
+                }
             );
+
+            if (!reviewResult) {
+                throwError(
+                    ErrorCode.NOT_FOUND,
+                    'Error: No review found with given id.'
+                );
+            }
+
+            const [review] = reviewResult.reviews;
+
+            review.review_id = review.review_id.toString();
+
+            return review;
+        } catch (error) {
+            throwCatchError(error);
         }
-
-        const [review] = reviewResult.reviews;
-
-        review.review_id = review.review_id.toString();
-
-        return review;
     },
     async removeReviewById(reviewId) {
         try {
