@@ -10,30 +10,34 @@
     <form method="POST" action="/login" id="login-form">
       <div class="form-group">
         <div class="form-floating mb-5">
-          <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="username" required>
-          <label for="floatingInput">Email address</label>
+          <input type="text" class="form-control" id="floatingInput" placeholder="username" name="username" >
+          <label for="floatingInput">Username</label>
+          <div id="no-email" hidden>*Please Enter your username <style> #no-email{color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}</style></div>
         </div>
         <div class="form-floating mb-5">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" >
           <label for="floatingPassword">Password</label>
+           <div id="no-password" hidden>*Please Enter your password <style> #no-password{color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}</style></div>
         </div>
+        {{#if hasErrors}}
+    <p class="error">{{error}}</p>
+      {{/if}}
         <div class="text-center pt-5 pb-5 d-grid gap-2 col-6 mx-auto"> 
             {{#if cart}}
           <span class="fs-5">***{{cart}}***</span>
-{{/if}}
+          {{/if}}
           <button type="submit" class="btn btn-primary btn-lg mb-3">Log In</button>
           <span class="fs-5">Don't have an account? <a class="js-toggle-to-sign-up blue-text-link" href="/signup">Sign Up</a></span>
         </div>
       </div>
+      
+
     </form>
   </div>
 
 </section>
 
 
-{{#if hasErrors}}
-    <p class="error">{{error}}</p>
-{{/if}}
 
 
   {{!-- End of Login Form --}}
