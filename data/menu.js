@@ -188,19 +188,27 @@ async function getMenuByCategory(category){
   return CategoryMenu;
 }
 
-async function deleteCategory(id){
+async function deleteCategory(id,category){
 
   let idd=ObjectId(id)
   const categoryCollection = await categorys();
- 
-const deleteresult= await categoryCollection.deleteOne({_id:idd})
+  const MenuCollection = await menus();
+  const findresult = await MenuCollection.find({itemCategory:category}).toArray();
 
-if (deleteresult.deletedCount === 0) {
-  return false
-}
-else{
-return true
-}
+  if(findresult.length===0){
+    const deleteresult= await categoryCollection.deleteOne({_id:idd})
+
+    if (deleteresult.deletedCount === 0) {
+      return {delete:false}
+    }
+    else{
+    return {delete:true}
+    }
+  } else {
+    return {delete:"cannot delete"}
+  }
+
+
 
 }
 
