@@ -17,16 +17,50 @@ app.use(
         secret: 'secretKey',
         saveUninitialized: true,
         resave: false,
-        cookie: { maxAge: 600000 },
+        // cookie: { maxAge: 600000 },
     })
 );
+app.use(async (req, res, next) => {
+    let Timestamp = new Date().toUTCString();
+    let Method = req.method;
+    let Router = req.originalUrl;
+    let authen = 'Authenticated User';
+    let nonauthen = 'Non-Authenticated User';
+    if (req.session.user) {
+        console.log(`${Timestamp} ${Method} ${Router} ${authen}`);
+    } else {
+        console.log(`${Timestamp} ${Method} ${Router} ${nonauthen}`);
+    }
+    next();
+});
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 app.use('/login', (req, res, next) => {
     if (req.session.user) {
-        return res.redirect('/users/profile');
+        return res.redirect('/');
+    } else {
+        next();
+    }
+});
+app.use('/signup', (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    } else {
+        next();
+    }
+});
+app.use('/logout', (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect('/');
+    } else {
+        next();
+    }
+});
+app.use('/users/profile', (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect('/');
     } else {
         next();
     }
