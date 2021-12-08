@@ -18,15 +18,16 @@
           <label for="floatingPassword">Password</label>
         </div>
         <div class="text-center pt-5 pb-5 d-grid gap-2 col-6 mx-auto"> 
+            {{#if cart}}
+          <span class="fs-5">***{{cart}}***</span>
+{{/if}}
           <button type="submit" class="btn btn-primary btn-lg mb-3">Log In</button>
           <span class="fs-5">Don't have an account? <a class="js-toggle-to-sign-up blue-text-link" href="/signup">Sign Up</a></span>
         </div>
       </div>
     </form>
   </div>
-  {{#if cart}}
-    <p class="error">**{{cart}}</p> 
-{{/if}}
+
 </section>
 
 
