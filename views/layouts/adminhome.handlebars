@@ -34,28 +34,48 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/menu">Menu</a>
+                        <a class="nav-link active" aria-current="page" href="/">Dashboard</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Category
+                            Menu Options
                         </a>
                         
                          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {{#each getCategory}}
-                            <li><a class="dropdown-item" href="/category?name={{category}}">{{category}}</a></li>
+                            <li><a class="dropdown-item" href="./newMenu">Add Menu</a></li>
                             <li><hr class="dropdown-divider"></li>
-                        {{/each}}
+                            <li><a class="dropdown-item" href="./ViewMenu">View Menu</a></li>
                         </ul> 
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Advertisements</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Category Options
+                        </a>
+                        
+                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="./addCategory">Add Category</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="./ViewCategory">View Category</a></li>
+                            
+                        </ul> 
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Reviews</a>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Advertisements Options
+                        </a>
+                        
+                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="">Add Advertise</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="">View Advertise</a></li>
+                            
+                        </ul> 
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            View Reviews
+                        </a>
                     </li>
                    
                     {{!-- <li class="nav-item dropdown">
@@ -73,23 +93,11 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li> --}}
                 </ul>
-                    <a class="btn btn-primary cart-btn me-4 position-relative" href="/cartpage" role="button">
-                        <img src="/public/images/cart.png" class="rounded img-fluid cart-img" />
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="counter">{{counterValue}}
-                            <span class="visually-hidden">unread messages</span>
-                        </span>
-                    </a>
-                     <form class="d-flex" method="post" action="/search">
-               
-                    <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light me-2" type="submit">Search</button>
-                </form>
+                   
+                   
                 <button class="btn btn-outline-primary login-btn me-2" type="submit"><a class="login-link" href="/login">login</a></button>
                 <button class="btn btn-outline-primary logout-btn" type="submit"><a class="logout-link" href="/logout">logout</a></button>
-                <a class="btn position-relative user-profile-btn" href="/users/profile" role="button">
-                    <img src="/public/images/user_profile.png" class="rounded img-fluid user-img" />
-                </a>
-                </div>
+           </div>
             </div>
         </nav>
     </section>
