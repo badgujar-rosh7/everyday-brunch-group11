@@ -252,6 +252,7 @@
         function AddToCart(event){
             event.preventDefault();
 	        let element = event.currentTarget;
+           
             let idd=element.id
             let quantity=$(`.${idd}`).val();
             let price=$(`#${idd}${idd}${idd}`).text()
@@ -272,8 +273,10 @@
 
 				$.ajax(requestConfig).then(function(responseMessage) {
 					if(responseMessage.success){
+
                         $('#counter').text(responseMessage.count)
                     } else {
+                        
                         window.location.replace("http://localhost:3000/login?error=1");
                         
                     }

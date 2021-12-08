@@ -78,7 +78,7 @@ var nodemailer = require('nodemailer');
             });
            
             
-                res.render('pages/index')
+                res.redirect('/')
             }, 9000);
         })
         .catch((err) => { 
