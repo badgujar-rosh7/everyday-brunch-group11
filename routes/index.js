@@ -68,7 +68,8 @@ const constructorMethod = (app) => {
             res.redirect('/');
         } else {
             req.session.destroy();
-            res.render('pages/logout');
+            // res.render('pages/logout');
+            res.redirect('/');
         }
     });
     /*******************************************************************************Tanay*/
@@ -84,6 +85,8 @@ const constructorMethod = (app) => {
     app.get('/admin', async (req, res) => {
         res.render('pages/admin');
     });
+
+    
 
     //
     app.use('*', (req, res) => {

@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     
     <!-- Start of Navigation -->
@@ -85,7 +85,7 @@
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light me-2" type="submit">Search</button>
                 </form>
-                <button class="btn btn-outline-primary login-btn me-2" type="submit"><a class="login-link" href="/login">login</a></button>
+                <button class="btn btn-outline-primary login-btn me-2" type="submit" name="lbtn"><a class="login-link" href="/login">login</a></button>
                 <button class="btn btn-outline-primary logout-btn" type="submit"><a class="logout-link" href="/logout">logout</a></button>
                 <a class="btn position-relative user-profile-btn" href="/users/profile" role="button">
                     <img src="/public/images/user_profile.png" class="rounded img-fluid user-img" />
@@ -99,7 +99,7 @@
 
     {{{body}}}
 
-    <section class="footer-section black-section-background text-white">
+    <section class="footer-section black-section-background text-white mt-auto">
         <div class="container">
                 <div class="d-flex justify-content-around pt-5 pb-5">
                     <div><a class="main-label" href="/menu">Menu</a></div>
@@ -337,8 +337,6 @@
             $(`.${idd}`).val(newvalue)
          }
     </script> 
-    
-   
 
 </body>
 </html>
