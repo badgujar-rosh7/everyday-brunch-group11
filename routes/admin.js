@@ -9,7 +9,7 @@ const fileUpload = require('express-fileupload');
 
 router.get('/ViewCategory', async (req, res) => {
     let getCategory = await userData.getAllCategory();
-    console.log(getCategory);
+    res.render('pages/viewCategory',{getCategory})
 });
 
 router.post('/AddCategory', async (req, res) => {
@@ -199,4 +199,24 @@ router.post('/ViewMenuCategory', async (req, res) => {
     console.log(getCategory);
     //can get Menu items as per Category
 });
+
+router.post('/deleteCategory', async (req, res) => {
+    let id = req.body['deleteid'];
+    let category=req.body['deletecategory']
+    let getCategory = await userData.deleteCategory(id,category);
+    if(getCategory.delete==true) {
+        res.redirect('./ViewCategory')
+    } else if(getCategory.delete==false){
+        res.render('pages/viewCategory',{deleteerror:"Failed to Delete due to some Internal Server Error"})
+    }else {
+        res.render('pages/viewCategory',{deleteerror:"Cannot Delete Category Directly as it Menu items attached to its Nanme. If you still want to delete the category first delete all Menu items related to this name."})
+    }
+
+
+
+    //can get Menu items as per Category
+});
+
+
+
 module.exports = router;
