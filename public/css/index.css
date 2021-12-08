@@ -110,7 +110,7 @@
     color: red;
 }
 
-.section.slider-section,.section.menu-section,.section.cart-section,.section.admin-section,.section.login-form{
+.section.slider-section,.section.menu-section,.section.cart-section,.section.admin-section,.section.login-form,.section.userprofile-section{
     margin-top: 70px;
 }
 
@@ -265,6 +265,20 @@
     line-height: 40px;
 }
 
+.user-banner{
+    height: 50vh;
+}
+
+.user-profile-pic{
+    transform: translate(9%, -40%);
+}
+
+.userprofile-section .user-icon .material-icons{
+    vertical-align: sub;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
 @media(min-width:1024px){
     .card-container {
         padding: 0%;
@@ -272,6 +286,10 @@
 }
 
 @media (min-width: 1024px) {
+    
+    .user-profile-pic{
+        transform: translate(20%, -50%);
+    }
     .main-label,
     .social-label,
     .navigation-section .nav-link {

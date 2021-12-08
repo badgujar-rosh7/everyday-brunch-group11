@@ -62,6 +62,15 @@ const constructorMethod = (app) => {
     app.use('/reviews', reviewsRoutes);
     app.use('/login', loginRoutes);
     app.use('/signup', signupRoutes);
+
+    app.use('/logout', async (req, res) => {
+        if (!req.session.user) {
+            res.redirect('/');
+        } else {
+            req.session.destroy();
+            res.render('pages/logout');
+        }
+    });
     /*******************************************************************************Tanay*/
 
     // app.get('/login', async (req, res) => {

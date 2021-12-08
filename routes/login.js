@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 
         if (req.session.user) {
             auth = 'Authorised User';
-            return res.redirect('/users/profile');
+            return res.redirect('/');
         } else {
             const checkuser = await loginData.checkUser(
                 validatedUsername,
@@ -49,10 +49,14 @@ router.post('/', async (req, res) => {
                 );
             }
             const userId = await userdata.getUserId(validatedUsername);
-            const userdetails=await userdata.getUserById(userId.toString())
-            req.session.user = { username: validatedUsername, userId: userId,email: userdetails.email};
+            const userdetails = await userdata.getUserById(userId.toString());
+            req.session.user = {
+                username: validatedUsername,
+                userId: userId,
+                email: userdetails.email,
+            };
             // req.session.user = user;
-            return res.redirect('users/profile');
+            return res.redirect('/');
         }
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).render(

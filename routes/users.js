@@ -25,10 +25,11 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/profile', async (req, res) => {
-    let userId = req.session.user.userId;
+    let userId = xss(req.session.user.userId);
     try {
         let getUserById = await userData.getUserById(userId);
-        res.json(getUserById);
+        res.render('pages/userprofile',{data:getUserById});
+        //res.json(getUserById);
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
             serverResponse: error.message || 'Internal server error.',
@@ -41,16 +42,12 @@ router.get('/signup', async (req, res) => {
     res.render('pages/signupform');
 });
 
-router.get('/logout', async (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/');
-    } else {
-        req.session.destroy();
-        res.json('Logged out');
-    }
-    // res.render('users/logged-out', {
-    //     username: user.username,
-    //     pageTitle: 'Logged out',
-    // });
-});
+// router.get('/logout', async (req, res) => {
+//     if (!req.session.user) {
+//         res.redirect('/');
+//     } else {
+//         req.session.destroy();
+//         res.render('pages/logout');
+//     }
+// });
 module.exports = router;
