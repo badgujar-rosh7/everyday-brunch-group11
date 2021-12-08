@@ -1,6 +1,7 @@
 .commentlist-section,
 .comment-section,
-.comment-success-section {
+.comment-success-section,
+.order-success-section {
     margin-top: 70px;
     padding-top: 10px;
 }
@@ -141,4 +142,20 @@
     font-weight: 600;
     color: deepskyblue;
     margin-bottom: 20px;
+}
+.order-success-text{
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    font-style: italic;
+}
+.order-operation{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.order-btn{
+    width: 100px;
+    margin: 10px 4px;
 }

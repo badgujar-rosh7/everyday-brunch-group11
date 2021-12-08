@@ -3,7 +3,7 @@
     <div class="container">
         <div class="comment-input">
             <label for="food-name">Food Name:</label>
-            <input type="text" placeholder="Please Enter Food Name...">
+            <input id="foodNameInput" type="text" placeholder="Please Enter Food Name...">
         </div>
         <div class="comment-input">
             <label for="rate">Rate:</label>
@@ -17,8 +17,8 @@
         </div>
         <div class="comment-input">
             <label for="comment-content">Content:</label>
-            <textarea placeholder="Please Enter Content..." name="" id="" cols="30" rows="4"></textarea>
+            <textarea id="contentInput" placeholder="Please Enter Content..." name="" id="" cols="30" rows="4"></textarea>
         </div>
-        <a href="/commentsuccess" class="comment-btn btn btn-primary cart-btn position-relative">Submit</a>
+        <a onclick="submitComment()" class="comment-btn btn btn-primary cart-btn position-relative">Submit</a>
     </div>
 </section>
