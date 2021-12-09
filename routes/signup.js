@@ -46,8 +46,10 @@ router.post('/', async (req, res) => {
             validatedUsername,
             validatedPassword
         );
-
-        res.send.json({ message: 'success' });
+        if (!createUser) {
+            throw [400, 'Could not create user'];
+        }
+        res.json({ message: 'success' });
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).json({
             error: error.message || 'Internal Server Error',

@@ -8,7 +8,7 @@ $(document).ready(function () {
         newStateInput = $('#state'),
         newUsernameInput = $('#username'),
         newPasswordInput = $('#floatingPassword');
-    var error = $('#errormessage');
+
     $('#signup-form').on('submit', function (e) {
         e.preventDefault();
         var newFirstName = newFirstNameInput.val();
@@ -19,6 +19,9 @@ $(document).ready(function () {
         var newState = newStateInput.val();
         var newUsername = newUsernameInput.val();
         var newPassword = newPasswordInput.val();
+        let errorshow = $('#errormessage');
+        errorshow.empty();
+        errorshow.hide();
 
         if (
             newFirstName &&
@@ -69,7 +72,11 @@ $(document).ready(function () {
                     },
                     error: function (xhr, status, error) {
                         var errorMessage = xhr.responseJSON.error;
-                        error.innerHTML = errorMessage;
+                        console.log(errorMessage);
+                        let p = `<p>${errorMessage}</p>`;
+                        errorshow.removeClass('d-none');
+                        errorshow.append(p);
+                        errorshow.show();
                     },
                 });
 
