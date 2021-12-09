@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 yellow-section-background">
 
     
     <!-- Start of Navigation -->
@@ -34,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Dashboard</a>
+                        <a class="nav-link active" aria-current="page" href="./dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -108,19 +108,19 @@
 
     {{{body}}}
 
-    <section class="footer-section black-section-background text-white">
+    <section class="footer-section black-section-background text-white mt-auto">
         <div class="container">
                 <div class="d-flex justify-content-around pt-5 pb-5">
                     <div><a class="main-label" href="/menu">Menu</a></div>
-                    <div><a class="main-label" href="/sides">Sides</a></div>
-                    <div><a class="main-label" href="/beverages">Beverages</a></div>
-                    <div><a class="main-label" href="/desserts">Desserts</a></div>
+                    <div><a class="main-label" href="/advertisements">Advertisements</a></div>
+                    <div><a class="main-label" href="/reviews">Reviews</a></div>
+                    {{!-- <div><a class="main-label" href="/desserts">Desserts</a></div> --}}
                 </div>
                 <div class="d-flex justify-content-around pb-5">
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-twitter"></i><span class="social-label">Twitter</span></div>
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-instagram"></i><span class="social-label">Instagram</span></div>
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-facebook"></i><span class="social-label">Facebook</span></div>
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-linkedin"></i><span class="social-label">LinkedIn</span></div>
+                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-twitter"></i><a href="https://twitter.com/" class="social-label">Twitter</a></div>
+                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-instagram"></i><a href="https://www.instagram.com/" class="social-label">Instagram</a></div>
+                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-facebook"></i><a href="https://www.facebook.com/" class="social-label">Facebook</a></div>
+                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-linkedin"></i><a href="https://www.linkedin.com/" class="social-label">LinkedIn</a></div>
                 </div>
             </div>
         </div>
@@ -355,6 +355,28 @@
         window .location.reload();
     }
     }
+</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        function counter(id, start, end, duration) {
+        let obj = document.getElementById(id),
+        current = start,
+        range = end - start,
+        increment = end > start ? 1 : -1,
+        step = Math.abs(Math.floor(duration / range)),
+        timer = setInterval(() => {
+            current += increment;
+            obj.textContent = current;
+            if (current == end) {
+            clearInterval(timer);
+            }
+        }, step);
+        }
+        counter("count1", 100, {{count1}}, 1000);
+        counter("count2", 100, {{count2}}, 1000);
+        counter("count3", 100, {{count3}}, 1000);
+        counter("count4", 100, {{count4}}, 1000);
+        });
 
     </script>
     
