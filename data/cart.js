@@ -186,11 +186,10 @@ orderId=parseInt(orderId)
 async function getItemDetailsById(itemid){
   const MenuCollection = await menus();
   let idd=ObjectId(itemid);
-console.log(idd)
   const findresult = await MenuCollection.findOne( {_id: idd});
 console.log(findresult)
   if(findresult===null){
-    return false
+    return null
   } else{
     return findresult;
   }
@@ -201,15 +200,86 @@ console.log(findresult)
 
 
 async function getAllOrders(){
-  //console.log(userID)
-  const cartCollection = await carts();
-  const findresult = await cartCollection.find({}).toArray();
-  //console.log(findresult.length)
-  return findresult
+  console.log(67)
+  const orderCollection = await orders();
+  const findresult = await orderCollection.find({}).sort({_id:-1}).toArray();
+  return findresult;
 }
 
-
-
+async function getBestSeller(){
+  const cartCollection = await carts();
+  const MenuCollection = await menus();
+  let count= await cartCollection.find({"order_id":{$ne:null}}).toArray()
+  let menu=await MenuCollection.find({}).toArray()
+  console.log(menu.length)
+  console.log(count.length)
+  let counter=0;
+  let obj={}
+  let itemarray=[]
+  let counterarrray=[]
+  if(count.length>0){
+    if(menu.length>0){
+      for(let i=0;i<menu.length;i++){
+        for(let j=0;j<count.length;j++){
+          if(menu[i]._id.toString()==count[j].itemid){
+            counter=counter +1;
+          }
+        }
+        obj.itemid=menu[i]._id.toString()
+        obj.counter=counter
+       counterarrray.push(counter)
+        itemarray.push(obj)
+        obj={}
+        counter=0;
+      }
+    }
+  }
+  console.log(itemarray)
+//   for(let i=0;i<itemarray.length;i++){
+//     for(let j=1;j<itemarray.length;j++){
+//     if(itemarray[i].counter
+//   }
+// }
+let maxitems=[]
+if(itemarray.length>=3){
+  console.log('more than 3')
+let max1 = Math.max( ...counterarrray );
+console.log(max1)
+counterarrray = counterarrray.filter(item => item !== max1)
+console.log(counterarrray)
+let max2 = Math.max( ...counterarrray );
+counterarrray = counterarrray.filter(item => item !== max2)
+let max3 = Math.max( ...counterarrray );
+let maxcounterarray=[max1,max2,max3]
+console.log(maxcounterarray)
+for(let i=0;i<itemarray.length;i++){
+  for(let j=0;j<maxcounterarray.length;j++){
+    if(itemarray[i].counter==maxcounterarray[j]){
+maxitems.push(itemarray[i].itemid)
+    }
+  }
+}
+}else {
+  console.log('less then 3')
+  for(let i=0;i<itemarray.length;i++){
+    maxitems.push(itemarray[i].itemid)
+  }
+}
+let finalresult=[]
+for(let i=0;i<maxitems.length;i++){
+  let findresult=await getItemDetailsById(maxitems[i])
+  if(findresult===null){
+    //error no item with id
+  } else{
+  finalresult.push(findresult)
+  }
+}
+if(finalresult.length>0){
+  return finalresult
+} else {
+  return {noresult:"internal server error"}
+}
+}
 
 module.exports={
     createCartItem,
@@ -222,5 +292,6 @@ module.exports={
     getOrderByUserId,
     getCartByOrderId,
     getItemDetailsById,
-    getAllOrders
+    getAllOrders,
+    getBestSeller
 }

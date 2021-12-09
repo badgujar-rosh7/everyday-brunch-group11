@@ -14,7 +14,7 @@ const { signup } = require('../data');
 const signupRoutes = require('./signup');
 const paymentRoutes = require('./payment');
 const payRoutes = require('./paymentpage');
-
+const bestRoutes = require('./bestseller');
 const userData = data.menu;
 const cartData = data.cart;
 
@@ -53,6 +53,7 @@ const constructorMethod = (app) => {
     app.use('/cartpage', cartDetailRoutes);
     app.use('/payment', paymentRoutes);
     app.use('/paymentpage', payRoutes);
+    app.use('/bestseller',bestRoutes);
     /////////////////////////////////////////////////Roshan
     app.use('/menu', menuRoutes);
 
@@ -85,7 +86,8 @@ const constructorMethod = (app) => {
         res.render('pages/admin');
     });
 
-    
+    app.use('/bestseller',bestRoutes);
+
 
     //
     app.use('*', (req, res) => {
