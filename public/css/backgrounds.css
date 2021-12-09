@@ -5,7 +5,7 @@
 .white-smoke-background {
     background-color: whitesmoke;
 }
-.error {
+#errormessage {
     color: red;
     font-family: 'Open Sans', sans-serif;
 }

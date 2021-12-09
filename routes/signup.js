@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
 });
 router.post('/', async (req, res) => {
     try {
-        const firstname = xss(req.body.firstname.trim());
-        const lastname = xss(req.body.lastname.trim());
+        const firstname = xss(req.body.firstName.trim());
+        const lastname = xss(req.body.lastName.trim());
         const email = xss(req.body.email.trim());
         let dob = xss(req.body.dateOfBirth.trim());
         const city = xss(req.body.city.trim());
@@ -46,16 +46,12 @@ router.post('/', async (req, res) => {
             validatedUsername,
             validatedPassword
         );
-        res.redirect('/login');
+
+        res.send.json({ message: 'success' });
     } catch (error) {
-        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).render(
-            'pages/signup',
-            {
-                title: 'Signup',
-                hasErrors: true,
-                error: error.message || 'Internal Server Error',
-            }
-        );
+        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).json({
+            error: error.message || 'Internal Server Error',
+        });
     }
 });
 module.exports = router;
