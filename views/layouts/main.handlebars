@@ -348,6 +348,14 @@
         $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
     });
     </script>
+    
+    <script>
+        $('.add-item-btn').on("click", function () {
+        $('.toast').toast({animation:true, autohide: true, delay:3000});
+            $('.toast').toast("show");
+        });
+    </script>
+    
 
 </body>
 </html>

@@ -48,74 +48,16 @@
 <section class="section category-btn-section pt-5 pb-5 yellow-section-background">
     <div class="container">
         <div class="row row-cols-1 row-cols-md-2 g-4">
+            {{#if data}}
+            {{#each data}}
             <div class="col category-card-box">
                 <div class="card category-card">
-                <img src="./public/images/menu_img.gif" class="card-img-top" alt="./public/images/trial-img.jpg">
-                {{!-- <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                </div> --}}
+                    <img src="../../public/images/Category/{{image}}" class="card-img-top" alt="{{image}}">
                 </div>
             </div>
-            <div class="col category-card-box">
-                <div class="card category-card">
-                <img src="./public/images/sides_img.gif" class="card-img-top" alt="./public/images/trial-img.jpg">
-                {{!-- <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                </div> --}}
-                </div>
-            </div>
-            <div class="col category-card-box">
-                <div class="card category-card">
-                <img src="./public/images/beverages_img.gif" class="card-img-top" alt="./public/images/trial-img.jpg">
-                {{!-- <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                </div> --}}
-                </div>
-            </div>
-            <div class="col category-card-box">
-                <div class="card category-card">
-                <img src="./public/images/desserts_img.gif" class="card-img-top" alt="./public/images/trial-img.jpg">
-                {{!-- <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                </div> --}}
-                </div>
-            </div>
+            {{/each}}
+            {{/if}}
         </div>
-        {{!-- <div class="category-card-box">
-            <div class="card category-card">
-                <img src="./public/images/trial-img.jpg" class="card-img" alt="...">
-                <div class="card-img-overlay">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card category-card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card category-card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card category-card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div> --}}
     </div>
 </section>
 
