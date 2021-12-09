@@ -3,8 +3,9 @@ const router = express.Router();
 const data = require('../data');
 const path = require('path');
 const userData = data.menu;
+const orderData=data.cart;
 const usersinfo = data.user;
-const orderinfo = data.cart;
+//const orderinfo = data.cart;
 const sharp = require('sharp');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
@@ -12,13 +13,15 @@ const fileUpload = require('express-fileupload');
 
 router.get('/dashboard', async (req, res) => {
     let allusers = await usersinfo.getAllUsers();
-    let allorders = await orderinfo.getAllOrders();
+    let allorders = await orderData.getAllOrders();
     let allcategory = await userData.getAllCategory();
     let allMenu = await userData.getAllMenu();
     let usercount = allusers.length;
     let orercount = allorders.length;
     let catcount = allcategory.length;
     let menucount = allMenu.length;
+    console.log('hi')
+    console.log(orercount)
     res.render('pages/admin_dashboard',{layout:'adminhome',count1:usercount,count2:orercount,count3:catcount,count4:menucount})
 });
 
@@ -347,6 +350,11 @@ console.log(advertiseId)
     }
     
 })
+
+router.get('/getorders', async (req, res) => {
+    let getAllOrders = await orderData.getAllOrders();
+    res.render('pages/viewOrders',{layout:'adminhome',json:getAllOrders})
+});
 
 
 module.exports = router;
