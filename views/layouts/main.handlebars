@@ -121,6 +121,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
     <script src="/public/js/login.js"></script>
+    
     <script type="text/javascript">
         $(document).ready(function(){
 
@@ -285,15 +286,16 @@
 
         }
     </script>
-    {{!-- <script>
+    <script>
         function flip(event){
 	        var element = event.currentTarget;
-            if (element.className === "cardbox") {
-                if(element.style.transform == "rotateY(180deg)") {
-                    element.style.transform = "rotateY(0deg)";
+            var main_card = element.parentElement.parentElement.parentElement;
+            if (main_card.className === "cardbox") {
+                if(main_card.style.transform == "rotateY(180deg)") {
+                    main_card.style.transform = "rotateY(0deg)";
                 }
                 else {
-                    element.style.transform = "rotateY(180deg)";
+                    main_card.style.transform = "rotateY(180deg)";
                 }
             }
                         
@@ -307,7 +309,7 @@
                 $('.mycard').height(backHeight);
             }
         };
-    </script> --}}
+    </script>
     <script>
         function increment(event){
             //alert(77)

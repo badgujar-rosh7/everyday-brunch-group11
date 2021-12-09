@@ -8,7 +8,7 @@
                 {{#each data}}
                 <div class="col-sm-12 col-md-6 col-lg-3">
                     <div class="card-container">
-                        <div class="cardbox" >
+                        <div class="cardbox">
                             
                             <div class="card mycard">
                                 <div>
@@ -29,17 +29,18 @@
                                         <p class="card-text mb-2">{{itemCalories}} Cal. </p>
                                     </div>
                                     <a href="{{_id}}" class="btn btn-primary cart-btn" id="{{_id}}" onclick="AddToCart(event)" >Add to Cart</a>
-                                    <a id="desc-btn" class="btn btn-outline-primary cart-btn">Description</a>
+                                    <a id="desc-btn" class="btn btn-outline-primary cart-btn" onclick="flip(event)">Description</a>
                                 </div>
                             </div>
                             <div class="card mycard1">
-                                <div class="card-img-top menu-img flipped-img" alt="...">
+                                <div class="card-img-top menu-img flipped-img text-center" alt="...">
                                     <div class="card-body">
-                                    <h5 class="card-title text-center">Description</h5>
-                                    <div class="d-flex justify-content-around">
-                                        <p class="card-text mb-2">{{itemDescription}}</p>
+                                        <h5 class="card-title text-center">Description</h5>
+                                        <div class="d-flex justify-content-around">
+                                            <p class="card-text mb-2">{{itemDescription}}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                    <a id="desc-btn" class="btn btn-outline-primary cart-btn" onclick="flip(event)">Back</a>
                                 </div>
                             </div>
                         </div>
