@@ -1,7 +1,11 @@
-.white-background{
+.white-background {
     background-color: white;
 }
 
-.white-smoke-background{
+.white-smoke-background {
     background-color: whitesmoke;
+}
+.error {
+    color: red;
+    font-family: 'Open Sans', sans-serif;
 }

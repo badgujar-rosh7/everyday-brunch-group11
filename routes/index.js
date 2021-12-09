@@ -74,9 +74,9 @@ const constructorMethod = (app) => {
     });
     /*******************************************************************************Tanay*/
 
-    // app.get('/login', async (req, res) => {
-    //     res.render('pages/loginform');
-    // });
+    app.get('/advertisements', async (req, res) => {
+        res.render('pages/advertisements');
+    });
 
     // app.get('/signup', async (req, res) => {
     //     res.render('pages/signupform');

@@ -32,9 +32,11 @@ router.get('/', async (req,res)=>{
     res.render('pages/payment',{key:Publishable_Key,amt:amount,descriptionofCartItems})
     
 }else{
-    res.send({error:'you cannot directly access this page'})
+    // res.send({error:'you cannot directly access this page'})
+    res.render('pages/loginform');
 }} else {
-        res.send({error:'login to access the page'})
+        // res.send({error:'login to access the page'})
+        res.render('pages/loginform');
     }
 })
 // router.get('/', (req,res)=>{

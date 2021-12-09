@@ -9,10 +9,11 @@ let { ObjectId } = require('mongodb');
 const { menu } = require('../config/mongoCollections');
 const saltrounds=16;
 
-async function addCategory(category) {
+async function addCategory(category,image) {
   const categoryCollection = await categorys();
 let newcategory = {
-category:category
+category:category,
+image:image
 };
 
 const findresult = await categoryCollection.findOne( {category: category.toLowerCase()} );
