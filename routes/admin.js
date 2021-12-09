@@ -3,9 +3,24 @@ const router = express.Router();
 const data = require('../data');
 const path = require('path');
 const userData = data.menu;
+const usersinfo = data.user;
+const orderinfo = data.cart;
 const sharp = require('sharp');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
+
+
+router.get('/dashboard', async (req, res) => {
+    let allusers = await usersinfo.getAllUsers();
+    let allorders = await orderinfo.getAllOrders();
+    let allcategory = await userData.getAllCategory();
+    let allMenu = await userData.getAllMenu();
+    let usercount = allusers.length;
+    let orercount = allorders.length;
+    let catcount = allcategory.length;
+    let menucount = allMenu.length;
+    res.render('pages/admin_dashboard',{layout:'adminhome',count1:usercount,count2:orercount,count3:catcount,count4:menucount})
+});
 
 router.get('/ViewCategory', async (req, res) => {
     let getCategory = await userData.getAllCategory();
