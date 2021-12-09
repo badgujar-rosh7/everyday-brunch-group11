@@ -24,7 +24,8 @@ router.get('/dashboard', async (req, res) => {
 
 router.get('/ViewCategory', async (req, res) => {
     let getCategory = await userData.getAllCategory();
-    res.render('pages/addcategory',{layout:'adminhome'})
+    res.render('pages/viewCategory',{layout:'adminhome',getCategory})
+
 });
 
 router.get('/home', async (req, res) => {
@@ -121,6 +122,7 @@ router.post('/addMenu', async (req, res) => {
             }
             sharp(`./public/images/Menu/${uploadFile.name}`)
                 .resize(200, 200)
+                .withMetadata()
                 .toBuffer(function (err, buffer) {
                     fs.writeFile(
                         `./public/images/Menu/${uploadFile.name}`,
@@ -223,6 +225,7 @@ router.post('/updateMenu', async (req, res) => {
                 }
                 sharp(`./public/img/Menu/${uploadFile.name}`)
                     .resize(200, 200)
+                    .withMetadata()
                     .toBuffer(function (err, buffer) {
                         fs.writeFile(
                             `./public/img/Menu/${uploadFile.name}`,
@@ -243,9 +246,11 @@ router.post('/updateMenu', async (req, res) => {
 router.post('/deleteitem', async (req, res) => {
     //menu item delete
     let id = req.body['deleteid'];
-
+    let image=req.body['image'];
+    let uploadpath='./public/images/Menu/'+image;
     let deleted = await userData.deleteMenuItem(id);
     if (deleted) {
+        fs.unlinkSync(uploadpath)
         res.redirect('./ViewMenu');
     }
 });
@@ -261,19 +266,87 @@ router.post('/deleteCategory', async (req, res) => {
     let id = req.body['deleteid'];
     let category=req.body['deletecategory']
     let getCategory = await userData.deleteCategory(id,category);
+    let categoryimage=req.body['image']
+    let uploadpath='./public/images/Category/'+categoryimage;
     if(getCategory.delete==true) {
         res.redirect('./ViewCategory')
+        fs.unlinkSync(uploadpath)
     } else if(getCategory.delete==false){
         res.render('pages/viewCategory',{layout:'adminhome',deleteerror:"Failed to Delete due to some Internal Server Error"})
     }else {
         res.render('pages/viewCategory',{layout:'adminhome',deleteerror:"Cannot Delete Category Directly as it Menu items attached to its Nanme. If you still want to delete the category first delete all Menu items related to this name."})
     }
-
-
-
     //can get Menu items as per Category
 });
 
+router.get('/viewAdvertise',async(req,res)=>{
+    //render the page showing all advertisements added
+    let advertisedata= await userData.getAdvertise()
+    let json=advertisedata
+    res.render('pages/viewAdvertise',{layout:'adminhome',json})
+});
+
+router.get('/addAdd',async(req,res)=>{
+    //render the page showing all advertisements added
+    res.render('pages/addAdvertise',{layout:'adminhome'})
+});
+
+router.post('/addadvertise', async(req,res)=>{
+
+    let uploadFile=req.files.menuFile;
+    let advertiseTitle=req.body['advertiseTitle']
+    //let itemTitle=req.body['itemTitle']
+    let advertiseDescription=req.body['advertiseDescription']
+    let advertiseImage=uploadFile.name 
+
+    let uploadpath='./public/images/Advertise/'+uploadFile.name;
+    let ext=path.extname(uploadFile.name)
+    console.log(ext)
+    const allowedExtension=/png|jpg|jpeg|JPG/
+    if(!allowedExtension.test(ext)) {
+        console.log("wrong ext")
+    }
+
+    let add= await userData.addAdvertise(advertiseTitle,advertiseDescription,advertiseImage)
+
+    if(add.advertiseInserted){
+        uploadFile.mv(uploadpath, function(err) {
+        if (err){
+          return res.status(500).send(err);
+          }
+          sharp(`./public/images/Advertise/${uploadFile.name}`).resize(200, 200).withMetadata().toBuffer(function(err, buffer) {
+            fs.writeFile(`./public/images/Advertise/${uploadFile.name}`, buffer, function(e) {
+        
+            });
+        });
+
+      }); 
+      res.redirect('./viewAdvertise')
+    } else {
+            //mongo error not inserted
+    }
+    
+})
+
+router.post('/deleteadvertise', async(req,res)=>{
+    
+    let advertiseId=req.body['deleteid']
+    let advertiseimage=req.body['image']
+console.log(advertiseId)
+    let uploadpath='./public/images/Advertise/'+advertiseimage;
+
+    let deleted= await userData.deleteAdvertise(advertiseId)
+
+    if(deleted.advertiseDeleted){
+        fs.unlinkSync(uploadpath)
+        res.redirect('./viewAdvertise')
+    } else {
+            //mongo error not inserted
+            res.render('pages/viewAdvertise',{layout:'adminhome',deleteerror:'Unable to insert into Database.Try again After sometime!! Internal Database error'})
+
+    }
+    
+})
 
 
 module.exports = router;
