@@ -369,3 +369,43 @@
     font-size: 16px;
 } */
 
+
+.privacy-main-text {
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.bold, .styled-table .table-totals-row {
+    font-weight: 600;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.privacy-table {
+    border-width: 1px;
+    border-style: solid;
+}
+
+table#pi-collected {
+    table-layout: fixed;
+    width: 100%;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.ba, input.ignore-invalid:focus, .input-styles:invalid:focus, .styled-table {
+    border-width: 1px;
+    border-style: solid;
+}
