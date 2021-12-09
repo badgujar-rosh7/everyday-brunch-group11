@@ -10,6 +10,7 @@ const fileUpload = require('express-fileupload');
 router.get('/ViewCategory', async (req, res) => {
     let getCategory = await userData.getAllCategory();
     res.render('pages/viewCategory',{layout:'adminhome',getCategory})
+
 });
 
 router.get('/home', async (req, res) => {
