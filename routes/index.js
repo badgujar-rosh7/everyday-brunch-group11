@@ -68,14 +68,15 @@ const constructorMethod = (app) => {
             res.redirect('/');
         } else {
             req.session.destroy();
-            res.render('pages/logout');
+            // res.render('pages/logout');
+            res.redirect('/');
         }
     });
     /*******************************************************************************Tanay*/
 
-    // app.get('/login', async (req, res) => {
-    //     res.render('pages/loginform');
-    // });
+    app.get('/advertisements', async (req, res) => {
+        res.render('pages/advertisements');
+    });
 
     // app.get('/signup', async (req, res) => {
     //     res.render('pages/signupform');
@@ -84,6 +85,8 @@ const constructorMethod = (app) => {
     app.get('/admin', async (req, res) => {
         res.render('pages/admin');
     });
+
+    
 
     //
     app.use('*', (req, res) => {
