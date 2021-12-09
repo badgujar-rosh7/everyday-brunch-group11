@@ -172,9 +172,9 @@ async function getOrderByUserId(userId){
 
 async function getCartByOrderId(orderId){
   const cartCollection = await carts();
-
+orderId=parseInt(orderId)
   const findresult = await cartCollection.find( {order_id:orderId} ).toArray();
-
+  //console.log(findresult)
   if(findresult.length>0){
     return findresult
   } else{
@@ -186,9 +186,9 @@ async function getCartByOrderId(orderId){
 async function getItemDetailsById(itemid){
   const MenuCollection = await menus();
   let idd=ObjectId(itemid);
-
+console.log(idd)
   const findresult = await MenuCollection.findOne( {_id: idd});
-
+console.log(findresult)
   if(findresult===null){
     return false
   } else{
