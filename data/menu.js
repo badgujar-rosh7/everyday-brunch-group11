@@ -222,17 +222,16 @@ async function deleteAdvertise(id){
 const deleteresult= await AdvertiseCollection.deleteOne({_id:idd})
 
 if (deleteresult.deletedCount === 0) {
-  return false
+  return {advertiseDeleted:false}
 }
 else{
-return true
+return {advertiseDeleted:true}
 }
 
 }
 
 async function getAdvertise(){
 
-  let idd=ObjectId(id)
   const AdvertiseCollection = await advertises();
  
 const getresult= await AdvertiseCollection.find({}).toArray()
