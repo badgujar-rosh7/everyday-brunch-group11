@@ -346,6 +346,17 @@
             $(`.${idd}`).val(newvalue)
          }
     </script> 
+    <script>
+   var windowLoc = $(location).attr('pathname'); //jquery format to get window.location.pathname
+    console.log(windowLoc)
+    if(windowLoc=='/admin/getorders') {
+          window.setInterval('refresh()', 15000); 	
+    function refresh() {
+        window .location.reload();
+    }
+    }
+
+    </script>
     
    
 
