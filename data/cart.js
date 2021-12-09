@@ -200,6 +200,14 @@ console.log(findresult)
 }
 
 
+async function getAllOrders(){
+  //console.log(userID)
+  const cartCollection = await carts();
+  const findresult = await cartCollection.find({}).toArray();
+  //console.log(findresult.length)
+  return findresult
+}
+
 
 
 
@@ -213,5 +221,6 @@ module.exports={
     createOrder,
     getOrderByUserId,
     getCartByOrderId,
-    getItemDetailsById
+    getItemDetailsById,
+    getAllOrders
 }
