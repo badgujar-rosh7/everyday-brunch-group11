@@ -21,7 +21,7 @@ const validateArgumentsCheckuser = (totalArguments) => {
 };
 /*****************************************************************************************/
 const validateArgumentsCreateUser = (totalArguments) => {
-    const TOTAL_MANDATORY_ARGUMENTS = 8;
+    const TOTAL_MANDATORY_ARGUMENTS = 9;
 
     if (totalArguments !== TOTAL_MANDATORY_ARGUMENTS) {
         throwError(
