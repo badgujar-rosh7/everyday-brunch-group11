@@ -1,0 +1,161 @@
+.commentlist-section,
+.comment-section,
+.comment-success-section,
+.order-success-section {
+    margin-top: 70px;
+    padding-top: 10px;
+}
+
+.comment-operate {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.comment-list {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.comment-item {
+    width: 100%;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ccc;
+}
+
+.user-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.user-detail {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 40px;
+    padding: 2px 0;
+}
+
+.comment-bottom {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.delete-btn {
+    background: red;
+    border-color: red;
+    color: #fff;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+.delete-btn:hover {
+    color: #fff;
+}
+
+.user-name {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.star-list {
+    display: flex;
+    align-items: center;
+}
+
+.star-list img {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+}
+
+.comment-date {
+    font-size: 13px;
+    color: #999;
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+}
+
+.food-name {
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+.comment-input {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-input label {
+    font-size: 14px;
+    width: 90px;
+    margin-right: 6px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.comment-input input,
+.comment-input textarea {
+    flex: 1;
+    padding: 4px 6px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.comment-btn {
+    width: 80%;
+    margin: 10px 10%;
+}
+
+.comment-success-img {
+    width: 70%;
+    height: auto;
+}
+
+.comment-success-section .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.comment-success-text {
+    font-size: 30px;
+    font-weight: 600;
+    color: deepskyblue;
+    margin-bottom: 20px;
+}
+.order-success-text{
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    font-style: italic;
+}
+.order-operation{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.order-btn{
+    width: 100px;
+    margin: 10px 4px;
+}
