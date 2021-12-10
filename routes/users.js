@@ -48,9 +48,9 @@ router.get('/profile', async (req, res) => {
             json.push(menudetails);
             }
         }
-        res.render('pages/userprofile', { data: getUserById,getOrder,json });
+        res.render('pages/userprofile', { data: getUserById,getOrder,json,id:req.session.user.userId });
     }else {
-        res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet' });
+        res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet',id:req.session.user.userId });
     }
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({

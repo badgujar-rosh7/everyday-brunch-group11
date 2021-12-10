@@ -20,16 +20,20 @@ const userData = data.menu;
 const cartData = data.cart;
 
 const constructorMethod = (app) => {
+
     app.get('/', async (req, res) => {
         let getCategory = await userData.getAllCategory();
-        req.session.userid = '78787878';
         // let counterValue;
         // if(req.session.userid){
         //     counterValue = await cartData.getCounter(req.session.userid);
         // } else{
         //     counterValue=0
         // }
-        res.render('pages/index', { getCategory,data:getCategory });
+        if(req.session.user){
+        res.render('pages/index', { getCategory,data:getCategory,id:req.session.user.userId });
+        }else{
+            res.render('pages/index', { getCategory,data:getCategory });
+        }
     });
 
     app.use('/cartpage', cartDetailRoutes);
