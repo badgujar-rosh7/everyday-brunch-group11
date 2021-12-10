@@ -7,8 +7,19 @@
             <div class="user-banner yellow-section-background"></div>
             <div class="row responsive-flexbox">
                 <div class="col-sm-2">
+                    {{#ifEquals data.gender "male"}}
                     <img src="/public/images/male-user.svg" class="user-profile-pic" alt="./public/images/trial-img.jpg" />
-                    <img src="/public/images/male-user.svg" class="user-profile-pic" alt="./public/images/trial-img.jpg" hidden/>
+                    {{/ifEquals}}
+                    {{#ifEquals data.gender "female"}}
+                    <img src="/public/images/female-user.svg" class="user-profile-pic" alt="./public/images/trial-img.jpg"/>
+                    {{/ifEquals}}
+                    {{#ifEquals data.gender "other"}}
+                    <img src="/public/images/other.svg" class="user-profile-pic" alt="./public/images/trial-img.jpg"/>
+                    {{/ifEquals}}
+                    {{#ifEquals data.gender "prefer not to say"}}
+                    <img src="/public/images/other.svg" class="user-profile-pic" alt="./public/images/trial-img.jpg"/>
+                    {{/ifEquals}}
+                    
                 </div>
                 <div class="col-sm-6 col-md-6 col-lg-5 offset-lg-1 mt-3">
                     <p class="user-icon fs-5 ms-lg-5 ps-lg-4"><span class="material-icons">person</span>{{data.firstName}} {{data.lastName}}</p>
