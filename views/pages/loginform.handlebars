@@ -9,15 +9,23 @@
     </div>
     <form method="POST" action="/login" id="login-form">
       <div class="form-group">
-        <div class="form-floating mb-5">
-          <input type="text" class="form-control" id="floatingInput" placeholder="username" name="username" >
-          <label for="floatingInput">Username</label>
-          <div id="no-email" hidden>*Please Enter your username <style> #no-email{color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}</style></div>
+        <div class="row">
+          <div class="col-sm-6 offset-md-3">
+            <div class="form-floating mb-5">
+              <input type="text" class="form-control" id="floatingInput" placeholder="username" name="username" >
+              <label for="floatingInput">Username</label>
+              <div id="no-email" hidden>*Please Enter your username <style> #no-email{color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}</style></div>
+            </div>
+          </div>
         </div>
-        <div class="form-floating mb-5">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" >
-          <label for="floatingPassword">Password</label>
-           <div id="no-password" hidden>*Please Enter your password <style> #no-password{color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}</style></div>
+        <div class="row">
+          <div class="col-sm-6 offset-md-3">
+            <div class="form-floating mb-5">
+              <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" >
+              <label for="floatingPassword">Password</label>
+              <div id="no-password" hidden>*Please Enter your password <style> #no-password{color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}</style></div>
+            </div>
+          </div>  
         </div>
         {{#if hasErrors}}
     <p class="error">{{error}}</p>
