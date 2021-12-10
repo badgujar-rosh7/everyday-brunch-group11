@@ -70,20 +70,33 @@ module.exports = {
             let FoodIdd=ObjectId(foodId)
             console.log(1)
             const userColl = await usercollection();
-            const PushInfo = await userColl.updateOne(
-                { _id: UserIdd },
-                { "$pull": {
-                  "favorite_item" : { "foodId":FoodIdd }
-                }});
-                console.log(99)
 
-            if (deleteFavorite.modifiedCount == 0) {
+            const finduser = await userdata.getUserById(validatedUserId);
+            if (!finduser) {
+
                 throwError(
-                    ErrorCode.INTERNAL_SERVER_ERROR,
-                    'Error: Could not delete from Favorites.'
+                    ErrorCode.NOT_FOUND,
+                    'Error: No User found with given Id.'
                 );
-            }else {
-            return { deletedfromFavorite: true };
+            } else {
+                const deleteFavorite = await userColl.updateOne(
+                    { _id: ObjectId(validatedUserId) },
+                    {
+                        $pull: {
+                            favorite_item: {
+                                foodId: ObjectId(validatedFoodId),
+                            },
+                        },
+                    }
+                );
+
+                if (deleteFavorite.modifiedCount !== 1) {
+                    throwError(
+                        ErrorCode.INTERNAL_SERVER_ERROR,
+                        'Error: Could not delete from Favorites.'
+                    );
+                } else return { deletedfromFavorite: true };
+
             }
         } catch (error) {
             console.log(34343434)
