@@ -4,10 +4,11 @@ $(document).ready(function () {
         newLastNameInput = $('#lastname'),
         newEmailInput = $('#email'),
         newDobInput = $('#dateOfBirth'),
-        newCityInput = $('#city'),
-        newStateInput = $('#state'),
-        newUsernameInput = $('#username'),
-        newPasswordInput = $('#floatingPassword');
+        newGenderInput = $('#gender');
+    (newCityInput = $('#city')),
+        (newStateInput = $('#state')),
+        (newUsernameInput = $('#username')),
+        (newPasswordInput = $('#floatingPassword'));
 
     $('#signup-form').on('submit', function (e) {
         e.preventDefault();
@@ -15,6 +16,7 @@ $(document).ready(function () {
         var newLastName = newLastNameInput.val();
         var newEmail = newEmailInput.val();
         var newDob = newDobInput.val();
+        var newGender = newGenderInput.val();
         var newCity = newCityInput.val();
         var newState = newStateInput.val();
         var newUsername = newUsernameInput.val();
@@ -27,6 +29,7 @@ $(document).ready(function () {
             newFirstName &&
             newLastName &&
             newDob &&
+            newGender &&
             newEmail &&
             newPassword &&
             newUsername &&
@@ -44,6 +47,7 @@ $(document).ready(function () {
                         lastName: newLastName,
                         email: newEmail,
                         dateOfBirth: newDob,
+                        gender: newGender,
                         city: newCity,
                         state: newState,
                         username: newUsername,

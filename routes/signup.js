@@ -20,6 +20,7 @@ router.post('/', async (req, res) => {
         const lastname = xss(req.body.lastName.trim());
         const email = xss(req.body.email.trim());
         let dob = xss(req.body.dateOfBirth.trim());
+        const gender = xss(req.body.gender.trim());
         const city = xss(req.body.city.trim());
         const state = xss(req.body.state.trim());
         const username = xss(req.body.username.trim());
@@ -41,6 +42,7 @@ router.post('/', async (req, res) => {
             validatedlastname,
             validatedEmail,
             validatedDob,
+            gender,
             validatedcity,
             validatedState,
             validatedUsername,
