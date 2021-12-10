@@ -73,7 +73,7 @@
 {{! favourites of user}}
 
 {{!-- Start of Menu Section --}}
-
+{{#if json}}
 <section class="section menu-section yellow-section-background">
     <div class="container">
         <div class="menu-card-box">
@@ -126,6 +126,19 @@
         </div>
     </div>
 </section>
+{{/if}}
+
+{{#if nofav}}
+<section class="section menu-section yellow-section-background">
+    <div class="container">
+        <div class="menu-card-box">
+            <div class="row">
+                <h1 class="main-heading text-center mt-5 mb-5">{{nofav}}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+{{/if}}
 
 <script>
     function DeleteFav(id){

@@ -58,22 +58,14 @@ module.exports = {
         }
     },
 
-
     async removeFavorite(userId, foodId) {
-        console.log(userId+'dssdds'+foodId)
         try {
-            console.log(1)
-            //const validatedUserId = errorcheck.validateUserId(userId);
-            console.log(1)
-            //const validatedFoodId = errorcheck.validateUserId(foodId);
-            let UserIdd=ObjectId(userId)
-            let FoodIdd=ObjectId(foodId)
-            console.log(1)
-            const userColl = await usercollection();
+            const validatedUserId = errorcheck.validateUserId(userId);
+            const validatedFoodId = errorcheck.validateUserId(foodId);
 
+            const userColl = await usercollection();
             const finduser = await userdata.getUserById(validatedUserId);
             if (!finduser) {
-
                 throwError(
                     ErrorCode.NOT_FOUND,
                     'Error: No User found with given Id.'
@@ -89,17 +81,14 @@ module.exports = {
                         },
                     }
                 );
-
                 if (deleteFavorite.modifiedCount !== 1) {
                     throwError(
                         ErrorCode.INTERNAL_SERVER_ERROR,
                         'Error: Could not delete from Favorites.'
                     );
                 } else return { deletedfromFavorite: true };
-
             }
         } catch (error) {
-            console.log(34343434)
             throwCatchError(error);
         }
     },
@@ -110,13 +99,11 @@ module.exports = {
             const finduser = await userdata.getUserById(validatedUserId);
             if (
                 finduser.hasOwnProperty('favorite_item') &&
-                finduser.favorite_item.length < 1
+                finduser.favorite_item.length == 0
             ) {
-                throwError(
-                    ErrorCode.NOT_FOUND,
-                    'Error: No favorites found for the given User.'
-                );
-            }
+                return []
+                
+            }else{
             let result = [];
             for (let eachFav of finduser.favorite_item) {
                 eachFav.foodId = eachFav.foodId.toString();
@@ -124,7 +111,8 @@ module.exports = {
                 result.push(eachFav);
             }
             return result;
-        } catch (error) {
+        }
+            } catch (error) {
             throwCatchError(error);
         }
     },

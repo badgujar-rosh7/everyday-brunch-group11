@@ -40,6 +40,7 @@ router.get('/profile', async (req, res) => {
        // let getMenuFav=await orderData.getItemDetailsById(id)
         let allfav=await favData.getAllfavorite(userId) 
         console.log(allfav)
+        if(allfav.length>0){
         let json=[];
         for(let i=0;i<allfav.length;i++){
             let menudetails=await menuData.getMenuItem(allfav[i].foodId.toString())
@@ -48,6 +49,9 @@ router.get('/profile', async (req, res) => {
             }
         }
         res.render('pages/userprofile', { data: getUserById,getOrder,json });
+    }else {
+        res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet' });
+    }
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
             serverResponse: error.message || 'Internal server error.',
