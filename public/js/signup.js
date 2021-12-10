@@ -64,6 +64,7 @@ $(document).ready(function () {
                         lastName: newLastName,
                         email: newEmail,
                         dateOfBirth: newDob,
+                        gender: newGender,
                         city: newCity,
                         state: newState,
                         username: newUsername,

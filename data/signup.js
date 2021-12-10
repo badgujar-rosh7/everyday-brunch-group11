@@ -47,7 +47,7 @@ async function createUser(
                 lastName: validatedlastname,
                 email: validatedEmail.toLowerCase(),
                 DateOfBirth: validatedDob,
-                Gender: gender,
+                gender: gender,
                 City: validatedcity,
                 State: validatedState,
                 username: validatedUsername.toLowerCase(),
