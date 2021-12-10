@@ -2,16 +2,22 @@
 <section class="section cart-section">
     <div class="container">
         <h2 class="main-heading text-center pt-5 pb-5">My Cart</h2>
+        
+        {{#if failedtitle}}
+        <h4 class="main-heading text-center pt-5 pb-5">{{failedtitle}}</h4>
+        {{/if}}
         {{#if cartdetails}}
         {{#each cartdetails}}
         <div class="card m-4 m-md-5">
+            
             <div class="row g-0">
+                
                 <div class="col-md-4">
                     <div class="left-cart-box">
                         <img src="./public/images/Menu/{{details.image}}" class="img-fluid rounded-start w-100" alt="...">
                         <form method="post" action="cartpage/delete">
                         <input type="text" value="{{_id}}" id="deleteid" name="delete" hidden>
-                        <button type="submit" class="btn btn-outline-danger remove-btn mb-3 mt-3">Remove</button>
+                        <button type="submit" class="btn btn-outline-danger remove-btn mb-3 mt-3" id="liveAlertBtn">Remove</button>
                         </form>
                     </div>
                 </div>
@@ -41,6 +47,7 @@
             </div>
         </div>
         {{/each}}
+        
                 <div class="card m-4 m-md-5">
             <div class="row g-0">
                 <div class="offset-md-4 col-md-4">
@@ -49,7 +56,9 @@
                             <p class="card-text cart-info"><strong>Tax :</strong>{{tax}}</p>
                             <p class="card-text cart-info pb-3"><strong>Total :</strong>{{total}}</p>
                             <div class="d-grid col-sm-12">
-                                <button class="btn btn-primary btn-continue" type="button"><strong>Continue</strong></button>
+                                
+                                <button class="btn btn-primary btn-continue" type="button" onclick="location.href='/payment';" value="Go to Payment Page" > <strong> Continue</strong></button>
+                                
                             </div>
                         </div>
                     </div>
@@ -66,5 +75,7 @@
         {{/if}}
 
     </div>    
+    
 </section>
+
 {{!-- End of Cart Section --}}

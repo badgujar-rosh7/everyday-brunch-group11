@@ -5,9 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/public/css/aboutus.css" />
-    <link rel="stylesheet" href="/public/css/packagelist.css" />
-    <link rel="stylesheet" href="/public/css/comment.css" />
     <link rel="stylesheet" href="/public/css/backgrounds.css" />
     <link rel="stylesheet" href="/public/css/index.css" />
     <link rel="stylesheet" href="/public/css/buttons.css" />
@@ -37,31 +34,50 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/menu">Menu</a>
+                        <a class="nav-link active" aria-current="page" href="./dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Category
+                            Menu Options
                         </a>
                         
                          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {{#each getCategory}}
-                            <li><a class="dropdown-item" href="/category?name={{category}}">{{category}}</a></li>
+                            <li><a class="dropdown-item" href="./newMenu">Add Menu</a></li>
                             <li><hr class="dropdown-divider"></li>
-                        {{/each}}
+                            <li><a class="dropdown-item" href="./ViewMenu">View Menu</a></li>
                         </ul> 
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/advertisements">Advertisements</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Category Options
+                        </a>
+                        
+                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="./addCategory">Add Category</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="./ViewCategory">View Category</a></li>
+                            
+                        </ul> 
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Reviews</a>
+                    
+                    <li class="nav-item dropdown">
+                    
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                            Advertisements Options
+                        </a>
+                        
+                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="./addAdd">Add Advertise</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="./viewAdvertise">View Advertise</a></li>
+                            
+                        </ul> 
                     </li>
-                   <li class="nav-item">
-                        <a class="nav-link" href="/bestseller">Best Seller</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            View Reviews
+                        </a>
                     </li>
                    
                     {{!-- <li class="nav-item dropdown">
@@ -79,23 +95,11 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li> --}}
                 </ul>
-                    <a class="btn btn-primary cart-btn me-4 position-relative" href="/cartpage" role="button">
-                        <img src="/public/images/cart.png" class="rounded img-fluid cart-img" />
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="counter">{{counterValue}}
-                            <span class="visually-hidden">unread messages</span>
-                        </span>
-                    </a>
-                     <form class="d-flex" method="post" action="/search">
-               
-                    <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light me-2" type="submit">Search</button>
-                </form>
-                <button class="btn btn-outline-primary login-btn me-2" type="submit" name="lbtn"><a class="login-link" href="/login">login</a></button>
+                   
+                   
+                <button class="btn btn-outline-primary login-btn me-2" type="submit"><a class="login-link" href="/login">login</a></button>
                 <button class="btn btn-outline-primary logout-btn" type="submit"><a class="logout-link" href="/logout">logout</a></button>
-                <a class="btn position-relative user-profile-btn" href="/users/profile" role="button">
-                    <img src="/public/images/user_profile.png" class="rounded img-fluid user-img" />
-                </a>
-                </div>
+           </div>
             </div>
         </nav>
     </section>
@@ -126,8 +130,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
-    <script src="/public/js/login.js"></script>
-    <script src="/public/js/signup.js"></script>
     
     <script type="text/javascript">
         $(document).ready(function(){
@@ -293,16 +295,15 @@
 
         }
     </script>
-    <script>
+    {{!-- <script>
         function flip(event){
 	        var element = event.currentTarget;
-            var main_card = element.parentElement.parentElement.parentElement;
-            if (main_card.className === "cardbox") {
-                if(main_card.style.transform == "rotateY(180deg)") {
-                    main_card.style.transform = "rotateY(0deg)";
+            if (element.className === "cardbox") {
+                if(element.style.transform == "rotateY(180deg)") {
+                    element.style.transform = "rotateY(0deg)";
                 }
                 else {
-                    main_card.style.transform = "rotateY(180deg)";
+                    element.style.transform = "rotateY(180deg)";
                 }
             }
                         
@@ -316,7 +317,7 @@
                 $('.mycard').height(backHeight);
             }
         };
-    </script>
+    </script> --}}
     <script>
         function increment(event){
             //alert(77)
@@ -346,19 +347,40 @@
          }
     </script> 
     <script>
-    $(document).scroll(function () {
-        var $nav = $(".brunch-nav");
-        $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
-    });
-    </script>
-    
+   var windowLoc = $(location).attr('pathname'); //jquery format to get window.location.pathname
+    console.log(windowLoc)
+    if(windowLoc=='/admin/getorders') {
+          window.setInterval('refresh()', 15000); 	
+    function refresh() {
+        window .location.reload();
+    }
+    }
+</script>
     <script>
-        $('.add-item-btn').on("click", function () {
-        $('.toast').toast({animation:true, autohide: true, delay:3000});
-            $('.toast').toast("show");
+        document.addEventListener("DOMContentLoaded", () => {
+        function counter(id, start, end, duration) {
+        let obj = document.getElementById(id),
+        current = start,
+        range = end - start,
+        increment = end > start ? 1 : -1,
+        step = Math.abs(Math.floor(duration / range)),
+        timer = setInterval(() => {
+            current += increment;
+            obj.textContent = current;
+            if (current == end) {
+            clearInterval(timer);
+            }
+        }, step);
+        }
+        counter("count1", 100, {{count1}}, 1000);
+        counter("count2", 100, {{count2}}, 1000);
+        counter("count3", 100, {{count3}}, 1000);
+        counter("count4", 100, {{count4}}, 1000);
         });
+
     </script>
     
+   
 
 </body>
 </html>

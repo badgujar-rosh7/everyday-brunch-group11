@@ -12,7 +12,9 @@ const data = require('../data');
 const { category } = require('../config/mongoCollections');
 const { signup } = require('../data');
 const signupRoutes = require('./signup');
-
+const paymentRoutes = require('./payment');
+const payRoutes = require('./paymentpage');
+const bestRoutes = require('./bestseller');
 const userData = data.menu;
 const cartData = data.cart;
 
@@ -26,14 +28,13 @@ const constructorMethod = (app) => {
         // } else{
         //     counterValue=0
         // }
-
-        res.render('pages/index', { getCategory });
+        res.render('pages/index', { getCategory,data:getCategory });
     });
 
     app.use('/cartpage', cartDetailRoutes);
 
     /////////////////////////////////////////////////////Roshan
-    app.use('/', adminRoutes);
+    app.use('/admin', adminRoutes);
     app.use('/search', searchRoutes);
     app.use('/category', categoryRoutes);
     app.use('/cart', cartRoutes);
@@ -50,6 +51,9 @@ const constructorMethod = (app) => {
     });
 
     app.use('/cartpage', cartDetailRoutes);
+    app.use('/payment', paymentRoutes);
+    app.use('/paymentpage', payRoutes);
+    app.use('/bestseller',bestRoutes);
     /////////////////////////////////////////////////Roshan
     app.use('/menu', menuRoutes);
 
@@ -58,19 +62,32 @@ const constructorMethod = (app) => {
     app.use('/reviews', reviewsRoutes);
     app.use('/login', loginRoutes);
     app.use('/signup', signupRoutes);
+
+    app.use('/logout', async (req, res) => {
+        if (!req.session.user) {
+            res.redirect('/');
+        } else {
+            req.session.destroy();
+            // res.render('pages/logout');
+            res.redirect('/');
+        }
+    });
     /*******************************************************************************Tanay*/
 
-    // app.get('/login', async (req, res) => {
-    //     res.render('pages/loginform');
-    // });
+    app.get('/advertisements', async (req, res) => {
+        res.render('pages/advertisements');
+    });
 
     // app.get('/signup', async (req, res) => {
     //     res.render('pages/signupform');
     // });
 
-    // app.get('/admin', async (req, res) => {
-    //     res.render('pages/admin');
-    // });
+    app.get('/admin', async (req, res) => {
+        res.render('pages/admin');
+    });
+
+    app.use('/bestseller',bestRoutes);
+
 
     //
     app.use('*', (req, res) => {

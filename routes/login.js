@@ -12,18 +12,16 @@ const ErrorCode = {
     INTERNAL_SERVER_ERROR: 500,
 };
 router.get('/', async (req, res) => {
-    let error = req.query.error;
+    let error=req.query.error;
     if (req.session.user) {
         res.redirect('/');
     } else {
-        if (parseInt(error) === parseInt(1)) {
-            res.render('pages/loginform', {
-                cart: 'You need to be Logged-in before adding items to cart',
-            });
+        if(parseInt(error)===parseInt(1)){
+            res.render('pages/loginform',{cart:'You need to be Logged-in before adding items to cart'});  
 
-            //res.render('pages/loginform');
-        } else {
-            res.render('pages/loginform');
+        //res.render('pages/loginform');
+        } else{
+            res.render('pages/loginform'); 
         }
     }
 });
@@ -36,7 +34,7 @@ router.post('/', async (req, res) => {
 
         if (req.session.user) {
             auth = 'Authorised User';
-            return res.redirect('/users/profile');
+            return res.redirect('/');
         } else {
             const checkuser = await loginData.checkUser(
                 validatedUsername,
@@ -49,9 +47,14 @@ router.post('/', async (req, res) => {
                 );
             }
             const userId = await userdata.getUserId(validatedUsername);
-            req.session.user = { username: validatedUsername, userId: userId };
+            const userdetails = await userdata.getUserById(userId.toString());
+            req.session.user = {
+                username: validatedUsername,
+                userId: userId,
+                email: userdetails.email,
+            };
             // req.session.user = user;
-            return res.redirect('users/profile');
+            return res.redirect('/');
         }
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).render(

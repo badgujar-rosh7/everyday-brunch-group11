@@ -35,6 +35,7 @@ module.exports = {
         }
     },
     async getUserById(userId) {
+        //console.log(userId)
         try {
             const isString = errorcheck.isArgumentString(userId);
             const isStringEmpty = errorcheck.isStringEmpty(userId);

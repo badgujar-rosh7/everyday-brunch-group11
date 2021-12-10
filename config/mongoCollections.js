@@ -20,4 +20,5 @@ module.exports = {
     menu: getCollectionFn('menu'),
     cart: getCollectionFn('cart'),
     advertise: getCollectionFn('advertise'),
+    order: getCollectionFn('order'),
 };

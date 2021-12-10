@@ -9,10 +9,11 @@ let { ObjectId } = require('mongodb');
 const { menu } = require('../config/mongoCollections');
 const saltrounds=16;
 
-async function addCategory(category) {
+async function addCategory(category,image) {
   const categoryCollection = await categorys();
 let newcategory = {
-category:category
+category:category,
+image:image
 };
 
 const findresult = await categoryCollection.findOne( {category: category.toLowerCase()} );
@@ -188,19 +189,27 @@ async function getMenuByCategory(category){
   return CategoryMenu;
 }
 
-async function deleteCategory(id){
+async function deleteCategory(id,category){
 
   let idd=ObjectId(id)
   const categoryCollection = await categorys();
- 
-const deleteresult= await categoryCollection.deleteOne({_id:idd})
+  const MenuCollection = await menus();
+  const findresult = await MenuCollection.find({itemCategory:category}).toArray();
 
-if (deleteresult.deletedCount === 0) {
-  return false
-}
-else{
-return true
-}
+  if(findresult.length===0){
+    const deleteresult= await categoryCollection.deleteOne({_id:idd})
+
+    if (deleteresult.deletedCount === 0) {
+      return {delete:false}
+    }
+    else{
+    return {delete:true}
+    }
+  } else {
+    return {delete:"cannot delete"}
+  }
+
+
 
 }
 
@@ -213,17 +222,16 @@ async function deleteAdvertise(id){
 const deleteresult= await AdvertiseCollection.deleteOne({_id:idd})
 
 if (deleteresult.deletedCount === 0) {
-  return false
+  return {advertiseDeleted:false}
 }
 else{
-return true
+return {advertiseDeleted:true}
 }
 
 }
 
 async function getAdvertise(){
 
-  let idd=ObjectId(id)
   const AdvertiseCollection = await advertises();
  
 const getresult= await AdvertiseCollection.find({}).toArray()

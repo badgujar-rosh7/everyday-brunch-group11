@@ -3,6 +3,8 @@ const router = express.Router();
 const data = require('../data');
 const signupData = data.signup;
 const xss = require('xss');
+const moment = require('moment');
+const errorcheck = data.error;
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -10,34 +12,47 @@ const ErrorCode = {
     INTERNAL_SERVER_ERROR: 500,
 };
 router.get('/', async (req, res) => {
-    res.render('pages/signupform');
+    res.render('pages/signup');
 });
 router.post('/', async (req, res) => {
     try {
-        const firstname = xss(req.body.firstname.trim());
-        const lastname = xss(req.body.lastname.trim());
+        const firstname = xss(req.body.firstName.trim());
+        const lastname = xss(req.body.lastName.trim());
         const email = xss(req.body.email.trim());
-        const dob = xss(req.body.dob.trim());
+        let dob = xss(req.body.dateOfBirth.trim());
         const city = xss(req.body.city.trim());
         const state = xss(req.body.state.trim());
-
         const username = xss(req.body.username.trim());
         const password = xss(req.body.password.trim());
 
+        dob = moment(dob).format('MM/DD/YYYY');
+
+        const validatedfirstname = errorcheck.validateFirstname(firstname);
+        const validatedlastname = errorcheck.validateLastname(lastname);
+        const validatedEmail = errorcheck.validateEmail(email);
+        const validatedDob = errorcheck.validateDob(dob);
+        const validatedcity = errorcheck.validateCity(city);
+        const validatedState = errorcheck.validateState(state);
+        const validatedUsername = errorcheck.validateUsername(username);
+        const validatedPassword = errorcheck.validatePassword(password);
+
         const createUser = await signupData.createUser(
-            firstname,
-            lastname,
-            email,
-            dob,
-            city,
-            state,
-            username,
-            password
+            validatedfirstname,
+            validatedlastname,
+            validatedEmail,
+            validatedDob,
+            validatedcity,
+            validatedState,
+            validatedUsername,
+            validatedPassword
         );
-        res.json(createUser);
+        if (!createUser) {
+            throw [400, 'Could not create user'];
+        }
+        res.json({ message: 'success' });
     } catch (error) {
-        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
-            serverResponse: error.message || 'Internal server error.',
+        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).json({
+            error: error.message || 'Internal Server Error',
         });
     }
 });

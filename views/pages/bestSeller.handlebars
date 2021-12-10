@@ -28,9 +28,8 @@
                                         <p class="card-text mb-2" id="{{_id}}{{_id}}{{_id}}">$ {{itemPrice}}</p>
                                         <p class="card-text mb-2">{{itemCalories}} Cal. </p>
                                     </div>
-                                    <a href="{{_id}}" class="btn btn-primary cart-btn add-item-btn" id="{{_id}}" onclick="AddToCart(event)">Add to Cart</a>
+                                    <a href="{{_id}}" class="btn btn-primary cart-btn" id="{{_id}}" onclick="AddToCart(event)" >Add to Cart</a>
                                     <a id="desc-btn" class="btn btn-outline-primary cart-btn" onclick="flip(event)">Description</a>
-                                    
                                 </div>
                             </div>
                             <div class="card mycard1">
@@ -48,21 +47,6 @@
                     </div>
                 </div>
                 {{/each}}
-
-                <div aria-live="polite" aria-atomic="true" style="position: relative;">
-                    <div style="position: absolute; bottom: 0; right: 0;">
-                        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                            <strong class="me-auto">Alert</strong>
-                            <small>Just Now</small>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                            </div>
-                            <div class="toast-body">
-                            Cart is updated successfully !!!
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 {{!-- <div class="col-sm-12 col-md-6 col-lg-3">
                     <div class="card-container">
                         <div class="cardbox" onclick="flip(event)">
