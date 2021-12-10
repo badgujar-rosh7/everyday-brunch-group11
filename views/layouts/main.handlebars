@@ -99,6 +99,9 @@
             </div>
         </nav>
     </section>
+    <div class="container" id="errordiv" hidden>
+        <p id="error"></p>
+    </div>
 
     <!-- End of Navigation -->
 
@@ -185,6 +188,53 @@
         });
     </script>
     <script>
+        function AddToFavourites(event) {
+            event.preventDefault();
+             let element = event.currentTarget;
+            let idd=element.id
+            let length=idd.length;
+            let newid=idd.slice(0,length-3)
+            alert(newid)
+
+                        var requestConfig = {
+					method: 'POST',
+					url: '/favourites',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						itemId:newid,
+					})
+				};
+
+				$.ajax(requestConfig).then(function(responseMessage) {
+                    console.log(responseMessage)
+					if(responseMessage.success==true){
+                        $('#errordiv').hide()
+
+                            alert('added to fav')
+                    } else if(responseMessage.success==522){
+                            $('#errordiv').hide()
+                            alert('Already present')
+                    }else if(responseMessage.success==523){
+                        $('#errordiv').hide()
+                        alert("system error cannot update")
+                    }else if(responseMessage.success==false){
+                        $('#errordiv').hide()
+                        window.location.replace("http://localhost:3000/login?error="+responseMessage.success);
+                    } else{
+                       // window.location.replace("http://localhost:3000/login?error="+responseMessage.success);
+
+                        $('#error').text(responseMessage.success)
+                        $('#errordiv').show()
+                    }
+					//                alert("Data Saved: " + msg);
+				});
+
+
+
+
+        }
+
+
         function reduce(event){
             
             let element = event.currentTarget;
