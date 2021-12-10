@@ -87,11 +87,8 @@ module.exports = {
                         },
                     }
                 );
-                if (deleteFavorite.modifiedCount !== 1) {
-                    throwError(
-                        ErrorCode.INTERNAL_SERVER_ERROR,
-                        'Error: Could not delete from Favorites.'
-                    );
+                if (deleteFavorite.modifiedCount == 0) {
+                    return {deletedfromFavorite:false}
                 } else return { deletedfromFavorite: true };
             }
         } catch (error) {
