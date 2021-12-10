@@ -5,9 +5,11 @@ const path = require('path');
 const userData = data.user;
 const signupData = data.signup;
 const orderData = data.cart;
+const menuData = data.menu;
 const xss = require('xss');
 const moment = require('moment');
 const errorcheck = data.error;
+const favData = data.favorites;
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -35,7 +37,21 @@ router.get('/profile', async (req, res) => {
         const validateduserId = errorcheck.validateUserId(userId);
         let getUserById = await userData.getUserById(userId);
         let getOrder= await orderData.getOrderByUserId(userId)
-        res.render('pages/userprofile', { data: getUserById,getOrder });
+       // let getMenuFav=await orderData.getItemDetailsById(id)
+        let allfav=await favData.getAllfavorite(userId) 
+        console.log(allfav)
+        if(allfav.length>0){
+        let json=[];
+        for(let i=0;i<allfav.length;i++){
+            let menudetails=await menuData.getMenuItem(allfav[i].foodId.toString())
+            if(menudetails !=null){
+            json.push(menudetails);
+            }
+        }
+        res.render('pages/userprofile', { data: getUserById,getOrder,json,id:req.session.user.userId });
+    }else {
+        res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet',id:req.session.user.userId });
+    }
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
             serverResponse: error.message || 'Internal server error.',

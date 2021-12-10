@@ -90,15 +90,23 @@
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light me-2" type="submit">Search</button>
                 </form>
+                    {{#unless id}}
                 <button class="btn btn-outline-primary login-btn me-2" type="submit" name="lbtn"><a class="login-link" href="/login">login</a></button>
+                                {{/unless}}
+                                {{#if id}}
                 <button class="btn btn-outline-primary logout-btn" type="submit"><a class="logout-link" href="/logout">logout</a></button>
+               
                 <a class="btn position-relative user-profile-btn" href="/users/profile" role="button">
                     <img src="/public/images/user_profile.png" class="rounded img-fluid user-img" />
                 </a>
+                {{/if}}
                 </div>
             </div>
         </nav>
     </section>
+    <div class="container" id="errordiv" hidden>
+        <p id="error"></p>
+    </div>
 
     <!-- End of Navigation -->
 
@@ -185,6 +193,53 @@
         });
     </script>
     <script>
+        function AddToFavourites(event) {
+            event.preventDefault();
+             let element = event.currentTarget;
+            let idd=element.id
+            let length=idd.length;
+            let newid=idd.slice(0,length-3)
+            alert(newid)
+
+                        var requestConfig = {
+					method: 'POST',
+					url: '/favourites',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						itemId:newid,
+					})
+				};
+
+				$.ajax(requestConfig).then(function(responseMessage) {
+                    console.log(responseMessage)
+					if(responseMessage.success==true){
+                        $('#errordiv').hide()
+
+                            alert('added to fav')
+                    } else if(responseMessage.success==522){
+                            $('#errordiv').hide()
+                            alert('Already present')
+                    }else if(responseMessage.success==523){
+                        $('#errordiv').hide()
+                        alert("system error cannot update")
+                    }else if(responseMessage.success==false){
+                        $('#errordiv').hide()
+                        window.location.replace("http://localhost:3000/login?error="+responseMessage.success);
+                    } else{
+                       // window.location.replace("http://localhost:3000/login?error="+responseMessage.success);
+
+                        $('#error').text(responseMessage.success)
+                        $('#errordiv').show()
+                    }
+					//                alert("Data Saved: " + msg);
+				});
+
+
+
+
+        }
+
+
         function reduce(event){
             
             let element = event.currentTarget;

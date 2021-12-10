@@ -29,7 +29,7 @@ router.get('/', async (req,res)=>{
         req.session.user.cartdescription=descriptionofCartItems;
         
 
-    res.render('pages/payment',{key:Publishable_Key,amt:amount,descriptionofCartItems})
+    res.render('pages/payment',{key:Publishable_Key,amt:amount,descriptionofCartItems,id:req.session.user.userId})
     
 }else{
     // res.send({error:'you cannot directly access this page'})
