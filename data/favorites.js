@@ -70,20 +70,29 @@ module.exports = {
             let FoodIdd=ObjectId(foodId)
             console.log(1)
             const userColl = await usercollection();
-            const PushInfo = await userColl.updateOne(
-                { _id: UserIdd },
-                { "$pull": {
-                  "favorite_item" : { "foodId":FoodIdd }
-                }});
-                console.log(99)
-
-            if (deleteFavorite.modifiedCount == 0) {
+            const finduser = await userdata.getUserById(validatedUserId);
+            if (!finduser) {
                 throwError(
-                    ErrorCode.INTERNAL_SERVER_ERROR,
-                    'Error: Could not delete from Favorites.'
+                    ErrorCode.NOT_FOUND,
+                    'Error: No User found with given Id.'
                 );
-            }else {
-            return { deletedfromFavorite: true };
+            } else {
+                const deleteFavorite = await userColl.updateOne(
+                    { _id: ObjectId(validatedUserId) },
+                    {
+                        $pull: {
+                            favorite_item: {
+                                foodId: ObjectId(validatedFoodId),
+                            },
+                        },
+                    }
+                );
+                if (deleteFavorite.modifiedCount !== 1) {
+                    throwError(
+                        ErrorCode.INTERNAL_SERVER_ERROR,
+                        'Error: Could not delete from Favorites.'
+                    );
+                } else return { deletedfromFavorite: true };
             }
         } catch (error) {
             console.log(34343434)
@@ -97,13 +106,11 @@ module.exports = {
             const finduser = await userdata.getUserById(validatedUserId);
             if (
                 finduser.hasOwnProperty('favorite_item') &&
-                finduser.favorite_item.length < 1
+                finduser.favorite_item.length == 0
             ) {
-                throwError(
-                    ErrorCode.NOT_FOUND,
-                    'Error: No favorites found for the given User.'
-                );
-            }
+                return []
+                
+            }else{
             let result = [];
             for (let eachFav of finduser.favorite_item) {
                 eachFav.foodId = eachFav.foodId.toString();
@@ -111,7 +118,8 @@ module.exports = {
                 result.push(eachFav);
             }
             return result;
-        } catch (error) {
+        }
+            } catch (error) {
             throwCatchError(error);
         }
     },

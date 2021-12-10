@@ -29,8 +29,7 @@ const constructorMethod = (app) => {
         // } else{
         //     counterValue=0
         // }
-
-        res.render('pages/index', { getCategory });
+        res.render('pages/index', { getCategory,data:getCategory });
     });
 
     app.use('/cartpage', cartDetailRoutes);

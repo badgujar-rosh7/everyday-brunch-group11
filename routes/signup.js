@@ -16,10 +16,11 @@ router.get('/', async (req, res) => {
 });
 router.post('/', async (req, res) => {
     try {
-        const firstname = xss(req.body.firstname.trim());
-        const lastname = xss(req.body.lastname.trim());
+        const firstname = xss(req.body.firstName.trim());
+        const lastname = xss(req.body.lastName.trim());
         const email = xss(req.body.email.trim());
         let dob = xss(req.body.dateOfBirth.trim());
+        const gender = xss(req.body.gender.trim());
         const city = xss(req.body.city.trim());
         const state = xss(req.body.state.trim());
         const username = xss(req.body.username.trim());
@@ -41,21 +42,20 @@ router.post('/', async (req, res) => {
             validatedlastname,
             validatedEmail,
             validatedDob,
+            gender,
             validatedcity,
             validatedState,
             validatedUsername,
             validatedPassword
         );
-        res.redirect('/login');
+        if (!createUser) {
+            throw [400, 'Could not create user'];
+        }
+        res.json({ message: 'success' });
     } catch (error) {
-        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).render(
-            'pages/signup',
-            {
-                title: 'Signup',
-                hasErrors: true,
-                error: error.message || 'Internal Server Error',
-            }
-        );
+        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).json({
+            error: error.message || 'Internal Server Error',
+        });
     }
 });
 module.exports = router;
