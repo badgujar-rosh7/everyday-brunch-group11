@@ -21,4 +21,5 @@ module.exports = {
     cart: getCollectionFn('cart'),
     advertise: getCollectionFn('advertise'),
     order: getCollectionFn('order'),
+    favourite: getCollectionFn('favourite')
 };

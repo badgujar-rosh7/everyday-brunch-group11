@@ -15,6 +15,7 @@ const signupRoutes = require('./signup');
 const paymentRoutes = require('./payment');
 const payRoutes = require('./paymentpage');
 const bestRoutes = require('./bestseller');
+const favRoutes = require('./favourite');
 const userData = data.menu;
 const cartData = data.cart;
 
@@ -55,8 +56,10 @@ const constructorMethod = (app) => {
     app.use('/payment', paymentRoutes);
     app.use('/paymentpage', payRoutes);
     app.use('/bestseller',bestRoutes);
-    /////////////////////////////////////////////////Roshan
     app.use('/menu', menuRoutes);
+    app.use('/favourites', favRoutes);
+    /////////////////////////////////////////////////Roshan
+    
 
     /*******************************************************************************Tanay*/
     app.use('/users', userRoutes);
