@@ -14,12 +14,19 @@
             <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
                 <div class="accordion-body">
                     
-                    <form class="row g-0" ref='uploadForm' id='MenuAddForm' method="post" action="./addMenu" encType="multipart/form-data">
+                    <form class="row g-0" ref='MenuAddForm' id='MenuAddForm' method="post" action="./addMenu" encType="multipart/form-data">
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" placeholder="Type Category Name" id="itemCategory" name="itemCategory">
-                            <label for="floatingInput">Category Name</label>
-                        </div>
+          <div class="col-sm-6">  
+            <div class="form-floating mb-5">
+              <select class="form-select" id="itemCategory" name="itemCategory" placeholder="Category" required>
+                    <option selected disabled>select one</option>
+                    {{#each data}}
+                <option value="{{category}}">{{category}}</option>
+                    {{/each}}
+              </select>
+              <label for="itemCategory">Category</label>
+            </div>
+          </div> 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="Type Food Title" id="itemTitle" name="itemTitle" >
                             <label for="floatingPassword">Food Title</label>
@@ -45,8 +52,11 @@
                             <input class="form-control" type="file" name="menuFile" id="formFile">
                         </div>
 
+                             <div class="col-12" id="errordiv" >
+                        
+                        </div>
                         <div class="col-12">
-                            <button type="submit" value="submit" class="btn btn-primary">Publish</button>
+                            <button type="button" onclick="AddMenuItem()" class="btn btn-primary">Publish</button>
                         </div>
                     </form>
                 </div>
@@ -77,3 +87,107 @@
         
         <input type="submit" value="submit"/>
 </form> --}}
+<script>
+    function AddMenuItem(){
+        
+let category=$('#itemCategory').val();
+let title=$('#itemTitle').val();
+let description=$('#itemDescription').val();
+let price=$('#itemPrice').val();
+let Calories=$('#itemCalories').val();
+let Keyword=$('#itemKeywords').val();
+let menuFile=$('#formFile').val();
+
+if(!category || !category.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Category<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!title || !title.trim()){
+ $('#errordiv').empty();
+    $('#errordiv').append('<p>Provide a Valid title<p>');
+        $('#errordiv').show();
+        return;
+}
+
+if(!description || !description.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Description for item<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!price || !price.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid price for item<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!Calories || !Calories.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Calories for item<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!Keyword || !Keyword.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid keyword for item<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!menuFile || !menuFile.trim()){
+    
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid image for item<p>');
+        $('#errordiv').show();
+      
+        return;
+}
+let reg = new RegExp('^[0-9]+(\.[0-9]+)*$')
+let regnew=new RegExp('/^[a-zA-Z]*$/');
+    let titlewithoutspaces = title.replace(/ /g, '');
+
+if(!(/^[a-zA-Z]+$/.test(titlewithoutspaces))){
+    alert(titlewithoutspaces)
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters<p>');
+        $('#errordiv').show();
+        return;
+}
+alert(title.replace(/\s+/g, ' ').trim())
+let descriptionwithoutspaces=description.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(descriptionwithoutspaces))){
+    alert(descriptionwithoutspaces)
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Description for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters<p>');
+        $('#errordiv').show();
+        return;
+}
+
+if(!reg.test(`${price}`)){
+    alert(price)
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!reg.test(`${Calories}`)){
+    alert(Calories)
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES<p>');
+        $('#errordiv').show();
+        return;
+}
+let keywordswithoutspaces=Keyword.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(keywordswithoutspaces))){
+    alert(Calories)
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Provide Valid keywords for item. NO SPECIAL CHARACTERS Allowed, USE SPACE TO DISTINGUISH BETWEEN TWO WORDS. For Eg: bestdish spicy tangy<p>');
+        $('#errordiv').show();
+        return;
+}
+
+
+document.getElementById("MenuAddForm").submit();
+    }
+</script>

@@ -14,7 +14,7 @@
             <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
                 <div class="accordion-body">
                     
-                    <form class="row g-0" ref='uploadForm' id='uploadForm' method="post" action="./addMenu" encType="multipart/form-data">
+                    <form class="row g-0" ref='MenuUpdateForm' id='MenuUpdateForm' method="post" action="./updateMenu" encType="multipart/form-data">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="Type Category Name" id="itemCategory" name="itemCategory" value="{{category}}">
                             <label for="floatingInput">Category Name</label>
@@ -39,16 +39,31 @@
                             <input type="text" class="form-control" placeholder="Type Food Keyword" id="itemKeywords" name="itemKeywords" value="{{keywords}}">
                             <label for="floatingPassword">Food Keyword</label>
                         </div>
+                                                <div class="form-floating mb-3"hidden>
+                            <input type="text" class="form-control" placeholder="Type Food Keyword" id="itemId" name="itemId" value="{{id}}" hidden>
+                          
+                        </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Default file input example</label>
                             <input class="form-control" type="file" name="menuFile" id="formFile">
                         </div>
+
+                                <input type="text" id="itemCategoryold" name="itemCategoryold" value="{{category}}" hidden>
+        <input type="text" id="itemTitleold" name="itemTitleold" value="{{title}}" hidden>
+        <input type="text" id="itemDescriptionold" name="itemDescriptionold" value="{{description}}" hidden>
+        <input type="text" id="itemPriceold" name="itemPriceold" value="{{price}}" hidden>
+        <input type="text" id="itemCaloriesold" name="itemCaloriesold" value="{{calories}}" hidden>
+        <input type="text" id="itemKeywordsold" name="itemKeywordsold" value="{{keywords}}" hidden>
+
                         <div class="mb-3">
                             <img src="../../public/images/Menu/{{image}}">
                         </div>
-
+                        
+                             <div class="col-12" id="errordiv" >
+                        
+                        </div>
                         <div class="col-12">
-                            <button type="submit" value="submit" class="btn btn-primary">Publish</button>
+                            <button type="button" onclick="UpdateMenu()" class="btn btn-primary">Publish</button>
                         </div>
                     </form>
                 </div>
@@ -56,6 +71,116 @@
         </div>
     </div>
 </section>
+
+<script>
+    function UpdateMenu(){
+     let category=$('#itemCategory').val();
+let title=$('#itemTitle').val();
+let description=$('#itemDescription').val();
+let price=$('#itemPrice').val();
+let Calories=$('#itemCalories').val();
+let Keyword=$('#itemKeywords').val();
+
+
+if(!category || !category.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Category<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!title || !title.trim()){
+ $('#errordiv').empty();
+    $('#errordiv').append('<p>Provide a Valid title<p>');
+        $('#errordiv').show();
+        return;
+}
+
+if(!description || !description.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Description for item<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!price || !price.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid price for item<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!Calories || !Calories.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Calories for item<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!Keyword || !Keyword.trim()){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid keyword for item<p>');
+        $('#errordiv').show();
+        return;
+}
+let reg = new RegExp('^[0-9]+(\.[0-9]+)*$')
+let regnew=new RegExp('/^[a-zA-Z]*$/');
+    let titlewithoutspaces = title.replace(/ /g, '');
+
+if(!(/^[a-zA-Z]+$/.test(titlewithoutspaces))){
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters<p>');
+        $('#errordiv').show();
+        return;
+}
+
+let descriptionwithoutspaces=description.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(descriptionwithoutspaces))){
+    
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Description for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters<p>');
+        $('#errordiv').show();
+        return;
+}
+
+if(!reg.test(`${price}`)){
+  
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES<p>');
+        $('#errordiv').show();
+        return;
+}
+if(!reg.test(`${Calories}`)){
+    
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES<p>');
+        $('#errordiv').show();
+        return;
+}
+
+let keywordswithoutspaces=Keyword.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(keywordswithoutspaces))){
+  
+    $('#errordiv').empty();
+    $('#errordiv').append('<p>Provide Valid keywords for item. NO SPECIAL CHARACTERS Allowed, USE SPACE TO DISTINGUISH BETWEEN TWO WORDS. For Eg: bestdish spicy tangy<p>');
+        $('#errordiv').show();
+        return;
+}
+
+     let categoryold=$('#itemCategoryold').val();
+let titleold=$('#itemTitleold').val();
+let descriptionold=$('#itemDescriptionold').val();
+let priceold=$('#itemPriceold').val();
+let Caloriesold=$('#itemCaloriesold').val();
+let Keywordold=$('#itemKeywordsold').val();
+
+if(category==categoryold && title==titleold && description==descriptionold && priceold==price && Calories==Caloriesold && keywordswithoutspaces==Keywordold) {
+     $('#errordiv').empty();
+    $('#errordiv').append('<p>All Values are Same. NO UPdate provided</p>');
+        $('#errordiv').show();
+        return;
+}
+
+
+document.getElementById("MenuUpdateForm").submit();
+    }
+</script>
 
 
 
