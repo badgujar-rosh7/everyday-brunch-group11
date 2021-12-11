@@ -5,6 +5,7 @@ const path = require('path');
 const userData = data.menu;
 const orderData=data.cart;
 const usersinfo = data.user;
+const xss = require('xss');
 //const orderinfo = data.cart;
 const sharp = require('sharp');
 const fs = require('fs');
@@ -21,8 +22,6 @@ router.get('/dashboard', async (req, res) => {
     let orercount = allorders.length;
     let catcount = allcategory.length;
     let menucount = allMenu.length;
-    console.log('hi')
-    console.log(orercount)
     res.render('pages/admin_dashboard',{layout:'adminhome',count1:usercount,count2:orercount,count3:catcount,count4:menucount})
 });
 
@@ -45,8 +44,8 @@ router.get('/addCategory', async (req, res) => {
 router.post('/AddCategory', async (req, res) => {
     //render the page
     try{
-    let uploadFile = req.files.menuFile;
-    let category = req.body['itemCategory'];
+    let uploadFile = xss(req.files.menuFile);
+    let category = xss(req.body['itemCategory']);
     let categoryImage = uploadFile.name;
     if(!category || !category.trim()){
         res.status(400).render('pages/addCategory',{layout:'adminhome',err:'Provide valid Category Name'});
@@ -459,9 +458,12 @@ router.post('/deleteitem', async (req, res) => {
 });
 
 router.post('/ViewMenuCategory', async (req, res) => {
+    try{
     let category = req.body['category'];
     let getCategory = await userData.getMenuByCategory(category);
-    console.log(getCategory);
+    }catch(error){
+        res.status(500).send({error:error})
+    }
     //can get Menu items as per Category
 });
 
@@ -496,18 +498,49 @@ router.get('/addAdd',async(req,res)=>{
 
 router.post('/addadvertise', async(req,res)=>{
 
+    try{
     let uploadFile=req.files.menuFile;
     let advertiseTitle=req.body['advertiseTitle']
-    //let itemTitle=req.body['itemTitle']
     let advertiseDescription=req.body['advertiseDescription']
     let advertiseImage=uploadFile.name 
 
+
+    if(!advertiseTitle || !advertiseTitle.trim()){
+       
+        res.status(400).render('pages/addAdvertise',{layout:'adminhome',err:'Provide valid Title Name'});
+           
+           return;
+   }
+   
+          if(!advertiseDescription || !advertiseDescription.trim()){
+            res.status(400).render('pages/addAdvertise',{layout:'adminhome',err:'Provide valid Description'});
+           return;
+   }
+   
+     let titlewithoutspaces = advertiseTitle.replace(/ /g, '');
+   
+   if(!(/^[a-zA-Z]+$/.test(titlewithoutspaces))){
+       res.status(400).render('pages/addAdvertise',{layout:'adminhome',err:'Provide a Valid Title for Advertise. NO SPECIAL CHARACTERS ONLY Alphabetic Characters'});
+             return;
+   }
+    let descrptionwithoutspaces = advertiseDescription.replace(/ /g, '');
+   
+   if(!(/^[a-zA-Z]+$/.test(descrptionwithoutspaces))){
+    res.status(400).render('pages/addAdvertise',{layout:'adminhome',err:'Provide a Valid Description for Advertise. NO SPECIAL CHARACTERS ONLY Alphabetic Characters'});
+           return;
+   }
+
+
+
+   advertiseTitle=advertiseTitle.replace(/\s+/g, ' ').trim()
+   advertiseDescription=advertiseDescription.replace(/\s+/g, ' ').trim()
+
+
     let uploadpath='./public/images/Advertise/'+uploadFile.name;
     let ext=path.extname(uploadFile.name)
-    console.log(ext)
-    const allowedExtension=/png|jpg|jpeg|JPG/
+    const allowedExtension=/png|jpg|jpeg|JPG|PNG/
     if(!allowedExtension.test(ext)) {
-        console.log("wrong ext")
+        throw "ONLY png|jpg|jpeg|JPG|PNG allowed"
     }
 
     let add= await userData.addAdvertise(advertiseTitle,advertiseDescription,advertiseImage)
@@ -528,6 +561,10 @@ router.post('/addadvertise', async(req,res)=>{
     } else {
             //mongo error not inserted
     }
+}catch(error){
+    res.status(400).render('pages/addAdvertise',{layout:'adminhome',err:error});
+
+}
     
 })
 
