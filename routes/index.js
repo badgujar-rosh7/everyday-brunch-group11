@@ -54,6 +54,7 @@ const constructorMethod = (app) => {
             res.json({ success: true, count: 0 });
         }
     });
+    
 
     app.use('/cartpage', cartDetailRoutes);
     app.use('/payment', paymentRoutes);

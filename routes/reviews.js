@@ -13,13 +13,13 @@ const ErrorCode = {
 };
 router.post('/newreview', async (req, res) => {
     try {
-        const userId = xss(req.body.userId.trim());
-        const review = xss(req.body.review.trim());
-        const rating = xss(req.body.rating.trim());
+        let userId = req.body['userId'];
+        let review = req.body['review'];
+        let rating = parseInt(req.body['rating']);
 
         const validateduserId = errorcheck.validateUserId(userId);
         const validatedreview = errorcheck.validateReview(review);
-        const validatedrating = errorcheck.validatedrating(rating);
+        const validatedrating = rating;
 
         const current_datetime = new Date();
         const formatted_date =
@@ -35,13 +35,14 @@ router.post('/newreview', async (req, res) => {
             validatedrating,
             formatted_date
         );
-        res.json(createReview);
+        res.redirect('/users/profile');
     } catch (error) {
         res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
             serverResponse: error.message || 'Internal server error.',
         });
     }
 });
+
 router.get('/:id', async (req, res) => {
     try {
         const validateduserId = errorcheck.validateUserId(req.params.id);
@@ -55,6 +56,7 @@ router.get('/:id', async (req, res) => {
         });
     }
 });
+
 router.get('/review/:id', async (req, res) => {
     try {
         const validatedrevId = errorcheck.validateReviewId(req.params.id);
@@ -68,6 +70,7 @@ router.get('/review/:id', async (req, res) => {
         });
     }
 });
+
 router.get('/delete/:id', async (req, res) => {
     try {
         const validatedrevId = errorcheck.validateReviewId(req.params.id);
