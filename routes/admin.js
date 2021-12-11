@@ -81,8 +81,11 @@ router.post('/AddCategory', async (req, res) => {
     console.log(add);
 });
 
-router.get('/newMenu', (req, res) => {
-    res.render('pages/newMenu',{layout:'adminhome'});
+router.get('/newMenu', async(req, res) => {
+    let getCategory = await userData.getAllCategory();
+    console.log(getCategory)
+    res.render('pages/newMenu',{layout:'adminhome',data:getCategory});
+
     //render view page
 });
 
@@ -142,10 +145,16 @@ router.post('/addMenu', async (req, res) => {
 router.get('/ViewMenu', async (req, res) => {
     //res.render('pages/ViewMenu')
     //render view page
+    let error=req.query['updatefailed']
+
     let AllMenu = await userData.getAllMenu();
     console.log(AllMenu.length);
     let json = AllMenu;
+    if(error=='AkjsSHD897'){
+        res.render('pages/ViewMenu', { layout:'adminhome',json,error:true });
+    }else {
     res.render('pages/ViewMenu', { layout:'adminhome',json });
+}
 });
 
 router.post('/update', async (req, res) => {
@@ -154,7 +163,7 @@ router.post('/update', async (req, res) => {
     id = req.body['updateid'];
     let userdetails = await userData.getMenuItem(id);
     console.log(userdetails)
-    res.render('pages/update', {layout:'adminhome',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage});
+    res.render('pages/update', {layout:'adminhome',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
 });
 
 router.post('/updateMenu', async (req, res) => {
@@ -174,7 +183,8 @@ router.post('/updateMenu', async (req, res) => {
     let itemCalories = req.body['itemCalories'];
     let itemKeywords = req.body['itemKeywords'];
     let itemId = req.body['itemId'];
-
+    console.log(itemId)
+    itemKeywords = itemKeywords.replace(/ /g, '');
     let itemCategoryold = req.body['itemCategoryold'];
     let itemTitleold = req.body['itemTitleold'];
     let itemDescriptionold = req.body['itemDescriptionold'];
@@ -193,13 +203,14 @@ router.post('/updateMenu', async (req, res) => {
             itemKeywords == itemKeywordsold
         ) {
             console.log('all is same');
-            res.redirect('./ViewMenu');
+            res.redirect('./ViewMenu?updatefailed=AkjsSHD897');
             return;
         }
     }
 
-    itemKeywords = itemKeywords.replace(/ /g, '');
-    itemKeywords = itemKeywords.replace(/,/g, '');
+
+
+    console.log(itemTitle)
 
     let update = await userData.updateMenu(
         itemCategory,
