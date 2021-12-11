@@ -15,10 +15,18 @@
                 <div class="accordion-body">
                     
                     <form class="row g-0" ref='MenuUpdateForm' id='MenuUpdateForm' method="post" action="./updateMenu" encType="multipart/form-data">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" placeholder="Type Category Name" id="itemCategory" name="itemCategory" value="{{category}}">
-                            <label for="floatingInput">Category Name</label>
-                        </div>
+                        <div class="col-sm-6">  
+            <div class="form-floating mb-5">
+              <select class="form-select" id="itemCategory" name="itemCategory" placeholder="Category" required>
+                    <option selected>{{category}}</option>
+                    {{#each data}}
+                <option value="{{category}}">{{category}}</option>
+                    {{/each}}
+              </select>
+              <label for="itemCategory">Category</label>
+            </div>
+          </div> 
+          
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="Type Food Title" id="itemTitle" name="itemTitle" value="{{title}}">
                             <label for="floatingPassword">Food Title</label>
@@ -80,6 +88,8 @@ let description=$('#itemDescription').val();
 let price=$('#itemPrice').val();
 let Calories=$('#itemCalories').val();
 let Keyword=$('#itemKeywords').val();
+let image=$('#formFile').val();
+alert(image)
 
 
 if(!category || !category.trim()){
@@ -169,12 +179,14 @@ let descriptionold=$('#itemDescriptionold').val();
 let priceold=$('#itemPriceold').val();
 let Caloriesold=$('#itemCaloriesold').val();
 let Keywordold=$('#itemKeywordsold').val();
-
+if(image){
+} else{
 if(category==categoryold && title==titleold && description==descriptionold && priceold==price && Calories==Caloriesold && keywordswithoutspaces==Keywordold) {
      $('#errordiv').empty();
     $('#errordiv').append('<p>All Values are Same. NO UPdate provided</p>');
         $('#errordiv').show();
         return;
+}
 }
 
 

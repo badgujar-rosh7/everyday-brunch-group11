@@ -44,16 +44,37 @@ router.get('/addCategory', async (req, res) => {
 
 router.post('/AddCategory', async (req, res) => {
     //render the page
+    try{
     let uploadFile = req.files.menuFile;
     let category = req.body['itemCategory'];
     let categoryImage = uploadFile.name;
+    if(!category || !category.trim()){
+        res.status(400).render('pages/addCategory',{layout:'adminhome',err:'Provide valid Category Name'});
+           return;
+   }
+   if(!categoryImage || !categoryImage.trim()){
+    if(!category || !category.trim()){
+        res.status(400).render('pages/addCategory',{layout:'adminhome',err:'Provide valid Image for category'});
+           return;
+   }
+           return;
+   }
+   
+     let categorywithoutspaces = category.replace(/ /g, '');
+   
+   if(!(/^[a-zA-Z]+$/.test(categorywithoutspaces))){
+    res.status(400).render('pages/addCategory',{layout:'adminhome',err:'Provide a Valid Category Name. NO SPECIAL CHARACTERS ONLY Alphabetic Characters'});
+           return;
+   }
+
+   category=category.replace(/\s+/g, ' ').trim()
 
     let uploadpath = './public/images/Category/' + uploadFile.name;
     let ext = path.extname(uploadFile.name);
     console.log(ext);
-    const allowedExtension = /png|jpg|jpeg|JPG/;
+    const allowedExtension = /png|jpg|jpeg|JPG|PNG/;
     if (!allowedExtension.test(ext)) {
-        console.log('wrong ext');
+        throw 'Only png|jpg|jpeg|JPG|PNG types allowed';
     }
 
    //insert
@@ -78,8 +99,9 @@ router.post('/AddCategory', async (req, res) => {
     } else {
     }
 
-
-    console.log(add);
+    }catch(error){
+        res.status(400).render('pages/addCategory',{layout:'adminhome',err:error});
+    }
 });
 
 router.get('/newMenu', async(req, res) => {
@@ -91,8 +113,11 @@ router.get('/newMenu', async(req, res) => {
 });
 
 router.post('/addMenu', async (req, res) => {
-    let uploadFile = req.files.menuFile;
+    console.log("hello")
+    let getCategory = await userData.getAllCategory();
+    try{
 
+    let uploadFile = req.files.menuFile;
     let itemCategory = req.body['itemCategory'];
     let itemTitle = req.body['itemTitle'];
     let itemDescription = req.body['itemDescription'];
@@ -101,15 +126,79 @@ router.post('/addMenu', async (req, res) => {
     let itemKeywords = req.body['itemKeywords'];
     let itemImage = uploadFile.name;
 
-    itemKeywords = itemKeywords.replace(/ /g, '');
-    itemKeywords = itemKeywords.replace(/,/g, '');
+
+    if(!itemCategory || !itemCategory.trim()){
+        res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Provide valid Category for Menu Item'});
+        return;
+   }
+   if(!itemTitle || !itemTitle.trim()){
+    res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Provide proper Title for Menu Item'});
+           return;
+   }
+   
+   if(!itemDescription || !itemDescription.trim()){
+    res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Provide valid Description for Menu Item'});
+           return;
+   }
+   if(!itemPrice || !itemPrice.trim()){
+    res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Provide valid Price for Menu Item'});
+           return;
+   }
+   if(!itemCalories || !itemCalories.trim()){
+    res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Provide valid Calories for Menu Item'});
+           return;
+   }
+   if(!itemKeywords || !itemKeywords.trim()){
+    res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Provide valid Keywords for Menu Item'});
+           return;
+   }
+   
+
+
+    let reg = new RegExp('^[0-9]+(\.[0-9]+)*$')
+    let titlewithoutspaces=itemTitle.replace(/ /g, '');
+   let checktitle= !(/^[a-zA-Z]+$/.test(titlewithoutspaces))
+       if(checktitle){
+           console.log("titleissue")
+        res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+            return;
+    }
+
+
+    let descriptionwithoutspaces=itemDescription.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(descriptionwithoutspaces))){
+    res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Select a Valid description for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+        return;
+}
+
+if(!reg.test(itemPrice)){
+    res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES'});
+        return;
+}
+if(!reg.test(itemCalories)){
+    res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES'});
+        return;
+}
+
+let keywordswithoutspaces=itemKeywords.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(keywordswithoutspaces))){
+    res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Provide Valid keywords for item. NO SPECIAL CHARACTERS Allowed, USE SPACE TO DISTINGUISH BETWEEN TWO WORDS. For Eg: bestdish spicy tangy'});  
+        return;
+}
+itemTitle=itemTitle.replace(/\s+/g, ' ').trim()
+itemDescription=itemDescription.replace(/\s+/g, ' ').trim()
+itemKeywords=itemKeywords.replace(/\s+/g, ' ').trim()
+itemKeywords = itemKeywords.replace(/ /g, '');
+itemCalories=parseFloat(itemCalories)
+itemPrice=parseFloat(itemPrice)
 
     let uploadpath = './public/images/Menu/' + uploadFile.name;
     let ext = path.extname(uploadFile.name);
-    console.log(ext);
-    const allowedExtension = /png|jpg|jpeg|JPG/;
+
+    const allowedExtension = /png|jpg|jpeg|JPG|PNG/;
     if (!allowedExtension.test(ext)) {
-        console.log('wrong ext');
+        res.status(400).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:'Only these extensions allowed png|jpg|jpeg|JPG|PNG'});  
+        return;
     }
 
     let add = await userData.addMenu(
@@ -141,6 +230,9 @@ router.post('/addMenu', async (req, res) => {
         });
     } else {
     }
+}catch(error){
+    res.status(500).render('pages/newMenu',{layout:'adminhome',data:getCategory,err:error});
+}
 });
 
 router.get('/ViewMenu', async (req, res) => {
@@ -163,11 +255,24 @@ router.post('/update', async (req, res) => {
     //render view page
     id = req.body['updateid'];
     let userdetails = await userData.getMenuItem(id);
+    let getCategory = await userData.getAllCategory();
+    let catArray=[]
+    for(let i=0;i<getCategory.length;i++){
+        console.log(getCategory[i])
+        console.log(userdetails.itemCategory)
+        if(getCategory[i].category==userdetails.itemCategory){
+            console.log('same')
+        }else{
+            console.log('nosame')
+            catArray.push(getCategory[i])
+        }
+    }
     console.log(userdetails)
-    res.render('pages/update', {layout:'adminhome',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+    res.render('pages/update', {layout:'adminhome',data:catArray,category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
 });
 
 router.post('/updateMenu', async (req, res) => {
+    let catArray=[]
     let uploadFile;
     let itemImage;
     try {
@@ -177,21 +282,101 @@ router.post('/updateMenu', async (req, res) => {
         uploadFile = null;
         itemImage = null;
     }
+    let itemId = req.body['itemId'];
+    try{
+        
     let itemCategory = req.body['itemCategory'];
     let itemTitle = req.body['itemTitle'];
     let itemDescription = req.body['itemDescription'];
     let itemPrice = req.body['itemPrice'];
     let itemCalories = req.body['itemCalories'];
     let itemKeywords = req.body['itemKeywords'];
-    let itemId = req.body['itemId'];
+    
     console.log(itemId)
-    itemKeywords = itemKeywords.replace(/ /g, '');
+   // let userdetails = await userData.getMenuItem(itemId);
+   
     let itemCategoryold = req.body['itemCategoryold'];
     let itemTitleold = req.body['itemTitleold'];
     let itemDescriptionold = req.body['itemDescriptionold'];
     let itemPriceold = req.body['itemPriceold'];
     let itemCaloriesold = req.body['itemCaloriesold'];
     let itemKeywordsold = req.body['itemKeywordsold'];
+    let getCategory = await userData.getAllCategory();
+    let userdetails = await userData.getMenuItem(itemId);
+    for(let i=0;i<getCategory.length;i++){
+        if(getCategory[i].category==itemCategoryold){
+       
+        }else{
+           
+            catArray.push(getCategory[i])
+        }
+    }
+
+    if(!itemCategory || !itemCategory.trim()){
+        res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Provide valid Category for Menu Item',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+        return;
+   }
+   if(!itemTitle || !itemTitle.trim()){
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Provide proper Title for Menu Item',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+           return;
+   }
+   
+   if(!itemDescription || !itemDescription.trim()){
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Provide valid Description for Menu Item',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+           return;
+   }
+   if(!itemPrice || !itemPrice.trim()){
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Provide valid Price for Menu Item',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+           return;
+   }
+   if(!itemCalories || !itemCalories.trim()){
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Provide valid Calories for Menu Item',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+           return;
+   }
+   if(!itemKeywords || !itemKeywords.trim()){
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Provide valid Keywords for Menu Item',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+           return;
+   }
+   
+
+
+    let reg = new RegExp('^[0-9]+(\.[0-9]+)*$')
+    let titlewithoutspaces = itemTitle.replace(/ /g, '');
+
+    if(!(/^[a-zA-Z]+$/.test(titlewithoutspaces))){
+        res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+            return;
+    }
+
+
+    let descriptionwithoutspaces=itemDescription.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(descriptionwithoutspaces))){
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+        return;
+}
+
+if(!reg.test(itemPrice)){
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+        return;
+}
+if(!reg.test(`${itemCalories}`)){
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
+        return;
+}
+
+let keywordswithoutspaces=itemKeywords.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(keywordswithoutspaces))){
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'Provide Valid keywords for item. NO SPECIAL CHARACTERS Allowed, USE SPACE TO DISTINGUISH BETWEEN TWO WORDS. For Eg: bestdish spicy tangy',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});  
+        return;
+}
+itemTitle=itemTitle.replace(/\s+/g, ' ').trim()
+itemDescription=itemDescription.replace(/\s+/g, ' ').trim()
+itemKeywords=itemKeywords.replace(/\s+/g, ' ').trim()
+itemKeywords = itemKeywords.replace(/ /g, '');
+itemCalories=parseFloat(itemCalories)
+itemPrice=parseFloat(itemPrice)
+
+
 
     if (uploadFile) {
     } else {
@@ -203,15 +388,13 @@ router.post('/updateMenu', async (req, res) => {
             itemCalories == itemCaloriesold &&
             itemKeywords == itemKeywordsold
         ) {
-            console.log('all is same');
-            res.redirect('./ViewMenu?updatefailed=AkjsSHD897');
+
+            res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:'All Values are same as previous nothing to update',category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
             return;
         }
     }
 
 
-
-    console.log(itemTitle)
 
     let update = await userData.updateMenu(
         itemCategory,
@@ -226,24 +409,24 @@ router.post('/updateMenu', async (req, res) => {
     console.log(update);
     if (update.menuupdated) {
         if (uploadFile) {
-            let uploadpath = './public/img/Menu/' + uploadFile.name;
+            let uploadpath = './public/images/Menu/' + uploadFile.name;
             let ext = path.extname(uploadFile.name);
             console.log(ext);
-            const allowedExtension = /png|jpg|jpeg|JPG/;
+            const allowedExtension = /png|jpg|jpeg|JPG|PNG/;
             if (!allowedExtension.test(ext)) {
-                console.log('wrong ext');
+                throw 'Only png|jpg|jpeg|JPG|PNG these extensions allowed'
                 //throw error
             }
             uploadFile.mv(uploadpath, function (err) {
                 if (err) {
                     return res.status(500).send(err);
                 }
-                sharp(`./public/img/Menu/${uploadFile.name}`)
+                sharp(`./public/images/Menu/${uploadFile.name}`)
                     .resize(200, 200)
                     .withMetadata()
                     .toBuffer(function (err, buffer) {
                         fs.writeFile(
-                            `./public/img/Menu/${uploadFile.name}`,
+                            `./public/images/Menu/${uploadFile.name}`,
                             buffer,
                             function (e) {}
                         );
@@ -256,6 +439,11 @@ router.post('/updateMenu', async (req, res) => {
     } else {
         res.redirect('./ViewMenu');
     }
+} catch(error){
+    console.log(error)
+    let userdetails = await userData.getMenuItem(itemId);
+    res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:error,category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:itemId});
+}
 });
 
 router.post('/deleteitem', async (req, res) => {
