@@ -135,7 +135,9 @@
                                     </div>
                                     <a href="{{_id}}" class="btn btn-primary cart-btn" id="{{_id}}" onclick="AddToCart(event)" >Add to Cart</a>
                                     <a id="desc-btn" class="btn btn-outline-primary cart-btn" onclick="flip(event)">Description</a>
-                                    <button class="btn btn-primary btn-sm" type="type" onclick="DeleteFav('{{_id}}')"><span class="material-icons">delete</span></button>
+                                    <div class="d-flex justify-content-around">
+                                    <button class="btn btn-danger btn-sm mt-3" type="type" onclick="DeleteFav('{{_id}}')"><span class="material-icons">delete</span></button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card mycard1">

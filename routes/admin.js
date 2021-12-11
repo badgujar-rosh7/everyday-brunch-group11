@@ -9,6 +9,7 @@ const usersinfo = data.user;
 const sharp = require('sharp');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
+const reviewData = data.reviews;
 
 
 router.get('/dashboard', async (req, res) => {
@@ -366,6 +367,27 @@ router.get('/getorders', async (req, res) => {
     let getAllOrders = await orderData.getAllOrders();
     res.render('pages/viewOrders',{layout:'adminhome',json:getAllOrders})
 });
+
+
+router.get('/viewreview', async (req, res) => {
+    const allreviews = await reviewData.getAllReviews();
+    res.render('pages/adminreview',{layout:'adminhome',allreviews})
+});
+
+router.post('/viewreview', async (req, res) => {
+    try{
+    let delrevid = req.body['reviewid']
+    const delreviews = await reviewData.removeReviewById(delrevid);
+    const allreviews = await reviewData.getAllReviews();
+    res.render('pages/adminreview',{layout:'adminhome',allreviews})
+    } catch (error) {
+        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
+            serverResponse: error.message || 'Internal server error.',
+        });
+    }
+});
+
+
 
 
 module.exports = router;

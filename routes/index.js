@@ -18,6 +18,7 @@ const bestRoutes = require('./bestseller');
 const favRoutes = require('./favourite');
 const userData = data.menu;
 const cartData = data.cart;
+const reviewData = data.reviews;
 
 const constructorMethod = (app) => {
 
@@ -29,10 +30,11 @@ const constructorMethod = (app) => {
         // } else{
         //     counterValue=0
         // }
+        const allreviews = await reviewData.getAllReviews();
         if(req.session.user){
-        res.render('pages/index', { getCategory,data:getCategory,id:req.session.user.userId });
+        res.render('pages/index', { getCategory,data:getCategory,id:req.session.user.userId,allreviews });
         }else{
-            res.render('pages/index', { getCategory,data:getCategory });
+            res.render('pages/index', { getCategory,data:getCategory,allreviews });
         }
     });
 
