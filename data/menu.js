@@ -11,26 +11,101 @@ const saltrounds=16;
 
 async function addCategory(category,image) {
   const categoryCollection = await categorys();
+
+  if(!category || !category.trim()){
+    throw 'Provide valid Category Name'
+}
+if(!image || !image.trim()){
+    throw 'Provide valid Image for category'      
+}
+
+ let categorywithoutspaces = category.replace(/ /g, '');
+
+if(!(/^[a-zA-Z]+$/.test(categorywithoutspaces))){
+throw 'Provide a Valid Category Name. NO SPECIAL CHARACTERS ONLY Alphabetic Characters'
+}
 let newcategory = {
 category:category,
 image:image
 };
 
-const findresult = await categoryCollection.findOne( {category: category.toLowerCase()} );
-if (findresult === null) {
+const findresult = await categoryCollection.find( {} ).toArray();
+if (findresult.length === 0) {
 const insertInfo = await categoryCollection.insertOne(newcategory);
 if (insertInfo.insertedCount === 0) {
- return {categoryInserted:false}
+ throw 'Internal Server Error, Couldnot insert'
 } else {
 return {categoryInserted: true}
 }
 } else {
-    throw 'Category already exists'
+  for(let i=0;i<findresult.length;i++){
+    console.log(findresult[i])
+    console.log(category)
+    if(findresult[i].category.toLowerCase()==category.toLowerCase()){
+      throw 'Category Already Exists with same name'
+    }
+  }
 }
 }
 
 
 async function addMenu(itemCategory,itemTitle,itemDescription,itemPrice,itemCalories,itemImage,itemKeywords) {
+
+if(!itemCategory || !itemCategory.trim()){
+   throw 'Select Proper Category for Menu'
+}
+
+if(!itemTitle || !itemTitle.trim()){
+  throw 'Provide Proper Title for Menu'
+}
+
+if(!itemDescription || !itemDescription.trim()){
+  throw 'Provide Proper Description for Menu'
+}
+
+if(!itemPrice){
+  throw 'Provide Proper Price for Menu'
+}
+
+if(!itemCalories){
+  throw 'Provide Proper Calories for Menu'
+}
+
+if(!itemKeywords || !itemKeywords.trim()){
+  throw 'Provide Proper Keywords for Menu'
+}
+
+
+
+let reg = new RegExp('^[0-9]+(\.[0-9]+)*$')
+
+
+let titlewithoutspaces = itemTitle.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(titlewithoutspaces))){
+    throw 'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters';
+        
+}
+
+let descriptionwithoutspaces=itemDescription.replace(/ /g, '');
+if(!(/^[a-zA-Z]+$/.test(descriptionwithoutspaces))){
+throw 'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters';
+   
+}
+
+if(!reg.test(itemPrice)){
+throw 'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES';
+}
+
+if(!reg.test(itemCalories)){
+throw 'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES';
+   
+}
+
+if(!(/^[a-zA-Z]+$/.test(itemKeywords))){
+throw 'Provide Valid keywords for item. NO SPECIAL CHARACTERS Allowed, USE SPACE TO DISTINGUISH BETWEEN TWO WORDS. For Eg: bestdish spicy tangy';  
+   
+}
+console.log('before insert')
 
   const MenuCollection = await menus();
 
@@ -51,7 +126,7 @@ const findresult = await MenuCollection.findOne(
 if (findresult === null) {
 const insertInfo = await MenuCollection.insertOne(newMenuItem);
 if (insertInfo.insertedCount === 0) {
- return {menuInserted:false}
+ throw 'Internal Server Error Cannot insert'
 } else {
 return {menuInserted: true}
 }
@@ -61,7 +136,7 @@ return {menuInserted: true}
 }
 
 async function search(searchTerm){
-console.log(searchTerm)
+
   const MenuCollection = await menus();
 
   const findresult = await MenuCollection.find( 
@@ -119,6 +194,64 @@ return findresult;
 
 async function updateMenu(itemCategory,itemTitle,itemDescription,itemPrice,itemCalories,itemImage,itemKeywords,itemId) {
 
+
+  if(!itemCategory || !itemCategory.trim()){
+    throw 'Select Proper Category for Menu'
+ }
+ 
+ if(!itemTitle || !itemTitle.trim()){
+   throw 'Provide Proper Title for Menu'
+ }
+ 
+ if(!itemDescription || !itemDescription.trim()){
+   throw 'Provide Proper Description for Menu'
+ }
+ 
+ if(!itemPrice){
+   throw 'Provide Proper Price for Menu'
+ }
+ 
+ if(!itemCalories){
+   throw 'Provide Proper Calories for Menu'
+ }
+ 
+ if(!itemKeywords || !itemKeywords.trim()){
+   throw 'Provide Proper Keywords for Menu'
+ }
+ 
+ 
+ 
+ let reg = new RegExp('^[0-9]+(\.[0-9]+)*$')
+ 
+ let titlewithoutspaces = itemTitle.replace(/ /g, '');
+ if(!(/^[a-zA-Z]+$/.test(titlewithoutspaces))){
+     throw 'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters';
+         
+ }
+
+ let descriptionwithoutspaces=itemDescription.replace(/ /g, '');
+ if(!(/^[a-zA-Z]+$/.test(descriptionwithoutspaces))){
+ throw 'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters';
+    
+ }
+ 
+ if(!reg.test(itemPrice)){
+ throw 'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES';
+ }
+ 
+ if(!reg.test(itemCalories)){
+ throw 'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES';
+    
+ }
+ 
+ if(!(/^[a-zA-Z]+$/.test(itemKeywords))){
+ throw 'Provide Valid keywords for item. NO SPECIAL CHARACTERS Allowed, USE SPACE TO DISTINGUISH BETWEEN TWO WORDS. For Eg: bestdish spicy tangy';  
+    
+ }
+ 
+
+
+
 const MenuCollection = await menus();
 let newMenuItem={}
 if(itemImage){
@@ -149,7 +282,7 @@ const updatedInfo = await MenuCollection.updateOne(
 );
 
 if (updatedInfo.modifiedCount === 0) {
-  return {menuupdated:false}
+  throw 'Server Error Nothing updated'
 } else {
  return {menuupdated:true}
 }
