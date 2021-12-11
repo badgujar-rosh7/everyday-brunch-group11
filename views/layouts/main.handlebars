@@ -57,9 +57,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/advertisements">Advertisements</a>
                     </li>
-                    <li class="nav-item">
+                    {{!-- <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Reviews</a>
-                    </li>
+                    </li> --}}
                    <li class="nav-item">
                         <a class="nav-link" href="/bestseller">Best Seller</a>
                     </li>
@@ -413,6 +413,43 @@
             $('.toast').toast("show");
         });
     </script>
+
+    {{!-- <script type="text/javascript">
+function selectStar(e, rate) {
+ for (let i = 0; i < e.currentTarget.parentNode.children.length; i++) {
+e.currentTarget.parentNode.children[i].src = './public/images/comment/star.png'
+if (i + 1 <= rate) {
+ e.currentTarget.parentNode.children[i].src = './public/images/comment/star-active.png'
+}
+ }
+}
+
+function submitComment() {
+ let content = document.getElementById('contentInput').value;
+ let foodName = document.getElementById('foodNameInput').value;
+ if (!foodName) {
+alert('The foodName cannot be empty!')
+return
+ } else if (/^[0-9]*$/.test(foodName)) {
+alert('The foodName cannot be all numbers!')
+return
+ } else if (!foodName.replace(/( )/g, "")) {
+alert('The foodName cannot be empty!')
+return
+ }
+ if (!content) {
+alert('The content cannot be empty!')
+return
+ } else if (/^[0-9]*$/.test(content)) {
+alert('The content cannot be all numbers!')
+return
+ } else if (!content.replace(/( )/g, "")) {
+alert('The content cannot be empty!')
+return
+ }
+ window.location.href = '/commentsuccess'
+}
+    </script> --}}
 
 </body>
 </html>

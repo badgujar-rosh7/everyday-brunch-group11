@@ -54,7 +54,7 @@
 }
 
 .card.review-card:hover:before {
-    transform: scale(21);
+    transform: scale(19);
 }
 
 .slick-next,

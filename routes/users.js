@@ -10,6 +10,8 @@ const xss = require('xss');
 const moment = require('moment');
 const errorcheck = data.error;
 const favData = data.favorites;
+const reviewsRoutes = require('./reviews');
+const reviewData = data.reviews;
 
 const ErrorCode = {
     BAD_REQUEST: 400,
@@ -48,7 +50,8 @@ router.get('/profile', async (req, res) => {
             json.push(menudetails);
             }
         }
-        res.render('pages/userprofile', { data: getUserById,getOrder,json,id:req.session.user.userId });
+        const reviewByUserId = await reviewData.getAllReviewsByUserId(userId);
+        res.render('pages/userprofile', { data: getUserById,getOrder,json,id:req.session.user.userId,reviewByUserId});
     }else {
         res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet',id:req.session.user.userId });
     }
@@ -57,6 +60,7 @@ router.get('/profile', async (req, res) => {
             serverResponse: error.message || 'Internal server error.',
         });
     }
+
 });
 router.get('/myprofile', async (req, res) => {});
 router.post('/myprofile', async (req, res) => {});
