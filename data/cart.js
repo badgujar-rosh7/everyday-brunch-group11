@@ -250,7 +250,15 @@ console.log(counterarrray)
 let max2 = Math.max( ...counterarrray );
 counterarrray = counterarrray.filter(item => item !== max2)
 let max3 = Math.max( ...counterarrray );
-let maxcounterarray=[max1,max2,max3]
+let counterarray=[max1,max2,max3]
+
+let maxcounterarray=[]
+for(let i=0;i<counterarray.length;i++){
+  if(counterarray[i]!=0){
+    maxcounterarray.push(counterarray[i])
+  }
+}
+
 console.log(maxcounterarray)
 for(let i=0;i<itemarray.length;i++){
   for(let j=0;j<maxcounterarray.length;j++){

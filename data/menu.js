@@ -45,6 +45,12 @@ return {categoryInserted: true}
       throw 'Category Already Exists with same name'
     }
   }
+  const insertInfo = await categoryCollection.insertOne(newcategory);
+if (insertInfo.insertedCount === 0) {
+ throw 'Internal Server Error, Couldnot insert'
+} else {
+return {categoryInserted: true}
+}
 }
 }
 
@@ -105,7 +111,7 @@ if(!(/^[a-zA-Z]+$/.test(itemKeywords))){
 throw 'Provide Valid keywords for item. NO SPECIAL CHARACTERS Allowed, USE SPACE TO DISTINGUISH BETWEEN TWO WORDS. For Eg: bestdish spicy tangy';  
    
 }
-console.log('before insert')
+
 
   const MenuCollection = await menus();
 
@@ -119,11 +125,8 @@ itemImage:itemImage,
 itemKeywords:itemKeywords
 };
 
-const findresult = await MenuCollection.findOne( 
-  {itemCategory: itemCategory,
-  itemTitle:itemTitle  
-  } );
-if (findresult === null) {
+const findresult = await MenuCollection.find({}).toArray();
+if (findresult.length == 0) {
 const insertInfo = await MenuCollection.insertOne(newMenuItem);
 if (insertInfo.insertedCount === 0) {
  throw 'Internal Server Error Cannot insert'
@@ -131,7 +134,17 @@ if (insertInfo.insertedCount === 0) {
 return {menuInserted: true}
 }
 } else {
-    throw 'Menu already exists'
+  for(let i=0;i<findresult.length;i++){
+    if(findresult[i].itemCategory.toLowerCase()==itemCategory.toLowerCase() && findresult[i].itemTitle.toLowerCase()==itemTitle.toLowerCase()){
+      throw "Menu Already exists with similar name"
+    }
+  }
+  const insertInfo = await MenuCollection.insertOne(newMenuItem);
+if (insertInfo.insertedCount === 0) {
+ throw 'Internal Server Error Cannot insert'
+} else {
+return {menuInserted: true}
+}
 }
 }
 
@@ -154,25 +167,58 @@ async function addAdvertise(advertiseTitle,advertiseDescription,advertiseImage) 
 
   const AdvertiseCollection = await advertises();
 
+
+  if(!advertiseTitle || !advertiseTitle.trim()){
+       
+    throw "Provide valid Title"
+       
+}
+
+      if(!advertiseDescription || !advertiseDescription.trim()){
+       throw "Provide Valid Description"
+}
+
+ let titlewithoutspaces = advertiseTitle.replace(/ /g, '');
+
+if(!(/^[a-zA-Z]+$/.test(titlewithoutspaces))){
+   throw 'Provide a Valid Title for Advertise. NO SPECIAL CHARACTERS ONLY Alphabetic Characters'
+}
+let descrptionwithoutspaces = advertiseDescription.replace(/ /g, '');
+
+if(!(/^[a-zA-Z]+$/.test(descrptionwithoutspaces))){
+  throw 'Provide a Valid Description for Advertise. NO SPECIAL CHARACTERS ONLY Alphabetic Characters'
+}
+
+
+
+
 let newAdvertiseItem = {
 advertiseTitle:advertiseTitle,
 advertiseDescription:advertiseDescription,
 advertiseImage:advertiseImage
 };
 
-const findresult = await AdvertiseCollection.findOne( 
-  {
-  advertiseTitle:advertiseTitle  
-  } );
-if (findresult === null) {
+const findresult = await AdvertiseCollection.find( { } ).toArray();
+if (findresult.length == 0) {
 const insertInfo = await AdvertiseCollection.insertOne(newAdvertiseItem);
 if (insertInfo.insertedCount === 0) {
- return {advertiseInserted:false}
+ throw "Server Error Couldnot Insert"
 } else {
 return {advertiseInserted: true}
 }
 } else {
-    throw 'Advertise already exists'
+  for(let i=0;i<findresult.length;i++){
+if(findresult[i].advertiseTitle.toLowerCase()==advertiseTitle.toLowerCase())
+throw "Advertise Already exists with a similar name"
+  }
+  const insertInfo = await AdvertiseCollection.insertOne(newAdvertiseItem);
+  if (insertInfo.insertedCount === 0) {
+    throw "Server Error Couldnot Insert"
+   } else {
+   return {advertiseInserted: true}
+   }
+
+    
 }
 }
 

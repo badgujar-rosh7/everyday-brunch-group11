@@ -57,6 +57,26 @@ const constructorMethod = (app) => {
         }
     });
     
+    app.get('/advertisements', async(req,res)=>{
+        let getCategory = await userData.getAllCategory();
+        if(req.session.user){
+            let advertisement=await userData.getAdvertise()
+            console.log(advertisement)
+            if(!advertisement){
+                res.render('pages/advertisements',{error:'No Advertisements Found',getCategory,id:req.session.user.userId})
+            }else{
+                res.render('pages/advertisements',{data:advertisement,getCategory,id:req.session.user.userId})
+            }
+        }else {
+            let advertisement=await userData.getAdvertise()
+            console.log(advertisement)
+            if(!advertisement){
+                res.render('pages/advertisements',{error:'No Advertisements Found',getCategory})
+            }else{
+                res.render('pages/advertisements',{data:advertisement,getCategory})
+            }
+        }
+    })
 
     app.use('/cartpage', cartDetailRoutes);
     app.use('/payment', paymentRoutes);
