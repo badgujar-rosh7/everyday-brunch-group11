@@ -64,60 +64,26 @@
 {{!-- End of Category Section --}}
 
 {{!-- Start of Review Section --}}
+{{#if allreviews}}
 <section class="section review-section pt-5 pb-5 bg-white">
     <div class="container">
             <h2 class="main-heading text-center mt-5 mb-5">Reviews</h2>
+            
             <div class="slider slider-nav">
+                {{#each allreviews}}
                 <div class="card review-card">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <p class="card-text">Rating is 5.0/5.0</p>
+                        <h5 class="card-title">{{review}}</h5>
+                        <p class="card-text">Rating : {{rating}} / 5</p>
+                        <p class="card-text">Date : {{dateofReview}}</p>
                         {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}
                     </div>
                 </div>
-                <div class="card review-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <p class="card-text">Rating is 5.0/5.0</p>
-                        {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}
-                    </div>
-                </div>
-                <div class="card review-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <p class="card-text">Rating is 5.0/5.0</p>
-                        {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}
-                    </div>
-                </div>
-                <div class="card review-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <p class="card-text">Rating is 5.0/5.0</p>
-                        {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}
-                    </div>
-                </div>
-                <div class="card review-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <p class="card-text">Rating is 5.0/5.0</p>
-                        {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}
-                    </div>
-                </div>
-                <div class="card review-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <p class="card-text">Rating is 5.0/5.0</p>
-                        {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}
-                    </div>
-                </div>
+                {{/each}}
             </div>
+            
         </div>
     </div>
 </section>
+{{/if}}
 {{!-- End of Review Section --}}

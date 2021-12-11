@@ -43,6 +43,22 @@ module.exports = {
             throwCatchError(error);
         }
     },
+    async getAllReviews() {
+        try {
+            const userColl = await usercollection();
+            const updatedInfo = await userColl.find({}).toArray();
+            
+            let arr = [];
+            for(let i = 0;i<updatedInfo.length; i++){
+                for(let j = 0;j<updatedInfo[i].reviews.length; j++){
+                    arr.push(updatedInfo[i].reviews[j])
+                }
+            }
+            return arr;
+        } catch (error) {
+            throwCatchError(error);
+        }
+    },
     async getAllReviewsByUserId(userId) {
         try {
             if (!userId)
@@ -54,9 +70,9 @@ module.exports = {
                     ErrorCode.NOT_FOUND,
                     'Error: No reviews found with given Id.'
                 );
-            if (user.hasOwnProperty('reviews') && user.reviews.length < 1) {
-                throwError(ErrorCode.NOT_FOUND, 'Error: No reviews found.');
-            }
+            // if (user.hasOwnProperty('reviews') && user.reviews.length < 1) {
+            //     throwError(ErrorCode.NOT_FOUND, 'Error: No reviews found.');
+            // }
 
             let result = user.reviews;
 
@@ -124,7 +140,7 @@ module.exports = {
                     'Error: No review with that id.'
                 );
             }
-            if (deleteReview.modifiedCount !== 0)
+            if (deleteReview.modifiedCount === 0)
                 throwError(
                     ErrorCode.INTERNAL_SERVER_ERROR,
                     'Error: Could not delete review.'
