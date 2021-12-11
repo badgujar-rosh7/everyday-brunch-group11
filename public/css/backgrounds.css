@@ -5,7 +5,14 @@
 .white-smoke-background {
     background-color: whitesmoke;
 }
+.error {
+    font-size: 18px;
+    color: red;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
 #errormessage {
     color: red;
+    text-align: center;
     font-family: 'Open Sans', sans-serif;
 }

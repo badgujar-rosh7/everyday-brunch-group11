@@ -62,22 +62,22 @@ const validateUsername = (name) => {
     if (!checkvaliduser.test(name)) {
         throwError(
             ErrorCode.BAD_REQUEST,
-            'Invalid Format for username provided'
+            'Invalid Format for username provided, Atleast 4 Characters and no spaces allowed.'
         );
     }
     return name.trim();
 };
 /*****************************************************************************************/
 const validatePassword = (pass) => {
-    isArgumentString(pass, 'pass');
-    isStringEmpty(pass, 'pass');
+    isArgumentString(pass, 'password');
+    isStringEmpty(pass, 'password');
     pass = pass.trim();
     checkspace(pass);
     let checkvalidpass = /[A-Za-z0-9\W]{6,}/g;
     if (!checkvalidpass.test(pass)) {
         throwError(
             ErrorCode.BAD_REQUEST,
-            'Invalid format for Password provided'
+            'Invalid format for Password provided,Atleast 6 Characters and no Alphanumeric allowed.'
         );
     }
     return pass.trim();
@@ -214,7 +214,7 @@ const isArgumentString = (str, variableName) => {
     if (typeof str !== 'string') {
         throwError(
             ErrorCode.BAD_REQUEST,
-            `Error: Invalid argument passed for ${
+            `Invalid argument passed for ${
                 variableName || 'provided variable'
             }. Expected string.`
         );
@@ -225,9 +225,7 @@ const isStringEmpty = (str, variableName) => {
     if (!str.trim() || str.length < 1) {
         throwError(
             ErrorCode.BAD_REQUEST,
-            `Error: Empty string passed for ${
-                variableName || 'provided variable'
-            }.`
+            `Empty string passed for ${variableName || 'provided variable'}.`
         );
     }
 };
@@ -237,7 +235,7 @@ const checkspace = (string, variableName) => {
     if (checkspace.test(string))
         throwError(
             ErrorCode.BAD_REQUEST,
-            `Error: Invalid argument passed, spaces not allowed `
+            ` Invalid argument passed, spaces not allowed `
         );
 };
 /*****************************************************************************************/
@@ -246,7 +244,7 @@ const validateObjectId = (id) => {
     const objectIdRegex = /^[a-fA-F0-9]{24}$/;
 
     if (!ObjectId.isValid(id) || !objectIdRegex.test(id)) {
-        throwError(ErrorCode.BAD_REQUEST, 'Error: id is not a valid ObjectId.');
+        throwError(ErrorCode.BAD_REQUEST, ' id is not a valid ObjectId.');
     }
 
     return ObjectId(id);
