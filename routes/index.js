@@ -118,12 +118,15 @@ const constructorMethod = (app) => {
     app.use('/logout', async (req, res) => {
         if (req.session.admin) {
             req.session.destroy();
-        } else if (!req.session.user) {
             res.redirect('/');
         } else {
-            req.session.destroy();
-            // res.render('pages/logout');
-            res.redirect('/');
+            if (!req.session.user) {
+                res.redirect('/');
+            } else {
+                req.session.destroy();
+                // res.render('pages/logout');
+                res.redirect('/');
+            }
         }
     });
     /*******************************************************************************Tanay*/
