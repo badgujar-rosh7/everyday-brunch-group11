@@ -53,8 +53,10 @@ var nodemailer = require('nodemailer');
            // console.log("ioioioioi")
             //console.log(req.session.user.email)
             let neworder= cartData.createOrder(req.session.user.userId,num);
-            setTimeout(() => {
-                let mailto=`${req.session.user.email}`
+        }).then(()=>{
+
+            
+            let mailto=`${req.session.user.email}`
             var transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
@@ -80,7 +82,7 @@ var nodemailer = require('nodemailer');
            
             
                 res.redirect('/')
-            }, 9000);
+
         })
         .catch((err) => { 
 
