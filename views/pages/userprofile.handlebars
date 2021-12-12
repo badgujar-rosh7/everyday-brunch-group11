@@ -206,34 +206,6 @@
 </section>
 {{/if}}
 
-<script>
-    function DeleteFav(id){
-
-                    var requestConfig = {
-					method: 'POST',
-					url: '/favourites/delete',
-					contentType: 'application/json',
-					data: JSON.stringify({
-						itemid:id
-					})
-				};
-
-				$.ajax(requestConfig).then(function(responseMessage) {
-					if(responseMessage.success==true){
-                                            window.location.replace("http://localhost:3000/users/profile");                        
-                    } else {
-                        console.log(responseMessage)
-                            alert(responseMessage.success)
-                        
-                    }
-					//                alert("Data Saved: " + msg);
-				});
-
-
-
-    }
-
-</script>
 
 
 {{!-- End of Menu Section --}}
@@ -290,9 +262,9 @@
             </div>
             </div>
             {{!--  --}}
-            {{#if reviewByUserId}}
+            {{#if rarr}}
             <div class="slider slider-nav">
-                {{#each reviewByUserId}}
+                {{#each rarr}}
                 <div class="card review-card">
                     <div class="card-body">
                         <h5 class="card-title">{{review}}</h5>
@@ -309,3 +281,33 @@
 </section>
 {{/if}}
 {{!-- End of Review Section --}}
+
+
+<script>
+    function DeleteFav(id){
+
+                    var requestConfig = {
+					method: 'POST',
+					url: '/favourites/delete',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						itemid:id
+					})
+				};
+
+				$.ajax(requestConfig).then(function(responseMessage) {
+					if(responseMessage.success==true){
+                                            window.location.replace("http://localhost:3000/users/profile");                        
+                    } else {
+                        console.log(responseMessage)
+                            alert(responseMessage.success)
+                        
+                    }
+					//                alert("Data Saved: " + msg);
+				});
+
+
+
+    }
+
+</script>
