@@ -10,6 +10,7 @@ app.use(fileupload());
 //app.use(cookieParser());
 app.use('/public', static);
 app.use(express.json());
+const path = require('path');
 app.use(express.urlencoded({ extended: true }));
 app.use(
     session({
@@ -36,7 +37,13 @@ app.use(async (req, res, next) => {
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
-
+app.use('/admin', (req, res, next) => {
+    if (!req.session.admin) {
+        res.sendFile(path.resolve('static/forbidden.html'));
+    } else {
+        next();
+    }
+});
 app.use('/login', (req, res, next) => {
     if (req.session.user) {
         return res.redirect('/');
@@ -66,14 +73,12 @@ app.use('/users/profile', (req, res, next) => {
     }
 });
 
-
 var hbs = exphbs.create({});
 
 // register new function
-hbs.handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+hbs.handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
+    return arg1 == arg2 ? options.fn(this) : options.inverse(this);
 });
-
 
 configRoutes(app);
 
