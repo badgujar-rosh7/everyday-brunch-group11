@@ -63,14 +63,14 @@
 
 <section class="section category-btn-section pt-5 pb-5 yellow-section-background">
     <div class="container">
-        <h2 class="main-heading text-center mt-5 mb-5">Our Categories</h2>
+        <h1 class="main-heading text-center mt-5 mb-5">Our Categories</h1>
         <div class="row row-cols-1 row-cols-md-2 g-4">
             {{#if data}}
             {{#each data}}
             <div class="col category-card-box">
                
                 <div class="card category-card">
-                     <h5>{{category}}</h5>
+                     {{!-- <p>{{category}}</p> --}}
                     <img src="../../public/images/Category/{{image}}" class="card-img-top" alt="{{image}}">
                 </div>
             </div>
@@ -92,7 +92,7 @@
                 {{#each allreviews}}
                 <div class="card review-card">
                     <div class="card-body">
-                        <h5 class="card-title">{{review}}</h5>
+                        <p class="card-title">{{review}}</p>
                         <p class="card-text">Rating : {{rating}} / 5</p>
                         <p class="card-text">Date : {{dateofReview}}</p>
                         {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}

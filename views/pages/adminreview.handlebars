@@ -3,13 +3,13 @@
 {{#if allreviews}}
 <section class="section review-section pt-5 pb-5 bg-white">
     <div class="container">
-            <h2 class="main-heading text-center mt-5 mb-5">Reviews</h2>
+            <h1 class="main-heading text-center mt-5 mb-5">Reviews</h1>
             <div class="slider slider-nav">
                 {{#each allreviews}}
                 <form method="POST" action="/admin/viewreview">
                 <div class="card review-card">
                     <div class="card-body">
-                        <h5 class="card-title">{{review}}</h5>
+                        <p class="card-title">{{review}}</p>
                         <p class="card-text">Rating : {{rating}} / 5</p>
                         <p class="card-text">Date : {{dateofReview}}</p>
                         <input id="reviewid" name="reviewid" type="text" value="{{review_id}}" class="form-control" hidden>

@@ -63,7 +63,7 @@
 <section class="section admin-section">
   <div class="container">
     <div class="row">
-        <h2 class="main-heading text-center mt-5 mb-5">User Orders</h2>
+        <h1 class="main-heading text-center mt-5 mb-5">User Orders</h1>
     </div>
     <div class="accordion-item mb-5">
         <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
@@ -231,7 +231,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Let Us Know Your Thoughts !!!</h5>
+                    <p class="modal-title" id="staticBackdropLabel">Let Us Know Your Thoughts !!!</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="/users/profile" id="review-form">
@@ -268,7 +268,7 @@
                 {{#each rarr}}
                 <div class="card review-card">
                     <div class="card-body">
-                        <h5 class="card-title">{{review}}</h5>
+                        <p class="card-title">{{review}}</p>
                         <p class="card-text">Rating : {{rating}} / 5</p>
                         <p class="card-text">Date : {{dateofReview}}</p>
                         {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}
