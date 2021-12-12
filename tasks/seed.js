@@ -14,12 +14,12 @@ async function main() {
     //const userD = await signup.createUser('Tanay', 'Tadas', 'TanayT@gmail.com', '04/04/1998', 'Male', 'Miami', 'FL', 'TanayT', 'TanayTPW');
     //const userE = await signup.createUser('Yongxiang', 'Zhang', 'YongxiangZ@gmail.com', '05/05/1999', 'Male', 'Philadelphia', 'PA', 'YongxiangZ', 'YongxiangZPW')
 
-     userA = {
+    let userA = {
         firstName: 'Akshay',
         lastName: 'Sahasrabuddhe',
         email: 'AkshayS@gmail.com',
         DateOfBirth: 01/01/1995,
-        gender: 'Male',
+        gender: 'male',
         City: 'LA',
         State: 'CA',
         username: 'AkshayS',
@@ -31,7 +31,7 @@ async function main() {
         lastName: 'Li',
         email: 'HaoyuL@gmail.com',
         DateOfBirth: 02/02/1996,
-        gender: 'Female',
+        gender: 'female',
         City: 'Hoboken',
         State: 'NJ',
         username: 'HaoyuL',
@@ -43,7 +43,7 @@ async function main() {
         lastName: 'Badhujar',
         email: 'RoshanB@gmail.com',
         DateOfBirth: 03/03/1997,
-        gender: 'Male',
+        gender: 'male',
         City: 'Boston',
         State: 'MA',
         username: 'RoshanB',
@@ -55,7 +55,7 @@ async function main() {
         lastName: 'Tadas',
         email: 'TanayT@gmail.com',
         DateOfBirth: 04/04/1998,
-        gender: 'Male',
+        gender: 'male',
         City: 'Miami',
         State: 'FL',
         username: 'TanayT',
@@ -67,11 +67,35 @@ async function main() {
         lastName: 'Zhang',
         email: 'YongxiangZ@gmail.com',
         DateOfBirth: 05/05/1999,
-        gender: 'Male',
+        gender: 'male',
         City: 'Philadelphia',
         State: 'PA',
         username: 'YongxiangZ',
         password: 'YongxiangZPW',
+    }
+
+    let userF = {
+        firstName: 'Ada',
+        lastName: 'Smith',
+        email: 'AdaS@outlook.com',
+        DateOfBirth: 06/06/2000,
+        gender: 'other',
+        City: 'Riverside',
+        State: 'CA',
+        username: 'AdaS',
+        password: 'AdaSPW',
+    }
+
+    let userG = {
+        firstName: 'Jason',
+        lastName: 'Karlsson',
+        email: 'JasonK@gmail.com',
+        DateOfBirth: 07/07/2001,
+        gender: 'prefer not to say',
+        City: 'Orlando',
+        State: 'FL',
+        username: 'JasonK',
+        password: 'JasonKPW',
     }
 
     userA = await signup.createUser(userA);
@@ -79,6 +103,8 @@ async function main() {
     userC = await signup.createUser(userC);
     userD = await signup.createUser(userD);
     userE = await signup.createUser(userE);
+    userF = await signup.createUser(userF);
+    userG = await signup.createUser(userG);
 
     //Review
     let reviewA = {
