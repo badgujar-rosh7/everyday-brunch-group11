@@ -59,11 +59,7 @@ var nodemailer = require('nodemailer');
             let mailto=`${req.session.user.email}`
             var transporter = nodemailer.createTransport({
               service: 'gmail',
-<<<<<<< HEAD
-              secure: true,
-=======
               secure:true,
->>>>>>> 68924e7690507bac62dd0ce3d20c8156b7f508da
               auth: {
                 user: 'sudronikbusiness@gmail.com',
                 pass: '8454949819'
@@ -79,11 +75,7 @@ var nodemailer = require('nodemailer');
             
             transporter.sendMail(mailOptions, function(error, info){
               if (error) {
-<<<<<<< HEAD
-                console.log(error);
-=======
               console.log(error);
->>>>>>> 68924e7690507bac62dd0ce3d20c8156b7f508da
               } else {
                 console.log('Email sent: ' + info.response);
               }

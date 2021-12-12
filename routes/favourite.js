@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const path = require('path');
 const favData = data.favorites;
+const xss = require('xss');
 
 
 router.post('/',async(req,res)=>{
