@@ -4,9 +4,12 @@ const data = require('../data');
 const path = require('path');
 const { safeAttrValue } = require('xss');
 const cartData = data.cart;
+const orderData = data.menu;
+const xss=require('xss')
 
 
 router.get('/',async(req,res)=>{
+        let getCategory = await orderData.getAllCategory();
     if(req.session.user){
         //console.log(req.session.userid)
         //cart collection
@@ -18,17 +21,17 @@ router.get('/',async(req,res)=>{
                 total=parseFloat(total)+parseFloat(cartdetails[i].totalcost)
             }
             let tax=parseFloat(0.05*total)
-            res.render('pages/cart',{cartdetails,tax,total}) 
+            res.render('pages/cart',{cartdetails,tax,total,getCategory}) 
         }else{
-            res.render('pages/cart',{NoCart:'DANG!! Your Cart is Empty. Hurry Up!!'}) 
+            res.render('pages/cart',{NoCart:'DANG!! Your Cart is Empty. Hurry Up!!',getCategory}) 
         }
     } else {
-    res.render('pages/cart',{NoCart:'You must be logged-in to able to use the cart'}) 
+    res.render('pages/cart',{NoCart:'You must be logged-in to able to use the cart',getCategory}) 
     }
 })
 
 router.post('/delete',async(req,res)=>{
-    let deleteid=req.body['delete'];
+    let deleteid=xss(req.body['delete']);
     if(req.session.user){
     let cartdetails=await cartData.deleteCartItem(deleteid)
     if(cartdetails){

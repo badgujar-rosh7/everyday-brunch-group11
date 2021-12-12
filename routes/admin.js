@@ -13,6 +13,7 @@ const fileUpload = require('express-fileupload');
 const reviewData = data.reviews;
 
 router.get('/dashboard', async (req, res) => {
+    //admin session
     let allusers = await usersinfo.getAllUsers();
     let allorders = await orderData.getAllOrders();
     let allcategory = await userData.getAllCategory();
@@ -341,7 +342,7 @@ router.get('/ViewMenu', async (req, res) => {
     let error = req.query['updatefailed'];
 
     let AllMenu = await userData.getAllMenu();
-    console.log(AllMenu.length);
+   // console.log(AllMenu.length);
     let json = AllMenu;
     if (error == 'AkjsSHD897') {
         res.render('pages/ViewMenu', {
@@ -357,7 +358,7 @@ router.get('/ViewMenu', async (req, res) => {
 router.post('/update', async (req, res) => {
     //res.render('pages/ViewMenu')
     //render view page
-    id = req.body['updateid'];
+    id = xss(req.body['updateid']);
     let userdetails = await userData.getMenuItem(id);
     let getCategory = await userData.getAllCategory();
     let catArray = [];

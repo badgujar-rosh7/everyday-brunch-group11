@@ -31,37 +31,55 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/profile', async (req, res) => {
-    if (!req.session.user) {
-        res.redirect('/');
-    }
-    try {
-        let userId = xss(req.session.user.userId);
-        const validateduserId = errorcheck.validateUserId(userId);
-        let getUserById = await userData.getUserById(userId);
-        let getOrder= await orderData.getOrderByUserId(userId)
-       // let getMenuFav=await orderData.getItemDetailsById(id)
-        let allfav=await favData.getAllfavorite(userId) 
-        console.log(allfav)
-        if(allfav.length>0){
-        let json=[];
-        for(let i=0;i<allfav.length;i++){
-            let menudetails=await menuData.getMenuItem(allfav[i].foodId.toString())
-            if(menudetails !=null){
-            json.push(menudetails);
+    
+    
+    console.log("hi")
+
+    if (req.session.user) {
+
+        try {
+            console.log("gghggghgh")
+            let userId = xss(req.session.user.userId);
+            const validateduserId = errorcheck.validateUserId(userId);
+            let getUserById = await userData.getUserById(userId);
+            let getOrder= await orderData.getOrderByUserId(userId)
+           // let getMenuFav=await orderData.getItemDetailsById(id)
+            let allfav=await favData.getAllfavorite(userId) 
+            console.log(allfav)
+            if(allfav.length>0){
+            let json=[];
+            for(let i=0;i<allfav.length;i++){
+                let menudetails=await menuData.getMenuItem(allfav[i].foodId.toString())
+                if(menudetails !=null){
+                json.push(menudetails);
+                }
+            }
+            const reviewByUserId = await reviewData.getAllReviewsByUserId(userId);
+            if(getOrder.length>0){
+            res.render('pages/userprofile', { data: getUserById,getOrder,json,id:req.session.user.userId,reviewByUserId});
+            }else{
+                res.render('pages/userprofile', { data: getUserById,json,noorder:'No Order placed by user',id:req.session.user.userId,reviewByUserId});
+            }
+        }else {
+            if(getOrder.length>0){
+            res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet',id:req.session.user.userId });
+            }else {
+                res.render('pages/userprofile', { data: getUserById,noorder:'No Order placed by user',nofav:'No Fav item added by user yet',id:req.session.user.userId });
             }
         }
-        const reviewByUserId = await reviewData.getAllReviewsByUserId(userId);
-        res.render('pages/userprofile', { data: getUserById,getOrder,json,id:req.session.user.userId,reviewByUserId});
-    }else {
-        res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet',id:req.session.user.userId });
+        } catch (error) {
+            res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
+                serverResponse: error.message || 'Internal server error.',
+            });
+        }
+        }
+else{
+    
+        console.log("hi")
+        res.render('pages/errors',{errors:'You must be logged-in to Acess this page'})
     }
-    } catch (error) {
-        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
-            serverResponse: error.message || 'Internal server error.',
-        });
-    }
-
 });
+
 router.get('/myprofile', async (req, res) => {});
 router.post('/myprofile', async (req, res) => {});
 router.get('/signup', async (req, res) => {
