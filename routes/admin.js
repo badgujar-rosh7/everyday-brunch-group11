@@ -227,7 +227,7 @@ router.post('/addMenu', async (req, res) => {
         let titlewithoutspaces = itemTitle.replace(/ /g, '');
         let checktitle = !/^[a-zA-Z]+$/.test(titlewithoutspaces);
         if (checktitle) {
-            console.log('titleissue');
+           // console.log('titleissue');
             res.status(400).render('pages/newMenu', {
                 layout: 'adminhome',
                 data: getCategory,
@@ -320,7 +320,7 @@ router.post('/addMenu', async (req, res) => {
             itemPrice,
             itemCalories,
             itemImage,
-            itemKeywords
+            itemKeywords,
         );
 
         if (add.menuInserted) {
@@ -425,7 +425,6 @@ router.post('/updateMenu', async (req, res) => {
         let itemCalories = req.body['itemCalories'];
         let itemKeywords = req.body['itemKeywords'];
 
-        console.log(itemId);
         // let userdetails = await userData.getMenuItem(itemId);
 
         let itemCategoryold = req.body['itemCategoryold'];
@@ -678,7 +677,7 @@ router.post('/updateMenu', async (req, res) => {
             itemKeywords,
             itemId
         );
-        console.log(update);
+
         if (update.menuupdated) {
             if (uploadFile) {
                 let uploadpath = './public/images/Menu/' + uploadFile.name;
