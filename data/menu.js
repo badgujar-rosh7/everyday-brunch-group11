@@ -11,7 +11,6 @@ const saltrounds=16;
 
 async function addCategory(category,image) {
   const categoryCollection = await categorys();
-
   if(!category || !category.trim()){
     throw 'Provide valid Category Name'
 }
@@ -83,7 +82,7 @@ if(!itemKeywords || !itemKeywords.trim()){
 
 
 
-let reg = new RegExp('^[0-9]+(\.[0-9]+)*$')
+let reg = new RegExp('^[0-9]+(\.[0-9]{1,2})?$')
 
 
 let titlewithoutspaces = itemTitle.replace(/ /g, '');
@@ -99,11 +98,11 @@ throw 'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Char
 }
 
 if(!reg.test(itemPrice)){
-throw 'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES';
+throw 'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES upto TWO DECIMALS';
 }
 
 if(!reg.test(itemCalories)){
-throw 'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES';
+throw 'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES upto TWO DECIMALS';
    
 }
 

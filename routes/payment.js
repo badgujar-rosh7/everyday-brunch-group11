@@ -24,8 +24,8 @@ router.get('/', async (req,res)=>{
             amount=amount +parseFloat(cart[i].totalcost) 
             descriptionofCartItems=`${descriptionofCartItems} ${cart[i].quantity} ${cart[i].details.title} \n`
         }
-        amount=(amount + parseFloat(0.05*amount))*100
-        console.log(amount)
+        amount=(amount + parseFloat(0.05*amount)).toFixed(2)
+        amount=amount*100
         console.log(descriptionofCartItems)
         req.session.user.cartvalue=amount;
         req.session.user.cartdescription=descriptionofCartItems;
