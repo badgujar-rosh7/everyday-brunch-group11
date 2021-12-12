@@ -46,6 +46,7 @@ router.get('/profile', async (req, res) => {
            // let getMenuFav=await orderData.getItemDetailsById(id)
             let allfav=await favData.getAllfavorite(userId) 
             console.log(allfav)
+
             if(allfav.length>0){
             let json=[];
             for(let i=0;i<allfav.length;i++){
@@ -62,9 +63,9 @@ router.get('/profile', async (req, res) => {
             }
         }else {
             if(getOrder.length>0){
-            res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet',id:req.session.user.userId });
+            res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet',id:req.session.user.userId,reviewByUserId});
             }else {
-                res.render('pages/userprofile', { data: getUserById,noorder:'No Order placed by user',nofav:'No Fav item added by user yet',id:req.session.user.userId });
+                res.render('pages/userprofile', { data: getUserById,noorder:'No Order placed by user',nofav:'No Fav item added by user yet',id:req.session.user.userId,reviewByUserId });
             }
         }
         } catch (error) {
@@ -74,8 +75,6 @@ router.get('/profile', async (req, res) => {
         }
         }
 else{
-    
-        console.log("hi")
         res.render('pages/errors',{errors:'You must be logged-in to Acess this page'})
     }
 });

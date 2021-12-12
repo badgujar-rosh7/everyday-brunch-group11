@@ -6,6 +6,7 @@ const { route } = require('./users');
 const { Router, response } = require('express');
 const { ObjectId } = require('bson');
 const cartData = data.cart;
+const menuData = data.menu;
 const userData = data.user;
 var Publishable_Key = 'pk_test_51K0juZCsyI93mWA70otfl7zDJgeF6RXUZjSNpUk20pDMRV7Ia6a5mqYOBCEr3aHp5Wh21CJQiDKdTTiIY7BmujbG00WCFZBW95'
 var Secret_Key = 'sk_test_51K0juZCsyI93mWA7U5FlUvzECuroJrru73V3MrVSWXfgVCY0xrANdpDqEEmzUTCGNeNwRlMAH0MtOMDJUJ9dfgar00yMxJKw4V'
@@ -15,11 +16,12 @@ const stripe = require('stripe')(Secret_Key)
 var nodemailer = require('nodemailer');
 
     router.post('/', async(req, res)=>{ 
+      let getCategory = await menuData.getAllCategory();
 
         // Moreover you can take more details from user 
         // like Address, Name, etc from form
         var num = Math.floor(Math.random() * 90000) + 10000;
-        console.log(req.session.user.cartvalue)
+        
     if(req.session.user){
         stripe.customers.create({ 
             email: req.body.stripeEmail, 
@@ -59,11 +61,7 @@ var nodemailer = require('nodemailer');
             let mailto=`${req.session.user.email}`
             var transporter = nodemailer.createTransport({
               service: 'gmail',
-<<<<<<< HEAD
-              secure: true,
-=======
               secure:true,
->>>>>>> 68924e7690507bac62dd0ce3d20c8156b7f508da
               auth: {
                 user: 'sudronikbusiness@gmail.com',
                 pass: '8454949819'
@@ -79,23 +77,21 @@ var nodemailer = require('nodemailer');
             
             transporter.sendMail(mailOptions, function(error, info){
               if (error) {
-<<<<<<< HEAD
-                console.log(error);
-=======
               console.log(error);
->>>>>>> 68924e7690507bac62dd0ce3d20c8156b7f508da
               } else {
-                console.log('Email sent: ' + info.response);
+                //console.log('Email sent: ' + info.response);
               }
             });
            
             
-                res.redirect('/')
 
-        })
-        .catch((err) => { 
 
-           res.render('pages/cart', {failedtitle:'Payment Failed, trying again in sometime'})
+        }).then(()=>{
+          res.render('pages/orderplaced',{order:num,getCategory})
+
+        }).catch((err) => { 
+
+           res.render('pages/cart', {failedtitle:'Payment Failed, trying again in sometime',getCategory})
   // If some error occurs 
   //res.send(err)
         }); 
