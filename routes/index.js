@@ -116,21 +116,31 @@ const constructorMethod = (app) => {
     app.use('/signup', signupRoutes);
 
     app.use('/logout', async (req, res) => {
-        if (req.sessionadmin) {
+        if (req.session.admin) {
             req.session.destroy();
-        }
-        if (!req.session.user) {
             res.redirect('/');
         } else {
-            req.session.destroy();
-            // res.render('pages/logout');
-            res.redirect('/');
+            if (!req.session.user) {
+                res.redirect('/');
+            } else {
+                req.session.destroy();
+                // res.render('pages/logout');
+                res.redirect('/');
+            }
         }
     });
     /*******************************************************************************Tanay*/
 
     app.get('/advertisements', async (req, res) => {
         res.render('pages/advertisements');
+    });
+
+    app.get('/terms-and-conditions', async (req, res) => {
+        res.render('pages/terms');
+    });
+
+    app.get('/privacy-policy', async (req, res) => {
+        res.render('pages/privacy');
     });
 
     // app.get('/signup', async (req, res) => {

@@ -154,13 +154,13 @@ let reg = new RegExp('^[0-9]+(\.[0-9]{1,2})?$')
     let titlewithoutspaces = title.replace(/ /g, '');
 
 if(!(/^[a-zA-Z]+$/.test(titlewithoutspaces))){
-    alert(titlewithoutspaces)
+    //alert(titlewithoutspaces)
     $('#errordiv').empty();
     $('#errordiv').append('<p>Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters<p>');
         $('#errordiv').show();
         return;
 }
-alert(title.replace(/\s+/g, ' ').trim())
+//alert(title.replace(/\s+/g, ' ').trim())
 let descriptionwithoutspaces=description.replace(/ /g, '');
 if(!(/^[a-zA-Z]+$/.test(descriptionwithoutspaces))){
     alert(descriptionwithoutspaces)

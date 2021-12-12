@@ -341,7 +341,7 @@ let idd=ObjectId(id)
 const MenuCollection = await menus();
 
 const deleteresult= await MenuCollection.deleteOne({_id:idd})
-
+console.log(deleteresult);
 if (deleteresult.deletedCount === 0) {
   return false
 }

@@ -27,7 +27,7 @@ app.use(async (req, res, next) => {
     let Router = req.originalUrl;
     let authen = 'Authenticated User';
     let nonauthen = 'Non-Authenticated User';
-    if (req.session.user) {
+    if (req.session.user || req.session.admin) {
         console.log(`${Timestamp} ${Method} ${Router} ${authen}`);
     } else {
         console.log(`${Timestamp} ${Method} ${Router} ${nonauthen}`);
@@ -58,16 +58,21 @@ app.use('/signup', (req, res, next) => {
         next();
     }
 });
-app.use('/logout', (req, res, next) => {
-    if (!req.session.user) {
-        return res.render('pages/errors',{errors:'Not Authorized to access this route'})
-    } else {
-        next();
-    }
-});
+// app.use('/logout', (req, res, next) => {
+//     if (!req.session.user) {
+//         return res.render('pages/errors', {
+//             errors: 'Not Authorized to access this route',
+//         });
+//     } else {
+//         console.log('it came here');
+//         next();
+//     }
+// });
 app.use('/users/profile', (req, res, next) => {
     if (!req.session.user) {
-        return res.render('pages/errors',{errors:'You must be logged-in to Acess this page'})
+        return res.render('pages/errors', {
+            errors: 'You must be logged-in to Acess this page',
+        });
     } else {
         next();
     }
