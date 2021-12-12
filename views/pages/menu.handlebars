@@ -49,9 +49,9 @@
                 </div>
                 {{/each}}
 
-                <div aria-live="polite" aria-atomic="true" style="position: relative;">
+                <div aria-live="assertive" aria-atomic="true" style="position: relative;">
                     <div style="position: absolute; bottom: 0; right: 0;">
-                        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div id="liveToast" class="toast hide align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
                             <div class="toast-header">
                             <strong class="me-auto">Alert</strong>
                             <small>Just Now</small>
@@ -63,6 +63,37 @@
                         </div>
                     </div>
                 </div>
+
+                <div aria-live="assertive" aria-atomic="true" style="position: relative;">
+                    <div style="position: absolute; bottom: 0; right: 0;">
+                        <div id="liveToast1" class="toast hide align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                            <strong class="me-auto">Alert</strong>
+                            <small>Just Now</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                            Food item is added to favourites successfully !!!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div aria-live="assertive" aria-atomic="true" style="position: relative;">
+                    <div style="position: absolute; bottom: 0; right: 0;">
+                        <div id="liveToast2" class="toast hide align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                            <strong class="me-auto">Alert</strong>
+                            <small>Just Now</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                            Food item is already added to favourites.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 
             </div>
         </div>

@@ -15,10 +15,9 @@
                 <div class="col-md-4">
                     <div class="left-cart-box">
                         <img src="./public/images/Menu/{{details.image}}" class="img-fluid rounded-start w-100" alt="...">
-                        <form method="post" action="cartpage/delete">
-                        <input type="text" value="{{_id}}" id="deleteid" name="delete" hidden>
-                        <button type="submit" class="btn btn-outline-danger remove-btn mb-3 mt-3" id="liveAlertBtn">Remove</button>
-                        </form>
+                        
+                        <button type="submit" class="btn btn-outline-danger remove-btn mb-3 mt-3" id="liveAlertBtn" data-bs-toggle="modal" data-bs-target=".cartmodal">Remove</button>
+        
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -46,6 +45,30 @@
                 </div>
             </div>
         </div>
+
+        
+        <!-- Modal -->
+        <form method="post" action="cartpage/delete">
+            <input type="text" value="{{_id}}" id="deleteid" name="delete" hidden>
+            <div class="cartmodal modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Alert</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to delete ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </form>
+
         {{/each}}
         
                 <div class="card m-4 m-md-5">
@@ -57,7 +80,7 @@
                             <p class="card-text cart-info pb-3"><strong>Total :</strong>{{total}}</p>
                             <div class="d-grid col-sm-12">
                                 
-                                <button class="btn btn-primary btn-continue" type="button" onclick="location.href='/payment';" value="Go to Payment Page" > <strong> Continue</strong></button>
+                                <button class="btn btn-primary btn-continue" type="button" value="Go to Payment Page" data-bs-toggle="modal" data-bs-target=".checkoutmodal"> <strong> Checkout</strong></button>
                                 
                             </div>
                         </div>
@@ -65,6 +88,26 @@
                 </div>
             </div>
         </div>
+
+        <div class="checkoutmodal modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Alert</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to checkout ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a type="submit" class="btn btn-primary" href="/payment">Checkout</a>
+                </div>
+                </div>
+            </div>
+            </div>
+
+
         {{/if}}
         {{#if NoCart}}
 
