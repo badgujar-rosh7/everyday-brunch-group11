@@ -7,8 +7,8 @@ const favData = data.favorites;
 
 router.post('/',async(req,res)=>{
 if(req.session.user){
-    let itemId=req.body['itemId']
-    console.log(itemId)
+    let itemId=xss(req.body['itemId'])
+    
     let userId=req.session.user.userId
     let added=await favData.addFavorite(userId, itemId)
     if(added.addedtoFavorite==true){
@@ -30,7 +30,7 @@ else {
 router.post('/delete',async(req,res)=>{
     if(req.session.user){
         try{
-    let id=req.body['itemid']
+    let id=xss(req.body['itemid'])
     let deleted=await favData.removeFavorite(req.session.user.userId,id)
             if(deleted.deletedfromFavorite){
                 res.send({success:true})

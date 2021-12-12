@@ -19,7 +19,7 @@ var nodemailer = require('nodemailer');
         // Moreover you can take more details from user 
         // like Address, Name, etc from form
         var num = Math.floor(Math.random() * 90000) + 10000;
-
+        console.log(req.session.user.cartvalue)
     if(req.session.user){
         stripe.customers.create({ 
             email: req.body.stripeEmail, 
@@ -28,7 +28,7 @@ var nodemailer = require('nodemailer');
         .then((customer) => { 
     
             return stripe.charges.create({ 
-                amount: req.session.user.cartvalue,    // Charing Rs 25 //pass saem value as previous page
+                amount: Math.round(req.session.user.cartvalue * 100),    // Charing Rs 25 //pass saem value as previous page
                 description: req.session.user.cartdescription, /// product names
                 currency: 'USD', 
                 customer: customer.id 
@@ -36,6 +36,7 @@ var nodemailer = require('nodemailer');
         }) 
         .then((charge) => { 
                // req.session.user.paymentstatus=true;
+               console.log(charge)
                 req.session.user.receipt=charge.receipt_url;
             //add entry to database
 
@@ -83,8 +84,9 @@ var nodemailer = require('nodemailer');
         })
         .catch((err) => { 
 
-            res.render('pages/cart', {failedtitle:'Payment Failed, trying again in sometime'})
+           // res.render('pages/cart', {failedtitle:'Payment Failed, trying again in sometime'})
   // If some error occurs 
+  res.send(err)
         }); 
 
     

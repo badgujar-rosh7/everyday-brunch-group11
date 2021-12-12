@@ -53,14 +53,14 @@ app.use('/signup', (req, res, next) => {
 });
 app.use('/logout', (req, res, next) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.render('pages/errors',{errors:'Not Authorized to access this route'})
     } else {
         next();
     }
 });
 app.use('/users/profile', (req, res, next) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.render('pages/errors',{errors:'You must be logged-in to Acess this page'})
     } else {
         next();
     }

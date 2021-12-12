@@ -46,6 +46,9 @@ router.post('/', async (req, res) => {
                     'Internal Server Error'
                 );
             }
+            // if(validatedUsername=='admin'){
+
+            // }
             const userId = await userdata.getUserId(validatedUsername);
             const userdetails = await userdata.getUserById(userId.toString());
             req.session.user = {

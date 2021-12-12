@@ -14,6 +14,7 @@ const reviewData = data.reviews;
 
 
 router.get('/dashboard', async (req, res) => {
+    //admin session
     let allusers = await usersinfo.getAllUsers();
     let allorders = await orderData.getAllOrders();
     let allcategory = await userData.getAllCategory();
@@ -26,6 +27,7 @@ router.get('/dashboard', async (req, res) => {
 });
 
 router.get('/ViewCategory', async (req, res) => {
+    //admin session
     let getCategory = await userData.getAllCategory();
     res.render('pages/viewCategory',{layout:'adminhome',getCategory})
 
@@ -37,12 +39,13 @@ router.get('/home', async (req, res) => {
 });
 
 router.get('/addCategory', async (req, res) => {
-
+//admin session
     res.render('pages/addcategory',{layout:'adminhome'})
 });
 
 router.post('/AddCategory', async (req, res) => {
     //render the page
+    //admin session
     try{
     let uploadFile = xss(req.files.menuFile);
     let category = xss(req.body['itemCategory']);
@@ -70,7 +73,7 @@ router.post('/AddCategory', async (req, res) => {
 
     let uploadpath = './public/images/Category/' + uploadFile.name;
     let ext = path.extname(uploadFile.name);
-    console.log(ext);
+
     const allowedExtension = /png|jpg|jpeg|JPG|PNG/;
     if (!allowedExtension.test(ext)) {
         throw 'Only png|jpg|jpeg|JPG|PNG types allowed';
@@ -105,24 +108,24 @@ router.post('/AddCategory', async (req, res) => {
 
 router.get('/newMenu', async(req, res) => {
     let getCategory = await userData.getAllCategory();
-    console.log(getCategory)
+    
     res.render('pages/newMenu',{layout:'adminhome',data:getCategory});
 
     //render view page
 });
 
 router.post('/addMenu', async (req, res) => {
-    console.log("hello")
+   
     let getCategory = await userData.getAllCategory();
     try{
 
     let uploadFile = req.files.menuFile;
-    let itemCategory = req.body['itemCategory'];
-    let itemTitle = req.body['itemTitle'];
-    let itemDescription = req.body['itemDescription'];
-    let itemPrice = req.body['itemPrice'];
-    let itemCalories = req.body['itemCalories'];
-    let itemKeywords = req.body['itemKeywords'];
+    let itemCategory = xss(req.body['itemCategory']);
+    let itemTitle = xss(req.body['itemTitle']);
+    let itemDescription = xss(req.body['itemDescription']);
+    let itemPrice = xss(req.body['itemPrice']);
+    let itemCalories = xss(req.body['itemCalories']);
+    let itemKeywords = xss(req.body['itemKeywords']);
     let itemImage = uploadFile.name;
 
 
@@ -237,36 +240,33 @@ itemPrice=parseFloat(itemPrice)
 router.get('/ViewMenu', async (req, res) => {
     //res.render('pages/ViewMenu')
     //render view page
-    let error=req.query['updatefailed']
+   
 
     let AllMenu = await userData.getAllMenu();
-    console.log(AllMenu.length);
+   // console.log(AllMenu.length);
     let json = AllMenu;
-    if(error=='AkjsSHD897'){
-        res.render('pages/ViewMenu', { layout:'adminhome',json,error:true });
-    }else {
+   
     res.render('pages/ViewMenu', { layout:'adminhome',json });
-}
+
 });
 
 router.post('/update', async (req, res) => {
     //res.render('pages/ViewMenu')
     //render view page
-    id = req.body['updateid'];
+    id = xss(req.body['updateid']);
     let userdetails = await userData.getMenuItem(id);
     let getCategory = await userData.getAllCategory();
     let catArray=[]
     for(let i=0;i<getCategory.length;i++){
-        console.log(getCategory[i])
-        console.log(userdetails.itemCategory)
+      
         if(getCategory[i].category==userdetails.itemCategory){
-            console.log('same')
+           
         }else{
-            console.log('nosame')
+          
             catArray.push(getCategory[i])
         }
     }
-    console.log(userdetails)
+    
     res.render('pages/update', {layout:'adminhome',data:catArray,category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:id});
 });
 
@@ -281,25 +281,25 @@ router.post('/updateMenu', async (req, res) => {
         uploadFile = null;
         itemImage = null;
     }
-    let itemId = req.body['itemId'];
+    let itemId = xss(req.body['itemId']);
     try{
         
-    let itemCategory = req.body['itemCategory'];
-    let itemTitle = req.body['itemTitle'];
-    let itemDescription = req.body['itemDescription'];
-    let itemPrice = req.body['itemPrice'];
-    let itemCalories = req.body['itemCalories'];
-    let itemKeywords = req.body['itemKeywords'];
+    let itemCategory = xss(req.body['itemCategory']);
+    let itemTitle = xss(req.body['itemTitle']);
+    let itemDescription = xss(req.body['itemDescription']);
+    let itemPrice = xss(req.body['itemPrice']);
+    let itemCalories = xss(req.body['itemCalories']);
+    let itemKeywords = xss(req.body['itemKeywords']);
     
-    console.log(itemId)
+    
    // let userdetails = await userData.getMenuItem(itemId);
    
-    let itemCategoryold = req.body['itemCategoryold'];
-    let itemTitleold = req.body['itemTitleold'];
-    let itemDescriptionold = req.body['itemDescriptionold'];
-    let itemPriceold = req.body['itemPriceold'];
-    let itemCaloriesold = req.body['itemCaloriesold'];
-    let itemKeywordsold = req.body['itemKeywordsold'];
+    let itemCategoryold = xss(req.body['itemCategoryold']);
+    let itemTitleold = xss(req.body['itemTitleold']);
+    let itemDescriptionold = xss(req.body['itemDescriptionold']);
+    let itemPriceold = xss(req.body['itemPriceold']);
+    let itemCaloriesold = xss(req.body['itemCaloriesold']);
+    let itemKeywordsold = xss(req.body['itemKeywordsold']);
     let getCategory = await userData.getAllCategory();
     let userdetails = await userData.getMenuItem(itemId);
     for(let i=0;i<getCategory.length;i++){
@@ -405,7 +405,7 @@ itemPrice=parseFloat(itemPrice)
         itemKeywords,
         itemId
     );
-    console.log(update);
+   
     if (update.menuupdated) {
         if (uploadFile) {
             let uploadpath = './public/images/Menu/' + uploadFile.name;
@@ -439,7 +439,7 @@ itemPrice=parseFloat(itemPrice)
         res.redirect('./ViewMenu');
     }
 } catch(error){
-    console.log(error)
+    
     let userdetails = await userData.getMenuItem(itemId);
     res.status(400).render('pages/update',{layout:'adminhome',data:catArray,err:error,category:userdetails.itemCategory,title:userdetails.itemTitle,description:userdetails.itemDescription,price:userdetails.itemPrice,calories:userdetails.itemCalories,keywords:userdetails.itemKeywords,image:userdetails.itemImage,id:itemId});
 }
@@ -447,8 +447,8 @@ itemPrice=parseFloat(itemPrice)
 
 router.post('/deleteitem', async (req, res) => {
     //menu item delete
-    let id = req.body['deleteid'];
-    let image=req.body['image'];
+    let id = xss(req.body['deleteid']);
+    let image=xss(req.body['image']);
     let uploadpath='./public/images/Menu/'+image;
     let deleted = await userData.deleteMenuItem(id);
     if (deleted) {
@@ -459,7 +459,7 @@ router.post('/deleteitem', async (req, res) => {
 
 router.post('/ViewMenuCategory', async (req, res) => {
     try{
-    let category = req.body['category'];
+    let category = xss(req.body['category']);
     let getCategory = await userData.getMenuByCategory(category);
     }catch(error){
         res.status(500).send({error:error})
@@ -468,9 +468,9 @@ router.post('/ViewMenuCategory', async (req, res) => {
 });
 
 router.post('/deleteCategory', async (req, res) => {
-    let id = req.body['deleteid'];
-    let category=req.body['deletecategory']
-    let getCategory = await userData.deleteCategory(id,category);
+    let id = xss(req.body['deleteid']);
+    let category=xss(req.body['deletecategory'])
+    let getCategory = xss(await userData.deleteCategory(id,category));
     let categoryimage=req.body['image']
     let uploadpath='./public/images/Category/'+categoryimage;
     if(getCategory.delete==true) {
@@ -485,23 +485,24 @@ router.post('/deleteCategory', async (req, res) => {
 });
 
 router.get('/viewAdvertise',async(req,res)=>{
-    //render the page showing all advertisements added
+    //admin session
     let advertisedata= await userData.getAdvertise()
     let json=advertisedata
     res.render('pages/viewAdvertise',{layout:'adminhome',json})
 });
 
 router.get('/addAdd',async(req,res)=>{
-    //render the page showing all advertisements added
+
+    //admin session
     res.render('pages/addAdvertise',{layout:'adminhome'})
 });
 
 router.post('/addadvertise', async(req,res)=>{
-
+//admin session
     try{
     let uploadFile=req.files.menuFile;
-    let advertiseTitle=req.body['advertiseTitle']
-    let advertiseDescription=req.body['advertiseDescription']
+    let advertiseTitle=xss(req.body['advertiseTitle'])
+    let advertiseDescription=xss(req.body['advertiseDescription'])
     let advertiseImage=uploadFile.name 
 
 
@@ -559,7 +560,7 @@ router.post('/addadvertise', async(req,res)=>{
       }); 
       res.redirect('./viewAdvertise')
     } else {
-            //mongo error not inserted
+            
     }
 }catch(error){
     res.status(400).render('pages/addAdvertise',{layout:'adminhome',err:error});
@@ -570,9 +571,9 @@ router.post('/addadvertise', async(req,res)=>{
 
 router.post('/deleteadvertise', async(req,res)=>{
     
-    let advertiseId=req.body['deleteid']
-    let advertiseimage=req.body['image']
-console.log(advertiseId)
+    let advertiseId=xss(req.body['deleteid'])
+    let advertiseimage=xss(req.body['image'])
+
     let uploadpath='./public/images/Advertise/'+advertiseimage;
 
     let deleted= await userData.deleteAdvertise(advertiseId)
@@ -581,7 +582,6 @@ console.log(advertiseId)
         fs.unlinkSync(uploadpath)
         res.redirect('./viewAdvertise')
     } else {
-            //mongo error not inserted
             res.render('pages/viewAdvertise',{layout:'adminhome',deleteerror:'Unable to insert into Database.Try again After sometime!! Internal Database error'})
 
     }
@@ -589,19 +589,21 @@ console.log(advertiseId)
 })
 
 router.get('/getorders', async (req, res) => {
+    //admin session
     let getAllOrders = await orderData.getAllOrders();
     res.render('pages/viewOrders',{layout:'adminhome',json:getAllOrders})
 });
 
 
 router.get('/viewreview', async (req, res) => {
+    //admin session
     const allreviews = await reviewData.getAllReviews();
     res.render('pages/adminreview',{layout:'adminhome',allreviews})
 });
 
 router.post('/viewreview', async (req, res) => {
     try{
-    let delrevid = req.body['reviewid']
+    let delrevid = xss(req.body['reviewid'])
     const delreviews = await reviewData.removeReviewById(delrevid);
     const allreviews = await reviewData.getAllReviews();
     res.render('pages/adminreview',{layout:'adminhome',allreviews})

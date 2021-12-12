@@ -69,7 +69,7 @@ const constructorMethod = (app) => {
             }
         }else {
             let advertisement=await userData.getAdvertise()
-            console.log(advertisement)
+            
             if(!advertisement){
                 res.render('pages/advertisements',{error:'No Advertisements Found',getCategory})
             }else{
