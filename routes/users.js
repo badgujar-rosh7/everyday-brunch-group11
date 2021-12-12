@@ -81,8 +81,6 @@ router.get('/profile', async (req, res) => {
         }
         }
 else{
-    
-        console.log("hi")
         res.render('pages/errors',{errors:'You must be logged-in to Acess this page'})
     }
 });

@@ -118,14 +118,15 @@ const constructorMethod = (app) => {
     app.use('/logout', async (req, res) => {
         if (req.session.admin) {
             req.session.destroy();
-            res.redirect('/');
+            res.render('pages/logout')
         } else {
             if (!req.session.user) {
-                res.redirect('/');
+                return res.render('pages/errors', {
+                errors: 'Not Authorized to access this route' });
             } else {
                 req.session.destroy();
                 // res.render('pages/logout');
-                res.redirect('/');
+                res.render('pages/logout')
             }
         }
     });
