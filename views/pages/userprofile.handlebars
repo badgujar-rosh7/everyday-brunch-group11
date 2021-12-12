@@ -59,7 +59,7 @@
 
 {{!--  --}}
 
-
+{{#if getOrder}}
 <section class="section admin-section">
   <div class="container">
     <div class="row">
@@ -98,7 +98,19 @@
     </div>
   </div>
 </section>
+{{/if}}
 
+{{#if noorder}}
+<section class="section menu-section yellow-section-background">
+    <div class="container">
+        <div class="menu-card-box">
+            <div class="row">
+                <h1 class="main-heading text-center mt-5 mb-5">{{noorder}}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+{{/if}}
 {{! orders of users}}
 
 {{! favourites of user}}
