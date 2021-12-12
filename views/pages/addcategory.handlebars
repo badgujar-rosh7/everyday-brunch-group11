@@ -41,39 +41,8 @@
     </div>
 </section>
 
+<script src="/public/js/AddCategory.js"></script>
 
-<script>
-    function AddCategory(){
-        let category=$('#itemCategory').val();
-        let image=$('#formFile').val()
-
-
-       if(!category || !category.trim()){
-     $('#errordiv').show();
-    $('#errordiv').empty();
-    $('#errordiv').append('<p>Select a Valid Category<p>');
-        $('#errordiv').show();
-        return;
-}
-if(!image || !image.trim()){
- $('#errordiv').empty();
-    $('#errordiv').append('<p>Provide a Valid image<p>');
-        $('#errordiv').show();
-        return;
-}
-
-  let categorywithoutspaces = category.replace(/ /g, '');
-
-if(!(/^[a-zA-Z]+$/.test(categorywithoutspaces))){
-    $('#errordiv').empty();
-    $('#errordiv').append('<p>Provide a Valid Title for Menu. NO SPECIAL CHARACTERS ONLY Alphabetic Characters<p>');
-        $('#errordiv').show();
-        return;
-}
-document.getElementById("categoryForm").submit();
-
-    }
-</script>
 
 {{!-- 
 <form ref='uploadForm' id='uploadForm' method="post" action="./updateMenu" encType="multipart/form-data">

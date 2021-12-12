@@ -92,8 +92,8 @@
                 </form>
                     {{#unless id}}
                 <a class="btn btn-outline-primary login-btn login-link me-2" type="submit" name="lbtn" href="/login">login</a>
-                                {{/unless}}
-                                {{#if id}}
+                    {{/unless}}
+                    {{#if id}}
                 <a class="btn btn-outline-primary logout-btn logout-link" type="submit" href="/logout">logout</a>
                
                 <a class="btn position-relative user-profile-btn" href="/users/profile" role="button">
@@ -140,6 +140,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
     <script src="/public/js/login.js"></script>
     <script src="/public/js/signup.js"></script>
+        <script src="/public/js/AddToFav.js"></script>
+                <script src="/public/js/flipevent.js"></script>
     
     <script type="text/javascript">
         $(document).ready(function(){
@@ -196,187 +198,9 @@
 
         });
     </script>
+  
     <script>
-        function AddToFavourites(event) {
-            event.preventDefault();
-            
-             let element = event.currentTarget;
-            let idd=element.id
-            let length=idd.length;
-            let newid=idd.slice(0,length-3)
-
-                        var requestConfig = {
-					method: 'POST',
-					url: '/favourites',
-					contentType: 'application/json',
-					data: JSON.stringify({
-						itemId:newid,
-					})
-				};
-
-				$.ajax(requestConfig).then(function(responseMessage) {
-                    console.log(responseMessage)
-					if(responseMessage.success==true){
-                        $('#errordiv').hide()
-                        $('#liveToast1').toast({animation:true, autohide: true, delay:3000});
-                        $('#liveToast1').toast("show");
-                        
-                    } else if(responseMessage.success==522){
-                            $('#errordiv').hide()
-                            $('#liveToast2').toast({animation:true, autohide: true, delay:3000});
-                        $('#liveToast2').toast("show");
-                    }else if(responseMessage.success==523){
-                        $('#errordiv').hide()
-                        alert("system error cannot update")
-                    }else if(responseMessage.success==false){
-                        $('#errordiv').hide()
-                        window.location.replace("http://localhost:3000/login?error="+responseMessage.success);
-                    } else{
-                       // window.location.replace("http://localhost:3000/login?error="+responseMessage.success);
-
-                        $('#error').text(responseMessage.success)
-                        $('#errordiv').show()
-                    }
-					//                alert("Data Saved: " + msg);
-				});
-
-
-
-
-        }
-
-
-        function reduce(event){
-            
-            let element = event.currentTarget;
-            let idd=element.id
-            let newvalue;
-           let currentvalue= $(`.${idd}`).val()
-           if(currentvalue==1){
-               newvalue=1
-           }else {
-
-            newvalue=currentvalue - 1
-               $(`.${idd}`).val(newvalue)
-               
-           }
-                        var requestConfig = {
-					method: 'POST',
-					url: '/cart/update',
-					contentType: 'application/json',
-					data: JSON.stringify({
-						updateid:idd,
-						quantity: newvalue,
-					})
-				};
-
-				$.ajax(requestConfig).then(function(responseMessage) {
-                    console.log(responseMessage)
-				if(responseMessage.success){
-                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
-                }else {
-                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
-
-                }
-    //                    $('#counter').text(responseMessage.count)
-  //                  } else {
-//                        window.location.replace("http://localhost:3000/login?error=1");
-                        
-                    //}
-					//                alert("Data Saved: " + msg);
-				});
-          
-        }   
        
-       function increase(event){
-           
-            let element = event.currentTarget;
-            let idd=element.id
-           let currentvalue= $(`.${idd}`).val()
-           let newvalue=parseInt(currentvalue) + parseInt(1)
-
-               $(`.${idd}`).val(newvalue)
-
-                 var requestConfig = {
-					method: 'POST',
-					url: '/cart/update',
-					contentType: 'application/json',
-					data: JSON.stringify({
-						updateid:idd,
-						quantity: newvalue,
-					})
-				};
-
-				$.ajax(requestConfig).then(function(responseMessage) {
-                    //console.log(responseMessage)
-				if(responseMessage.success){
-                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
-                } else{
-                    location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
-                }
-        
-           });
-          
-       }
-        function AddToCart(event){
-            event.preventDefault();
-	        let element = event.currentTarget;
-           
-            let idd=element.id
-            let quantity=$(`.${idd}`).val();
-            let price=$(`#${idd}${idd}${idd}`).text()
-            
-            price=price.replace('$','')
-            price=price.replace(' ','')
-           
-            var requestConfig = {
-					method: 'POST',
-					url: '/cart',
-					contentType: 'application/json',
-					data: JSON.stringify({
-						itemId:idd,
-						quantity: quantity,
-                        price:price
-					})
-				};
-
-				$.ajax(requestConfig).then(function(responseMessage) {
-					if(responseMessage.success){
-
-                        $('#counter').text(responseMessage.count)
-                    } else {
-                        
-                        window.location.replace("http://localhost:3000/login?error=1");
-                        
-                    }
-					//                alert("Data Saved: " + msg);
-				});
-
-        }
-    </script>
-    <script>
-        function flip(event){
-	        var element = event.currentTarget;
-            var main_card = element.parentElement.parentElement.parentElement;
-            if (main_card.className === "cardbox") {
-                if(main_card.style.transform == "rotateY(180deg)") {
-                    main_card.style.transform = "rotateY(0deg)";
-                }
-                else {
-                    main_card.style.transform = "rotateY(180deg)";
-                }
-            }
-                        
-            var frontHeight = $('.mycard').outerHeight();
-            var backHeight = $('.mycard1').outerHeight();
-
-            if (frontHeight > backHeight) {
-                $('.mycard1').height(frontHeight);
-            }
-            else if (frontHeight > backHeight) {
-                $('.mycard').height(backHeight);
-            }
-        };
     </script>
     <script>
         function increment(event){

@@ -14,6 +14,8 @@ const reviewData = data.reviews;
 
 router.get('/dashboard', async (req, res) => {
     //admin session
+    if(req.session.admin)
+    {
     let allusers = await usersinfo.getAllUsers();
     let allorders = await orderData.getAllOrders();
     let allcategory = await userData.getAllCategory();
@@ -28,7 +30,12 @@ router.get('/dashboard', async (req, res) => {
         count2: orercount,
         count3: catcount,
         count4: menucount,
+        name:req.session.admin.name
     });
+} else{
+    res.render('pages/errors',{layout:'adminhome',errors:'Not Authorize to access this page without login'})
+
+}
 });
 
 router.get('/ViewCategory', async (req, res) => {
@@ -118,7 +125,7 @@ router.post('/AddCategory', async (req, res) => {
                         return res.status(500).send(err);
                     }
                     sharp(`./public/images/Category/${uploadFile.name}`)
-                        .resize(200, 200)
+                        .resize(500, 500)
                         .withMetadata()
                         .toBuffer(function (err, buffer) {
                             fs.writeFile(
@@ -141,16 +148,20 @@ router.post('/AddCategory', async (req, res) => {
 });
 
 router.get('/newMenu', async (req, res) => {
-    if (!req.session.admin) res.sendFile(path.resolve('static/forbidden.html'));
+    if (!req.session.admin){
+     res.sendFile(path.resolve('static/forbidden.html'));
+    } else{
     let getCategory = await userData.getAllCategory();
-    console.log(getCategory);
+    //console.log(getCategory);
     res.render('pages/newMenu', { layout: 'adminhome', data: getCategory });
-
+    }
     //render view page
 });
 
 router.post('/addMenu', async (req, res) => {
-    if (!req.session.admin) res.sendFile(path.resolve('static/forbidden.html'));
+    if (!req.session.admin) {
+        res.sendFile(path.resolve('static/forbidden.html'));
+    } else{
     let getCategory = await userData.getAllCategory();
     try {
         let uploadFile = req.files.menuFile;
@@ -216,7 +227,7 @@ router.post('/addMenu', async (req, res) => {
         let titlewithoutspaces = itemTitle.replace(/ /g, '');
         let checktitle = !/^[a-zA-Z]+$/.test(titlewithoutspaces);
         if (checktitle) {
-            console.log('titleissue');
+           // console.log('titleissue');
             res.status(400).render('pages/newMenu', {
                 layout: 'adminhome',
                 data: getCategory,
@@ -309,7 +320,7 @@ router.post('/addMenu', async (req, res) => {
             itemPrice,
             itemCalories,
             itemImage,
-            itemKeywords
+            itemKeywords,
         );
 
         if (add.menuInserted) {
@@ -338,12 +349,13 @@ router.post('/addMenu', async (req, res) => {
             err: error,
         });
     }
+}
 });
 
 router.get('/ViewMenu', async (req, res) => {
     //res.render('pages/ViewMenu')
     //render view page
-    if (!req.session.admin) res.sendFile(path.resolve('static/forbidden.html'));
+    if (!req.session.admin)  res.sendFile(path.resolve('static/forbidden.html'));
     let error = req.query['updatefailed'];
 
     let AllMenu = await userData.getAllMenu();
@@ -363,6 +375,7 @@ router.get('/ViewMenu', async (req, res) => {
 router.post('/update', async (req, res) => {
     //res.render('pages/ViewMenu')
     //render view page
+    if (!req.session.admin)  res.sendFile(path.resolve('static/forbidden.html'));
     id = xss(req.body['updateid']);
     let userdetails = await userData.getMenuItem(id);
     let getCategory = await userData.getAllCategory();
@@ -371,13 +384,13 @@ router.post('/update', async (req, res) => {
         console.log(getCategory[i]);
         console.log(userdetails.itemCategory);
         if (getCategory[i].category == userdetails.itemCategory) {
-            console.log('same');
+            
         } else {
-            console.log('nosame');
+
             catArray.push(getCategory[i]);
         }
     }
-    console.log(userdetails);
+    
     res.render('pages/update', {
         layout: 'adminhome',
         data: catArray,
@@ -412,7 +425,6 @@ router.post('/updateMenu', async (req, res) => {
         let itemCalories = req.body['itemCalories'];
         let itemKeywords = req.body['itemKeywords'];
 
-        console.log(itemId);
         // let userdetails = await userData.getMenuItem(itemId);
 
         let itemCategoryold = req.body['itemCategoryold'];
@@ -665,7 +677,7 @@ router.post('/updateMenu', async (req, res) => {
             itemKeywords,
             itemId
         );
-        console.log(update);
+
         if (update.menuupdated) {
             if (uploadFile) {
                 let uploadpath = './public/images/Menu/' + uploadFile.name;
