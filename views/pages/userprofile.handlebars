@@ -136,7 +136,7 @@
                                     <a href="{{_id}}" class="btn btn-primary cart-btn" id="{{_id}}" onclick="AddToCart(event)" >Add to Cart</a>
                                     <a id="desc-btn" class="btn btn-outline-primary cart-btn" onclick="flip(event)">Description</a>
                                     <div class="d-flex justify-content-around">
-                                    <button class="btn btn-danger btn-sm mt-3" type="type" onclick="DeleteFav('{{_id}}')"><span class="material-icons">delete</span></button>
+                                    <button class="btn btn-danger btn-sm mt-3" type="type" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"><span class="material-icons">delete</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -154,12 +154,33 @@
                         </div>
                     </div>
                 </div>
+                
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Alert</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure to delete ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="DeleteFav('{{_id}}')">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
                 {{/each}}
             </div>
         </div>
     </div>
 </section>
 {{/if}}
+
+
 
 {{#if nofav}}
 <section class="section menu-section yellow-section-background">
@@ -175,7 +196,6 @@
 
 <script>
     function DeleteFav(id){
-        alert(id)
 
                     var requestConfig = {
 					method: 'POST',

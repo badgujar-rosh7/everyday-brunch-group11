@@ -108,6 +108,14 @@ const constructorMethod = (app) => {
         res.render('pages/advertisements');
     });
 
+    app.get('/terms-and-conditions', async (req, res) => {
+        res.render('pages/terms');
+    });
+
+    app.get('/privacy-policy', async (req, res) => {
+        res.render('pages/privacy');
+    });
+
     // app.get('/signup', async (req, res) => {
     //     res.render('pages/signupform');
     // });

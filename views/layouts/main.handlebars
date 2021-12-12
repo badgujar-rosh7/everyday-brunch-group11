@@ -88,13 +88,13 @@
                      <form class="d-flex" method="post" action="/search">
                
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light me-2" type="submit">Search</button>
+                    <button class="btn btn-outline-primary me-2" type="submit">Search</button>
                 </form>
                     {{#unless id}}
-                <button class="btn btn-outline-primary login-btn me-2" type="submit" name="lbtn"><a class="login-link" href="/login">login</a></button>
+                <a class="btn btn-outline-primary login-btn login-link me-2" type="submit" name="lbtn" href="/login">login</a>
                                 {{/unless}}
                                 {{#if id}}
-                <button class="btn btn-outline-primary logout-btn" type="submit"><a class="logout-link" href="/logout">logout</a></button>
+                <a class="btn btn-outline-primary logout-btn logout-link" type="submit" href="/logout">logout</a>
                
                 <a class="btn position-relative user-profile-btn" href="/users/profile" role="button">
                     <img src="/public/images/user_profile.png" class="rounded img-fluid user-img" />
@@ -117,14 +117,18 @@
                 <div class="d-flex justify-content-around pt-5 pb-5">
                     <div><a class="main-label" href="/menu">Menu</a></div>
                     <div><a class="main-label" href="/advertisements">Advertisements</a></div>
-                    <div><a class="main-label" href="/reviews">Reviews</a></div>
-                    {{!-- <div><a class="main-label" href="/desserts">Desserts</a></div> --}}
+                    <div><a class="main-label" href="/bestseller">Best Seller</a></div>
+                    <div><a class="main-label" href="/login">Login</a></div>
                 </div>
                 <div class="d-flex justify-content-around pb-5">
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-twitter"></i><a href="https://twitter.com/" class="social-label">Twitter</a></div>
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-instagram"></i><a href="https://www.instagram.com/" class="social-label">Instagram</a></div>
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-facebook"></i><a href="https://www.facebook.com/" class="social-label">Facebook</a></div>
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-linkedin"></i><a href="https://www.linkedin.com/" class="social-label">LinkedIn</a></div>
+                    <div class="d-flex flex-column text-center"><a href="https://twitter.com/" class="social-label"><i class="social-icon pb-2 fab fa-twitter"></i><p>Twitter</p></a></div>
+                    <div class="d-flex flex-column text-center"><a href="https://www.instagram.com/" class="social-label"><i class="social-icon pb-2 fab fa-instagram"></i><p>Instagram</p></a></div>
+                    <div class="d-flex flex-column text-center"><a href="https://www.facebook.com/" class="social-label"><i class="social-icon pb-2 fab fa-facebook"></i><p>Facebook</p></a></div>
+                    <div class="d-flex flex-column text-center"><a href="https://www.linkedin.com/" class="social-label"><i class="social-icon pb-2 fab fa-linkedin"></i><p>LinkedIn</p></a></div>
+                </div>
+                <div class="d-flex justify-content-around pb-5">
+                    <div><a class="main-label" href="/terms-and-conditions">Terms & Conditions</a></div>
+                    <div><a class="main-label" href="/privacy-policy">Privacy Policy</a></div>
                 </div>
             </div>
         </div>
@@ -195,11 +199,11 @@
     <script>
         function AddToFavourites(event) {
             event.preventDefault();
+            
              let element = event.currentTarget;
             let idd=element.id
             let length=idd.length;
             let newid=idd.slice(0,length-3)
-            alert(newid)
 
                         var requestConfig = {
 					method: 'POST',
@@ -214,11 +218,13 @@
                     console.log(responseMessage)
 					if(responseMessage.success==true){
                         $('#errordiv').hide()
-
-                            alert('added to fav')
+                        $('#liveToast1').toast({animation:true, autohide: true, delay:3000});
+                        $('#liveToast1').toast("show");
+                        
                     } else if(responseMessage.success==522){
                             $('#errordiv').hide()
-                            alert('Already present')
+                            $('#liveToast2').toast({animation:true, autohide: true, delay:3000});
+                        $('#liveToast2').toast("show");
                     }else if(responseMessage.success==523){
                         $('#errordiv').hide()
                         alert("system error cannot update")
@@ -252,7 +258,7 @@
 
             newvalue=currentvalue - 1
                $(`.${idd}`).val(newvalue)
-               alert("new")
+               
            }
                         var requestConfig = {
 					method: 'POST',
@@ -409,8 +415,8 @@
     
     <script>
         $('.add-item-btn').on("click", function () {
-        $('.toast').toast({animation:true, autohide: true, delay:3000});
-            $('.toast').toast("show");
+        $('#liveToast').toast({animation:true, autohide: true, delay:3000});
+            $('#liveToast').toast("show");
         });
     </script>
 
