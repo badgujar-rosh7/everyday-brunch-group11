@@ -27,7 +27,7 @@ app.use(async (req, res, next) => {
     let Router = req.originalUrl;
     let authen = 'Authenticated User';
     let nonauthen = 'Non-Authenticated User';
-    if (req.session.user) {
+    if (req.session.user || req.session.admin) {
         console.log(`${Timestamp} ${Method} ${Router} ${authen}`);
     } else {
         console.log(`${Timestamp} ${Method} ${Router} ${nonauthen}`);
@@ -59,9 +59,10 @@ app.use('/signup', (req, res, next) => {
     }
 });
 app.use('/logout', (req, res, next) => {
-    if (!req.session.user) {
+    if (!req.session.user || !req.session.admin) {
         return res.redirect('/');
     } else {
+        console.log('it came here');
         next();
     }
 });
