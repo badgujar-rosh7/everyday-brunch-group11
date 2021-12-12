@@ -33,12 +33,12 @@ router.get('/', async (req, res) => {
 router.get('/profile', async (req, res) => {
     
     
-    console.log("hi")
+    //console.log("hi")
 
     if (req.session.user) {
 
         try {
-            console.log("gghggghgh")
+            //console.log("gghggghgh")
             let userId = xss(req.session.user.userId);
             const validateduserId = errorcheck.validateUserId(userId);
             let getUserById = await userData.getUserById(userId);
@@ -47,27 +47,33 @@ router.get('/profile', async (req, res) => {
             let allfav=await favData.getAllfavorite(userId) 
             console.log(allfav)
 
+
+                let rarr = await reviewData.getAllReviewsByUserId(userId);
+
+
             if(allfav.length>0){
-            let json=[];
-            for(let i=0;i<allfav.length;i++){
-                let menudetails=await menuData.getMenuItem(allfav[i].foodId.toString())
-                if(menudetails !=null){
-                json.push(menudetails);
+                let json=[];
+                for(let i=0;i<allfav.length;i++){
+                    let menudetails=await menuData.getMenuItem(allfav[i].foodId.toString())
+                    if(menudetails !=null){
+                    json.push(menudetails);
+                    }
                 }
-            }
-            const reviewByUserId = await reviewData.getAllReviewsByUserId(userId);
-            if(getOrder.length>0){
-            res.render('pages/userprofile', { data: getUserById,getOrder,json,id:req.session.user.userId,reviewByUserId});
-            }else{
-                res.render('pages/userprofile', { data: getUserById,json,noorder:'No Order placed by user',id:req.session.user.userId,reviewByUserId});
-            }
+                
+                if(getOrder.length>0){
+                res.render('pages/userprofile', { data: getUserById,getOrder,json,id:req.session.user.userId,rarr});
+                }else{
+                    res.render('pages/userprofile', { data: getUserById,json,noorder:'No Order placed by user',id:req.session.user.userId,rarr});
+                }
         }else {
             if(getOrder.length>0){
-            res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet',id:req.session.user.userId,reviewByUserId});
+            res.render('pages/userprofile', { data: getUserById,getOrder,nofav:'No Fav item added by user yet',id:req.session.user.userId ,rarr});
             }else {
-                res.render('pages/userprofile', { data: getUserById,noorder:'No Order placed by user',nofav:'No Fav item added by user yet',id:req.session.user.userId,reviewByUserId });
+                res.render('pages/userprofile', { data: getUserById,noorder:'No Order placed by user',nofav:'No Fav item added by user yet',id:req.session.user.userId,rarr });
             }
         }
+       
+
         } catch (error) {
             res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR).send({
                 serverResponse: error.message || 'Internal server error.',
