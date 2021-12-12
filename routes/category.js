@@ -13,15 +13,24 @@ router.get('/', async (req, res) => {
     //console.log(getCategory);
     if(req.session.user){
     const menuData = await userData.getMenuByCategory(name);
-    //console.log(menuData);
+    console.log(menuData.length);
     let getCategory = await userData.getAllCategory();
-    res.render('pages/menu',{pageHeading:`Menu for ${name}`,data:menuData,getCategory,id:req.session.user.userId});
+    if(menuData.length>0){
+        res.render('pages/menu',{pageHeading:`Menu for ${name}`,data:menuData,getCategory});
+        }else{
+            res.render('pages/menu',{pageHeading:`No Menu for ${name}`,getCategory});
+        }
+    //res.render('pages/menu',{pageHeading:`Menu for ${name}`,data:menuData,getCategory,id:req.session.user.userId});
     } else{
         const menuData = await userData.getMenuByCategory(name);
         //console.log(menuData);
         let getCategory = await userData.getAllCategory();
+        console.log(menuData.length)
+        if(menuData.length>0){
         res.render('pages/menu',{pageHeading:`Menu for ${name}`,data:menuData,getCategory});
-
+        }else{
+            res.render('pages/menu',{pageHeading:`No Menu for ${name}`,getCategory});
+        }
     }
  }
  catch(error){

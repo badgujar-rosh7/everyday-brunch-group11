@@ -93,6 +93,7 @@ if(!(/^[a-zA-Z]+$/.test(keywordswithoutspaces))){
        $('#errordiv').show();
        return;
 }
+if(image.length!=0){
 if(string == '.JPG' || string == '.jpg' || string == '.PNG' || string == '.png' || string == '.JPEG' || string == '.jpeg'){
 
 }else{
@@ -101,6 +102,7 @@ if(string == '.JPG' || string == '.jpg' || string == '.PNG' || string == '.png' 
        $('#errordiv').show();
        return;
 
+}
 }
 
     let categoryold=$('#itemCategoryold').val();
