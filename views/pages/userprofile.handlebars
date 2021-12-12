@@ -223,6 +223,7 @@
                     <button class="btn btn-primary btn-continue" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Write Review
                     </button>
+                    
                 </div>
             </div>
             <!-- Modal -->
@@ -233,11 +234,11 @@
                     <h5 class="modal-title" id="staticBackdropLabel">Let Us Know Your Thoughts !!!</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="/reviews/newreview" id="review-form">
+                <form method="POST" action="/users/profile" id="review-form">
                 <div class="form-group">
                     <div class="modal-body">
                         <div class="form-floating mb-5">
-                            <input class="form-control" id="review" type="text" placeholder="Please Enter Food Name..." name="review">
+                            <input class="form-control" id="review" type="text" placeholder="Please Enter Food Name..." name="review" required>
                             <label for="review">Review</label>
                         </div>
                         <input id="userid" name="userId" type="text" value="{{data._id}}" class="form-control" hidden>
@@ -281,6 +282,18 @@
 </section>
 {{/if}}
 {{!-- End of Review Section --}}
+
+{{#if errors}}
+<section class="section admin-section">
+  <div class="container">
+    <div class="row">
+        <h2 class="main-heading text-center mt-5 mb-5">Reviews</h2>
+        <p class="subheading">{{errors}}</p>
+        <a class="subheading mb-5" href="./profile">Back to Reviews</a>
+    </div>
+  </div>
+</section>
+{{/if}}
 
 
 <script>

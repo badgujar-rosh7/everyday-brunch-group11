@@ -30,6 +30,40 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.post('/profile', async (req, res) => {
+    try {
+        let userId = req.body['userId'];
+        let review = req.body['review'];
+        let rating = parseInt(req.body['rating']);
+
+        const validateduserId = errorcheck.validateUserId(userId);
+        const validatedreview = errorcheck.validateReview(review);
+        const validatedrating = rating;
+
+        const current_datetime = new Date();
+        const formatted_date =
+            current_datetime.getMonth() +
+            1 +
+            '/' +
+            current_datetime.getDate() +
+            '/' +
+            current_datetime.getFullYear();
+        const createReview = await reviewData.createReview(
+            validateduserId,
+            validatedreview,
+            validatedrating,
+            formatted_date
+        );
+        res.redirect('./profile');
+    } catch (error) {
+        res.status(error.code || ErrorCode.INTERNAL_SERVER_ERROR);
+        res.render('pages/userprofile',{errors: error.message});
+        //res.redirect('./profile');
+    }
+});
+
+
+
 router.get('/profile', async (req, res) => {
     
     
