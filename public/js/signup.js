@@ -38,22 +38,22 @@ $(document).ready(function () {
         ) {
             var useJson = true;
             if (useJson) {
-                var requestConfig = {
-                    method: 'POST',
-                    url: '/signup',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        firstName: newFirstName,
-                        lastName: newLastName,
-                        email: newEmail,
-                        dateOfBirth: newDob,
-                        gender: newGender,
-                        city: newCity,
-                        state: newState,
-                        username: newUsername,
-                        password: newPassword,
-                    }),
-                };
+                // var requestConfig = {
+                //     method: 'POST',
+                //     url: '/signup',
+                //     contentType: 'application/json',
+                //     data: JSON.stringify({
+                //         firstName: newFirstName,
+                //         lastName: newLastName,
+                //         email: newEmail,
+                //         dateOfBirth: newDob,
+                //         gender: newGender,
+                //         city: newCity,
+                //         state: newState,
+                //         username: newUsername,
+                //         password: newPassword,
+                //     }),
+                // };
 
                 $.ajax({
                     method: 'POST',

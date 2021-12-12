@@ -19,9 +19,9 @@ const favRoutes = require('./favourite');
 const userData = data.menu;
 const cartData = data.cart;
 const reviewData = data.reviews;
+var isAdmin = false;
 
 const constructorMethod = (app) => {
-
     app.get('/', async (req, res) => {
         let getCategory = await userData.getAllCategory();
         // let counterValue;
@@ -31,10 +31,19 @@ const constructorMethod = (app) => {
         //     counterValue=0
         // }
         const allreviews = await reviewData.getAllReviews();
-        if(req.session.user){
-        res.render('pages/index', { getCategory,data:getCategory,id:req.session.user.userId,allreviews });
-        }else{
-            res.render('pages/index', { getCategory,data:getCategory,allreviews });
+        if (req.session.user) {
+            res.render('pages/index', {
+                getCategory,
+                data: getCategory,
+                id: req.session.user.userId,
+                allreviews,
+            });
+        } else {
+            res.render('pages/index', {
+                getCategory,
+                data: getCategory,
+                allreviews,
+            });
         }
     });
 
@@ -56,36 +65,49 @@ const constructorMethod = (app) => {
             res.json({ success: true, count: 0 });
         }
     });
-    
-    app.get('/advertisements', async(req,res)=>{
+
+    app.get('/advertisements', async (req, res) => {
         let getCategory = await userData.getAllCategory();
-        if(req.session.user){
-            let advertisement=await userData.getAdvertise()
-            console.log(advertisement)
-            if(!advertisement){
-                res.render('pages/advertisements',{error:'No Advertisements Found',getCategory,id:req.session.user.userId})
-            }else{
-                res.render('pages/advertisements',{data:advertisement,getCategory,id:req.session.user.userId})
+        if (req.session.user) {
+            let advertisement = await userData.getAdvertise();
+            console.log(advertisement);
+            if (!advertisement) {
+                res.render('pages/advertisements', {
+                    error: 'No Advertisements Found',
+                    getCategory,
+                    id: req.session.user.userId,
+                });
+            } else {
+                res.render('pages/advertisements', {
+                    data: advertisement,
+                    getCategory,
+                    id: req.session.user.userId,
+                });
             }
-        }else {
-            let advertisement=await userData.getAdvertise()
-            console.log(advertisement)
-            if(!advertisement){
-                res.render('pages/advertisements',{error:'No Advertisements Found',getCategory})
-            }else{
-                res.render('pages/advertisements',{data:advertisement,getCategory})
+        } else {
+            let advertisement = await userData.getAdvertise();
+            console.log(advertisement);
+            if (!advertisement) {
+                res.render('pages/advertisements', {
+                    error: 'No Advertisements Found',
+                    getCategory,
+                });
+            } else {
+                res.render('pages/advertisements', {
+                    data: advertisement,
+                    getCategory,
+                });
             }
         }
-    })
+    });
 
     app.use('/cartpage', cartDetailRoutes);
     app.use('/payment', paymentRoutes);
     app.use('/paymentpage', payRoutes);
-    app.use('/bestseller',bestRoutes);
+    app.use('/bestseller', bestRoutes);
     app.use('/menu', menuRoutes);
     app.use('/favourites', favRoutes);
     /////////////////////////////////////////////////Roshan
-    
 
     /*******************************************************************************Tanay*/
     app.use('/users', userRoutes);
@@ -94,6 +116,9 @@ const constructorMethod = (app) => {
     app.use('/signup', signupRoutes);
 
     app.use('/logout', async (req, res) => {
+        if (req.sessionadmin) {
+            req.session.destroy();
+        }
         if (!req.session.user) {
             res.redirect('/');
         } else {
@@ -113,11 +138,10 @@ const constructorMethod = (app) => {
     // });
 
     app.get('/admin', async (req, res) => {
-        res.render('pages/admin');
+        res.redirect('/admin/dashboard');
     });
 
-    app.use('/bestseller',bestRoutes);
-
+    app.use('/bestseller', bestRoutes);
 
     //
     app.use('*', (req, res) => {
