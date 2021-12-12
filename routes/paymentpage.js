@@ -28,7 +28,7 @@ var nodemailer = require('nodemailer');
         .then((customer) => { 
     
             return stripe.charges.create({ 
-                amount: Math.round(req.session.user.cartvalue * 100),    // Charing Rs 25 //pass saem value as previous page
+                amount:req.session.user.cartvalue,    // Charing Rs 25 //pass saem value as previous page
                 description: req.session.user.cartdescription, /// product names
                 currency: 'USD', 
                 customer: customer.id 
@@ -59,6 +59,7 @@ var nodemailer = require('nodemailer');
             let mailto=`${req.session.user.email}`
             var transporter = nodemailer.createTransport({
               service: 'gmail',
+              secure: true,
               auth: {
                 user: 'sudronikbusiness@gmail.com',
                 pass: '8454949819'
@@ -74,7 +75,7 @@ var nodemailer = require('nodemailer');
             
             transporter.sendMail(mailOptions, function(error, info){
               if (error) {
-              //  console.log(error);
+                console.log(error);
               } else {
                 console.log('Email sent: ' + info.response);
               }
@@ -86,9 +87,9 @@ var nodemailer = require('nodemailer');
         })
         .catch((err) => { 
 
-           // res.render('pages/cart', {failedtitle:'Payment Failed, trying again in sometime'})
+           res.render('pages/cart', {failedtitle:'Payment Failed, trying again in sometime'})
   // If some error occurs 
-  res.send(err)
+ // res.send(err)
         }); 
 
     
