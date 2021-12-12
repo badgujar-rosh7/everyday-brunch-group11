@@ -3,11 +3,12 @@ const router = express.Router();
 const data = require('../data');
 const path = require('path');
 const cartData = data.cart;
+const xss = require('xss');
 
 router.post('/', async (req, res) => {
-    let itemId=req.body.itemId
-    let quantity=req.body.quantity
-    let price=req.body.price
+    let itemId=xss(req.body.itemId)
+    let quantity=xss(req.body.quantity)
+    let price=xss(req.body.price)
   //  req.session.userid='78787878'
   if(req.session.user){
     let userID=req.session.user.userId  //this id will come form session after users loggedin
@@ -26,8 +27,8 @@ if(createCart.cartInserted){
 });
 
 router.post('/update', async (req, res) => {
-    let id=req.body.updateid
-    let quantity=req.body.quantity
+    let id=xss(req.body.updateid)
+    let quantity=xss(req.body.quantity)
   //  req.session.userid='78787878'
   if(req.session.user){
     let userID=req.session.user.userId  //this id will come form session after users loggedin

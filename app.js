@@ -59,8 +59,13 @@ app.use('/signup', (req, res, next) => {
     }
 });
 app.use('/logout', (req, res, next) => {
+<<<<<<< HEAD
     if (!req.session.user || !req.session.admin) {
         return res.redirect('/');
+=======
+    if (!req.session.user) {
+        return res.render('pages/errors',{errors:'Not Authorized to access this route'})
+>>>>>>> 0fa1f730a6b8d3a2fbd41d9309ad32d057c4635f
     } else {
         console.log('it came here');
         next();
@@ -68,7 +73,7 @@ app.use('/logout', (req, res, next) => {
 });
 app.use('/users/profile', (req, res, next) => {
     if (!req.session.user) {
-        return res.redirect('/');
+        return res.render('pages/errors',{errors:'You must be logged-in to Acess this page'})
     } else {
         next();
     }
