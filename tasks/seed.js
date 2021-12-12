@@ -2,6 +2,7 @@ const dbConnection = require('../config/mongoConnection');
 const data = require('../data');
 const signup = data.signup;
 const reviews = data.reviews;
+const menu = data.menu;
 
 async function main() {
     const db = await dbConnection;
@@ -106,8 +107,39 @@ async function main() {
     userF = await signup.createUser(userF);
     userG = await signup.createUser(userG);
 
+
+    //Category
+    let categoryA = {
+        catogory: 'Brunch'
+    }
+
+    let categoryB = {
+        catogory: 'Side'
+    }
+
+    let categoryC = {
+        catogory: 'Bakery'
+    }
+
+    let categoryD = {
+        catogory: 'Coffee'
+    }
+
+    let categoryE = {
+        catogory: 'Beverage'
+    }
+
+    categoryA = await menu.addCategory(categoryA);
+    categoryB = await menu.addCategory(categoryB);
+    categoryC = await menu.addCategory(categoryC);
+    categoryD = await menu.addCategory(categoryD);
+    categoryE = await menu.addCategory(categoryE);
+
+
+
     //Review
     let reviewA = {
+        review_id: ObjectId()
         userId: userA._id,
         review: 'Love the brunch here!',
         rating: 5,
@@ -116,7 +148,7 @@ async function main() {
 
     let reviewB = {
         userId: userB._id,
-        review: 'I had a large iced Americano and a 6 inch tuna sub, awesome food but the coffee can be better.',
+        review: 'I had a large Cold Brew and a Borrito, awesome food but the coffee can be better.',
         rating: 4,
         dateofReview: 07/07/2021,
     };
