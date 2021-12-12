@@ -63,7 +63,7 @@ router.post('/AddCategory', async (req, res) => {
     } else {
         //render the page
         try {
-            let uploadFile = xss(req.files.menuFile);
+            let uploadFile = req.files.menuFile;
             let category = xss(req.body['itemCategory']);
             let categoryImage = uploadFile.name;
             if (!category || !category.trim()) {
