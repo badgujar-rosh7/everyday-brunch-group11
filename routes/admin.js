@@ -66,6 +66,8 @@ router.post('/AddCategory', async (req, res) => {
             let uploadFile = req.files.menuFile;
             let category = xss(req.body['itemCategory']);
             let categoryImage = uploadFile.name;
+
+            
             if (!category || !category.trim()) {
                 res.status(400).render('pages/addCategory', {
                     layout: 'adminhome',
@@ -73,6 +75,7 @@ router.post('/AddCategory', async (req, res) => {
                 });
                 return;
             }
+
             if (!categoryImage || !categoryImage.trim()) {
                 if (!category || !category.trim()) {
                     res.status(400).render('pages/addCategory', {
@@ -106,8 +109,9 @@ router.post('/AddCategory', async (req, res) => {
             }
 
             //insert
+           
             let add = await userData.addCategory(category, categoryImage);
-
+            console.log(add)
             if (add.categoryInserted) {
                 uploadFile.mv(uploadpath, function (err) {
                     if (err) {
@@ -115,6 +119,7 @@ router.post('/AddCategory', async (req, res) => {
                     }
                     sharp(`./public/images/Category/${uploadFile.name}`)
                         .resize(200, 200)
+                        .withMetadata()
                         .toBuffer(function (err, buffer) {
                             fs.writeFile(
                                 `./public/images/Category/${uploadFile.name}`,
@@ -207,7 +212,7 @@ router.post('/addMenu', async (req, res) => {
             return;
         }
 
-        let reg = new RegExp('^[0-9]+(.[0-9]+)*$');
+        let reg = new RegExp('^[0-9]+(\.[0-9]{1,2})?$')
         let titlewithoutspaces = itemTitle.replace(/ /g, '');
         let checktitle = !/^[a-zA-Z]+$/.test(titlewithoutspaces);
         if (checktitle) {
@@ -253,7 +258,7 @@ router.post('/addMenu', async (req, res) => {
                 layout: 'adminhome',
                 data: getCategory,
                 err:
-                    'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES',
+                    'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES upto TWO DECIMALS',
             });
             return;
         }
@@ -262,7 +267,7 @@ router.post('/addMenu', async (req, res) => {
                 layout: 'adminhome',
                 data: getCategory,
                 err:
-                    'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES',
+                    'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES upto TWO DECIMALS',
             });
             return;
         }
@@ -776,8 +781,8 @@ router.get('/addAdd', async (req, res) => {
 router.post('/addadvertise', async (req, res) => {
     try {
         let uploadFile = req.files.menuFile;
-        let advertiseTitle = req.body['advertiseTitle'];
-        let advertiseDescription = req.body['advertiseDescription'];
+        let advertiseTitle = xss(req.body['advertiseTitle']);
+        let advertiseDescription = xss(req.body['advertiseDescription']);
         let advertiseImage = uploadFile.name;
 
         if (!advertiseTitle || !advertiseTitle.trim()) {
@@ -840,7 +845,7 @@ router.post('/addadvertise', async (req, res) => {
                     return res.status(500).send(err);
                 }
                 sharp(`./public/images/Advertise/${uploadFile.name}`)
-                    .resize(200, 200)
+                    .resize(1400, 500)
                     .withMetadata()
                     .toBuffer(function (err, buffer) {
                         fs.writeFile(

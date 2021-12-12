@@ -129,7 +129,7 @@ if(!Keyword || !Keyword.trim()){
         $('#errordiv').show();
         return;
 }
-let reg = new RegExp('^[0-9]+(\.[0-9]+)*$')
+let reg = new RegExp('^[0-9]+(\.[0-9]{1,2})?$')
 let regnew=new RegExp('/^[a-zA-Z]*$/');
     let titlewithoutspaces = title.replace(/ /g, '');
 
@@ -152,14 +152,14 @@ if(!(/^[a-zA-Z]+$/.test(descriptionwithoutspaces))){
 if(!reg.test(`${price}`)){
   
     $('#errordiv').empty();
-    $('#errordiv').append('<p>Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES<p>');
+    $('#errordiv').append('<p>Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES. VALUE UPTO TWO DECIMALS ONLY<p>');
         $('#errordiv').show();
         return;
 }
 if(!reg.test(`${Calories}`)){
     
     $('#errordiv').empty();
-    $('#errordiv').append('<p>Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES<p>');
+    $('#errordiv').append('<p>Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES. VALUE UPTO TWO DECIMALS ONLY<p>');
         $('#errordiv').show();
         return;
 }

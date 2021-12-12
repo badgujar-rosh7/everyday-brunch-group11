@@ -28,7 +28,7 @@ var nodemailer = require('nodemailer');
         .then((customer) => { 
     
             return stripe.charges.create({ 
-                amount: Math.round(req.session.user.cartvalue * 100),    // Charing Rs 25 //pass saem value as previous page
+                amount:req.session.user.cartvalue,    // Charing Rs 25 //pass saem value as previous page
                 description: req.session.user.cartdescription, /// product names
                 currency: 'USD', 
                 customer: customer.id 
@@ -59,7 +59,11 @@ var nodemailer = require('nodemailer');
             let mailto=`${req.session.user.email}`
             var transporter = nodemailer.createTransport({
               service: 'gmail',
+<<<<<<< HEAD
+              secure: true,
+=======
               secure:true,
+>>>>>>> 68924e7690507bac62dd0ce3d20c8156b7f508da
               auth: {
                 user: 'sudronikbusiness@gmail.com',
                 pass: '8454949819'
@@ -75,7 +79,11 @@ var nodemailer = require('nodemailer');
             
             transporter.sendMail(mailOptions, function(error, info){
               if (error) {
+<<<<<<< HEAD
+                console.log(error);
+=======
               console.log(error);
+>>>>>>> 68924e7690507bac62dd0ce3d20c8156b7f508da
               } else {
                 console.log('Email sent: ' + info.response);
               }

@@ -8,9 +8,10 @@ const xss=require('xss')
 const fileUpload = require('express-fileupload');
 
 router.get('/', async (req, res) => {
+    try{
     let name=xss(req.query.name)
     //console.log(getCategory);
-    if(req.session.user.userId){
+    if(req.session.user){
     const menuData = await userData.getMenuByCategory(name);
     //console.log(menuData);
     let getCategory = await userData.getAllCategory();
@@ -22,7 +23,10 @@ router.get('/', async (req, res) => {
         res.render('pages/menu',{pageHeading:`Menu for ${name}`,data:menuData,getCategory});
 
     }
-        //res.json({menuData})
+ }
+ catch(error){
+     res.status(500).send({errorMessage:error})
+ } //res.json({menuData})
 });
 
 module.exports=router;

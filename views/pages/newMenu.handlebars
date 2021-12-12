@@ -149,7 +149,7 @@ if(!menuFile || !menuFile.trim()){
       
         return;
 }
-let reg = new RegExp('^[0-9]+(\.[0-9]+)*$')
+let reg = new RegExp('^[0-9]+(\.[0-9]{1,2})?$')
 
     let titlewithoutspaces = title.replace(/ /g, '');
 
@@ -173,7 +173,7 @@ if(!(/^[a-zA-Z]+$/.test(descriptionwithoutspaces))){
 if(!reg.test(`${price}`)){
     alert(price)
     $('#errordiv').empty();
-    $('#errordiv').append('<p>Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES<p>');
+    $('#errordiv').append('<p>Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES. VALUE SHOULD BE UPTO TWO DECIMALS ONLY<p>');
         $('#errordiv').show();
         return;
 }
