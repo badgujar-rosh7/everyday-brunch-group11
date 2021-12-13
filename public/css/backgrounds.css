@@ -16,3 +16,11 @@
     text-align: center;
     font-family: 'Open Sans', sans-serif;
 }
+#errorList {
+    list-style-position: inside;
+    text-align: center;
+    font-size: 18px;
+    color: red;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
