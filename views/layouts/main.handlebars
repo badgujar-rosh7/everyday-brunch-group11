@@ -250,42 +250,71 @@
         }
     </script>
 
-    {{!-- <script >
-function selectStar(e, rate) {
- for (let i = 0; i < e.currentTarget.parentNode.children.length; i++) {
-e.currentTarget.parentNode.children[i].src = './public/images/comment/star.png'
-if (i + 1 <= rate) {
- e.currentTarget.parentNode.children[i].src = './public/images/comment/star-active.png'
-}
- }
-}
+    <script type="text/javascript">
+        function selectStar(e, rate) {
+            for (let i = 0; i < e.currentTarget.parentNode.children.length; i++) {
+                e.currentTarget.parentNode.children[i].src = './public/images/comment/star.png'
+                if (i + 1 <= rate) {
+                    e.currentTarget.parentNode.children[i].src = './public/images/comment/star-active.png'
+                }
+            }
+        }
+        function submitComment(e) {
+            let userId = $('#comment-btn').data('user').userId
+            let review = $('#contentInput').val()
+            let foodName = document.getElementById('foodNameInput').value;
+            if (!userId) {
+                alert('Please Login First!')
+                return
+            }
+            else if (!foodName) {
+                alert('The foodName cannot be empty!')
+                return
+            } else if (/^[0-9]*$/.test(foodName)) {
+                alert('The foodName cannot be all numbers!')
+                return
+            } else if (!foodName.replace(/( )/g, "")) {
+                alert('The foodName cannot be empty!')
+                return
+            }
+            if (!review) {
+                alert('The content cannot be empty!')
+                return
+            } else if (/^[0-9]*$/.test(review)) {
+                alert('The content cannot be all numbers!')
+                return
+            } else if (!review.replace(/( )/g, "")) {
+                alert('The content cannot be empty!')
+                return
+            }
 
-function submitComment() {
- let content = document.getElementById('contentInput').value;
- let foodName = document.getElementById('foodNameInput').value;
- if (!foodName) {
-alert('The foodName cannot be empty!')
-return
- } else if (/^[0-9]*$/.test(foodName)) {
-alert('The foodName cannot be all numbers!')
-return
- } else if (!foodName.replace(/( )/g, "")) {
-alert('The foodName cannot be empty!')
-return
- }
- if (!content) {
-alert('The content cannot be empty!')
-return
- } else if (/^[0-9]*$/.test(content)) {
-alert('The content cannot be all numbers!')
-return
- } else if (!content.replace(/( )/g, "")) {
-alert('The content cannot be empty!')
-return
- }
- window.location.href = '/commentsuccess'
-}
-    </script> --}}
+            let rating = 0
+            let star = document.getElementsByClassName('star-list')[0].children
+            for (let i = 0; i < star.length; i++) {
+                if (star[i].src.indexOf('active') != -1) {
+                    rating++
+                }
+            }
+            var requestConfig = {
+                method: 'POST',
+                url: '/reviews/newreview',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    userId,
+                    review: '#' + foodName + '#' + review,
+                    rating
+                })
+            };
+
+            $.ajax(requestConfig).then((res) => {
+                if (res.success) {
+                    window.location.href = '/commentsuccess'
+                } else {
+                    alert(res.msg)
+                }
+            })
+        }
+    </script>
 
 </body>
 </html>
