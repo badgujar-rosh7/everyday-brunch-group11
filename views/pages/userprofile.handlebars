@@ -1,7 +1,7 @@
 {{#if data}}
 
 {{!-- Profile Section --}}
-<section class="section userprofile-section bg-white">
+<div class="section userprofile-section bg-white">
     <div class="container">
         <div class="user-banner-section">
             <div class="user-banner yellow-section-background"></div>
@@ -31,10 +31,8 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-</section>
+</div>
 {{!-- End of Profile Section --}}
 
 
@@ -60,7 +58,7 @@
 {{!--  --}}
 
 {{#if getOrder}}
-<section class="section admin-section">
+<div class="section admin-section">
   <div class="container">
     <div class="row">
         <h1 class="main-heading text-center mt-5 mb-5">User Orders</h1>
@@ -97,7 +95,7 @@
         </div>
     </div>
   </div>
-</section>
+</div>
 {{/if}}
 
 {{#if noorder}}
@@ -215,19 +213,19 @@
 {{!-- Start of Review Section --}}
 <section class="section review-section pt-5 pb-5 bg-white">
     <div class="container">
-            <h2 class="main-heading text-center mt-5 mb-5">Reviews</h2>
-            <p class="subheading card-title text-center mb-5">Feel Free To Share Your Views.</p>
-            {{!--  --}}
-            <div class="text-center">
-                <div class="d-grid gap-2 col-3 mx-auto mt-5 mb-5">
-                    <button class="btn btn-primary btn-continue" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Write Review
-                    </button>
-                    
-                </div>
+        <h2 class="main-heading text-center mt-5 mb-5">Reviews</h2>
+        <p class="subheading card-title text-center mb-5">Feel Free To Share Your Views.</p>
+        {{!--  --}}
+        <div class="text-center">
+            <div class="d-grid gap-2 col-3 mx-auto mt-5 mb-5">
+                <button class="btn btn-primary btn-continue" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Write Review
+                </button>
+                
             </div>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -243,14 +241,14 @@
                         </div>
                         <input id="userid" name="userId" type="text" value="{{data._id}}" class="form-control" hidden>
                         <div class="form-floating mb-5">
-                            <select class="form-select" id="rating" placeholder="Please Enter Food Name..." name="rating" required>
+                            <select class="form-select" id="rating" name="rating">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                                 <option value="5">5</option>
                             </select>
-                            <label for="gender">Rating</label>
+                            <label for="rating">Rating</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -261,23 +259,22 @@
                 </form>
                 </div>
             </div>
-            </div>
-            {{!--  --}}
-            {{#if rarr}}
-            <div class="slider slider-nav">
-                {{#each rarr}}
-                <div class="card review-card">
-                    <div class="card-body">
-                        <p class="card-title">{{review}}</p>
-                        <p class="card-text">Rating : {{rating}} / 5</p>
-                        <p class="card-text">Date : {{dateofReview}}</p>
-                        {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}
-                    </div>
-                </div>
-                {{/each}}
-            </div>
-            {{/if}}
         </div>
+        {{!--  --}}
+        {{#if rarr}}
+        <div class="slider slider-nav">
+            {{#each rarr}}
+            <div class="card review-card">
+                <div class="card-body">
+                    <p class="card-title">{{review}}</p>
+                    <p class="card-text">Rating : {{rating}} / 5</p>
+                    <p class="card-text">Date : {{dateofReview}}</p>
+                    {{!-- <a href="#" class="btn btn-danger">Go somewhere</a> --}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
     </div>
 </section>
 {{/if}}
