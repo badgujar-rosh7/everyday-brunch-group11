@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     let itemId=xss(req.body.itemId)
     let quantity=xss(req.body.quantity)
     let price=xss(req.body.price)
-  //  req.session.userid='78787878'
+    
   if(req.session.user){
     let userID=req.session.user.userId  //this id will come form session after users loggedin
     

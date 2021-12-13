@@ -211,8 +211,6 @@ async function getBestSeller(){
   const MenuCollection = await menus();
   let count= await cartCollection.find({"order_id":{$ne:null}}).toArray()
   let menu=await MenuCollection.find({}).toArray()
-  console.log(menu.length)
-  console.log(count.length)
   let counter=0;
   let obj={}
   let itemarray=[]
@@ -233,8 +231,12 @@ async function getBestSeller(){
         counter=0;
       }
     }
+    else{
+      return false
+    }
+  } else{
+    return false
   }
-  console.log(itemarray)
 //   for(let i=0;i<itemarray.length;i++){
 //     for(let j=1;j<itemarray.length;j++){
 //     if(itemarray[i].counter
@@ -268,16 +270,21 @@ maxitems.push(itemarray[i].itemid)
   }
 }
 }else {
+  if(itemarray.length==0){
+    return false;
+  }else{
   console.log('less then 3')
   for(let i=0;i<itemarray.length;i++){
     maxitems.push(itemarray[i].itemid)
   }
 }
+}
 let finalresult=[]
 for(let i=0;i<maxitems.length;i++){
   let findresult=await getItemDetailsById(maxitems[i])
   if(findresult===null){
-    //error no item with id
+
+    return false;
   } else{
   finalresult.push(findresult)
   }
@@ -285,7 +292,7 @@ for(let i=0;i<maxitems.length;i++){
 if(finalresult.length>0){
   return finalresult
 } else {
-  return {noresult:"internal server error"}
+return false
 }
 }
 

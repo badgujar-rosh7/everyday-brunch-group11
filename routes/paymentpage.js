@@ -87,11 +87,11 @@ var nodemailer = require('nodemailer');
 
 
         }).then(()=>{
-          res.render('pages/orderplaced',{order:num,getCategory})
+          res.render('pages/orderplaced',{order:num,getCategory,id:req.session.user.userId})
 
         }).catch((err) => { 
 
-           res.render('pages/cart', {failedtitle:'Payment Failed, trying again in sometime',getCategory})
+           res.render('pages/cart', {failedtitle:'Payment Failed, trying again in sometime',getCategory,id:req.session.user.userId})
   // If some error occurs 
   //res.send(err)
         }); 

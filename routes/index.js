@@ -70,33 +70,64 @@ const constructorMethod = (app) => {
         let getCategory = await userData.getAllCategory();
         if (req.session.user) {
             let advertisement = await userData.getAdvertise();
-            console.log(advertisement);
+
             if (!advertisement) {
                 res.render('pages/advertisements', {
                     error: 'No Advertisements Found',
                     getCategory,
                     id: req.session.user.userId,
                 });
-            } else {
-                res.render('pages/advertisements', {
-                    data: advertisement,
-                    getCategory,
-                    id: req.session.user.userId,
-                });
-            }
+            } 
+            else {
+    if(advertisement.length==1){
+        res.render('pages/advertisements', {
+            data1: advertisement,
+            getCategory,
+        });
+    } else {
+        if(advertisement.length>1){
+            //console.log('iui')
+            let advertisement2=advertisement.slice(1,advertisement.length)
+            let advertisement1=[]
+            advertisement1.push(advertisement[0])
+            console.log(advertisement1)
+            
+             res.render('pages/advertisements', {data1:advertisement1,data2:advertisement2,getCategory});
+        }
+
+    }
+
+
+}
         } else {
             let advertisement = await userData.getAdvertise();
-            console.log(advertisement);
-            if (!advertisement) {
+
+                        if (!advertisement) {
                 res.render('pages/advertisements', {
                     error: 'No Advertisements Found',
                     getCategory,
                 });
             } else {
-                res.render('pages/advertisements', {
-                    data: advertisement,
-                    getCategory,
-                });
+                if(advertisement.length==1){
+                    console.log('hiii')
+                    res.render('pages/advertisements', {
+                        data1: advertisement,
+                        getCategory,
+                    });
+                } else {
+                    if(advertisement.length>1){
+                        console.log('iui')
+                        let advertisement2=advertisement.slice(1,advertisement.length)
+                        let advertisement1=[]
+                        advertisement1.push(advertisement[0])
+                        console.log(advertisement1)
+                        
+                         res.render('pages/advertisements', {data1:advertisement1,data2:advertisement2,getCategory});
+                    }
+
+                }
+
+            
             }
         }
     });
@@ -132,9 +163,7 @@ const constructorMethod = (app) => {
     });
     /*******************************************************************************Tanay*/
 
-    app.get('/advertisements', async (req, res) => {
-        res.render('pages/advertisements');
-    });
+   
 
     app.get('/terms-and-conditions', async (req, res) => {
         res.render('pages/terms');

@@ -781,7 +781,7 @@ router.get('/viewAdvertise', async (req, res) => {
     //render the page showing all advertisements added
     let advertisedata = await userData.getAdvertise();
     let json = advertisedata;
-    res.render('pages/viewAdvertise', { layout: 'adminhome', json });
+    res.render('pages/viewAdvertise', { layout: 'adminhome', json,advertisedata });
 });
 
 router.get('/addAdd', async (req, res) => {

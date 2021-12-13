@@ -13,7 +13,7 @@
             <div class="form-floating mb-5">
               <input type="text" class="form-control" id="floatingInput" placeholder="username" name="username" >
               <label for="floatingInput">Username</label>
-              <div id="no-email" hidden>*Please Enter your username <style> #no-email{color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}</style></div>
+              <div id="no-email" style="color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" hidden>*Please Enter your username </div>
             </div>
           </div>
         </div>
@@ -22,9 +22,12 @@
             <div class="form-floating mb-5">
               <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" >
               <label for="floatingPassword">Password</label>
-              <div id="no-password" hidden>*Please Enter your password <style> #no-password{color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}</style></div>
+              <div id="no-password" style="color: red;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" hidden>*Please Enter your password</div>
             </div>
           </div>  
+        </div>
+        <div id="error">
+        <ul id="errorList"></ul>
         </div>
         {{#if hasErrors}}
     <p class="error">{{error}}</p>
