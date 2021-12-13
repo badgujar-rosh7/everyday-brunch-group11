@@ -14,28 +14,29 @@ const reviewData = data.reviews;
 
 router.get('/dashboard', async (req, res) => {
     //admin session
-    if(req.session.admin)
-    {
-    let allusers = await usersinfo.getAllUsers();
-    let allorders = await orderData.getAllOrders();
-    let allcategory = await userData.getAllCategory();
-    let allMenu = await userData.getAllMenu();
-    let usercount = allusers.length;
-    let orercount = allorders.length;
-    let catcount = allcategory.length;
-    let menucount = allMenu.length;
-    res.render('pages/admin_dashboard', {
-        layout: 'adminhome',
-        count1: usercount,
-        count2: orercount,
-        count3: catcount,
-        count4: menucount,
-        name:req.session.admin.name
-    });
-} else{
-    res.render('pages/errors',{layout:'adminhome',errors:'Not Authorize to access this page without login'})
-
-}
+    if (req.session.admin) {
+        let allusers = await usersinfo.getAllUsers();
+        let allorders = await orderData.getAllOrders();
+        let allcategory = await userData.getAllCategory();
+        let allMenu = await userData.getAllMenu();
+        let usercount = allusers.length;
+        let orercount = allorders.length;
+        let catcount = allcategory.length;
+        let menucount = allMenu.length;
+        res.render('pages/admin_dashboard', {
+            layout: 'adminhome',
+            count1: usercount,
+            count2: orercount,
+            count3: catcount,
+            count4: menucount,
+            name: req.session.admin.name,
+        });
+    } else {
+        res.render('pages/errors', {
+            layout: 'adminhome',
+            errors: 'Not Authorize to access this page without login',
+        });
+    }
 });
 
 router.get('/ViewCategory', async (req, res) => {
@@ -74,7 +75,6 @@ router.post('/AddCategory', async (req, res) => {
             let category = xss(req.body['itemCategory']);
             let categoryImage = uploadFile.name;
 
-            
             if (!category || !category.trim()) {
                 res.status(400).render('pages/addCategory', {
                     layout: 'adminhome',
@@ -109,16 +109,14 @@ router.post('/AddCategory', async (req, res) => {
 
             let uploadpath = './public/images/Category/' + uploadFile.name;
             let ext = path.extname(uploadFile.name);
-            console.log(ext);
             const allowedExtension = /png|jpg|jpeg|JPG|PNG/;
             if (!allowedExtension.test(ext)) {
                 throw 'Only png|jpg|jpeg|JPG|PNG types allowed';
             }
 
             //insert
-           
+
             let add = await userData.addCategory(category, categoryImage);
-            console.log(add)
             if (add.categoryInserted) {
                 uploadFile.mv(uploadpath, function (err) {
                     if (err) {
@@ -148,12 +146,11 @@ router.post('/AddCategory', async (req, res) => {
 });
 
 router.get('/newMenu', async (req, res) => {
-    if (!req.session.admin){
-     res.sendFile(path.resolve('static/forbidden.html'));
-    } else{
-    let getCategory = await userData.getAllCategory();
-    //console.log(getCategory);
-    res.render('pages/newMenu', { layout: 'adminhome', data: getCategory });
+    if (!req.session.admin) {
+        res.sendFile(path.resolve('static/forbidden.html'));
+    } else {
+        let getCategory = await userData.getAllCategory();
+        res.render('pages/newMenu', { layout: 'adminhome', data: getCategory });
     }
     //render view page
 });
@@ -161,205 +158,204 @@ router.get('/newMenu', async (req, res) => {
 router.post('/addMenu', async (req, res) => {
     if (!req.session.admin) {
         res.sendFile(path.resolve('static/forbidden.html'));
-    } else{
-    let getCategory = await userData.getAllCategory();
-    try {
-        let uploadFile = req.files.menuFile;
-        let itemCategory = req.body['itemCategory'];
-        let itemTitle = req.body['itemTitle'];
-        let itemDescription = req.body['itemDescription'];
-        let itemPrice = req.body['itemPrice'];
-        let itemCalories = req.body['itemCalories'];
-        let itemKeywords = req.body['itemKeywords'];
-        let itemImage = uploadFile.name;
+    } else {
+        let getCategory = await userData.getAllCategory();
+        try {
+            let uploadFile = req.files.menuFile;
+            let itemCategory = req.body['itemCategory'];
+            let itemTitle = req.body['itemTitle'];
+            let itemDescription = req.body['itemDescription'];
+            let itemPrice = req.body['itemPrice'];
+            let itemCalories = req.body['itemCalories'];
+            let itemKeywords = req.body['itemKeywords'];
+            let itemImage = uploadFile.name;
 
-        if (!itemCategory || !itemCategory.trim()) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err: 'Provide valid Category for Menu Item',
-            });
-            return;
-        }
-        if (!itemTitle || !itemTitle.trim()) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err: 'Provide proper Title for Menu Item',
-            });
-            return;
-        }
+            if (!itemCategory || !itemCategory.trim()) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err: 'Provide valid Category for Menu Item',
+                });
+                return;
+            }
+            if (!itemTitle || !itemTitle.trim()) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err: 'Provide proper Title for Menu Item',
+                });
+                return;
+            }
 
-        if (!itemDescription || !itemDescription.trim()) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err: 'Provide valid Description for Menu Item',
-            });
-            return;
-        }
-        if (!itemPrice || !itemPrice.trim()) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err: 'Provide valid Price for Menu Item',
-            });
-            return;
-        }
-        if (!itemCalories || !itemCalories.trim()) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err: 'Provide valid Calories for Menu Item',
-            });
-            return;
-        }
-        if (!itemKeywords || !itemKeywords.trim()) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err: 'Provide valid Keywords for Menu Item',
-            });
-            return;
-        }
+            if (!itemDescription || !itemDescription.trim()) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err: 'Provide valid Description for Menu Item',
+                });
+                return;
+            }
+            if (!itemPrice || !itemPrice.trim()) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err: 'Provide valid Price for Menu Item',
+                });
+                return;
+            }
+            if (!itemCalories || !itemCalories.trim()) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err: 'Provide valid Calories for Menu Item',
+                });
+                return;
+            }
+            if (!itemKeywords || !itemKeywords.trim()) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err: 'Provide valid Keywords for Menu Item',
+                });
+                return;
+            }
 
-        let reg = new RegExp('^[0-9]+(\.[0-9]{1,2})?$')
-        let titlewithoutspaces = itemTitle.replace(/ /g, '');
-        let checktitle = !/^[a-zA-Z]+$/.test(titlewithoutspaces);
-        if (checktitle) {
-           // console.log('titleissue');
-            res.status(400).render('pages/newMenu', {
+            let reg = new RegExp('^[0-9]+(.[0-9]{1,2})?$');
+            let titlewithoutspaces = itemTitle.replace(/ /g, '');
+            let checktitle = !/^[a-zA-Z]+$/.test(titlewithoutspaces);
+            if (checktitle) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err:
+                        'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters',
+                    category: userdetails.itemCategory,
+                    title: userdetails.itemTitle,
+                    description: userdetails.itemDescription,
+                    price: userdetails.itemPrice,
+                    calories: userdetails.itemCalories,
+                    keywords: userdetails.itemKeywords,
+                    image: userdetails.itemImage,
+                    id: id,
+                });
+                return;
+            }
+
+            let descriptionwithoutspaces = itemDescription.replace(/ /g, '');
+            if (!/^[a-zA-Z]+$/.test(descriptionwithoutspaces)) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err:
+                        'Select a Valid description for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters',
+                    category: userdetails.itemCategory,
+                    title: userdetails.itemTitle,
+                    description: userdetails.itemDescription,
+                    price: userdetails.itemPrice,
+                    calories: userdetails.itemCalories,
+                    keywords: userdetails.itemKeywords,
+                    image: userdetails.itemImage,
+                    id: id,
+                });
+                return;
+            }
+
+            if (!reg.test(itemPrice)) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err:
+                        'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES upto TWO DECIMALS',
+                });
+                return;
+            }
+            if (!reg.test(itemCalories)) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err:
+                        'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES upto TWO DECIMALS',
+                });
+                return;
+            }
+
+            let keywordswithoutspaces = itemKeywords.replace(/ /g, '');
+            if (!/^[a-zA-Z]+$/.test(keywordswithoutspaces)) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err:
+                        'Provide Valid keywords for item. NO SPECIAL CHARACTERS Allowed, USE SPACE TO DISTINGUISH BETWEEN TWO WORDS. For Eg: bestdish spicy tangy',
+                });
+                return;
+            }
+            itemTitle = itemTitle.replace(/\s+/g, ' ').trim();
+            itemDescription = itemDescription.replace(/\s+/g, ' ').trim();
+            itemKeywords = itemKeywords.replace(/\s+/g, ' ').trim();
+            itemKeywords = itemKeywords.replace(/ /g, '');
+            itemCalories = parseFloat(itemCalories);
+            itemPrice = parseFloat(itemPrice);
+
+            let uploadpath = './public/images/Menu/' + uploadFile.name;
+            let ext = path.extname(uploadFile.name);
+
+            const allowedExtension = /png|jpg|jpeg|JPG|PNG/;
+            if (!allowedExtension.test(ext)) {
+                res.status(400).render('pages/newMenu', {
+                    layout: 'adminhome',
+                    data: getCategory,
+                    err: 'Only these extensions allowed png|jpg|jpeg|JPG|PNG',
+                });
+                return;
+            }
+
+            let add = await userData.addMenu(
+                itemCategory,
+                itemTitle,
+                itemDescription,
+                itemPrice,
+                itemCalories,
+                itemImage,
+                itemKeywords
+            );
+
+            if (add.menuInserted) {
+                uploadFile.mv(uploadpath, function (err) {
+                    if (err) {
+                        return res.status(500).send(err);
+                    }
+                    sharp(`./public/images/Menu/${uploadFile.name}`)
+                        .resize(200, 200)
+                        .withMetadata()
+                        .toBuffer(function (err, buffer) {
+                            fs.writeFile(
+                                `./public/images/Menu/${uploadFile.name}`,
+                                buffer,
+                                function (e) {}
+                            );
+                        });
+                    res.redirect('./viewMenu');
+                });
+            } else {
+            }
+        } catch (error) {
+            res.status(500).render('pages/newMenu', {
                 layout: 'adminhome',
                 data: getCategory,
-                err:
-                    'Select a Valid Title for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters',
-                category: userdetails.itemCategory,
-                title: userdetails.itemTitle,
-                description: userdetails.itemDescription,
-                price: userdetails.itemPrice,
-                calories: userdetails.itemCalories,
-                keywords: userdetails.itemKeywords,
-                image: userdetails.itemImage,
-                id: id,
+                err: error,
             });
-            return;
         }
-
-        let descriptionwithoutspaces = itemDescription.replace(/ /g, '');
-        if (!/^[a-zA-Z]+$/.test(descriptionwithoutspaces)) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err:
-                    'Select a Valid description for item. NO SPECIAL CHARACTERS ONLY Alphabetic Characters',
-                category: userdetails.itemCategory,
-                title: userdetails.itemTitle,
-                description: userdetails.itemDescription,
-                price: userdetails.itemPrice,
-                calories: userdetails.itemCalories,
-                keywords: userdetails.itemKeywords,
-                image: userdetails.itemImage,
-                id: id,
-            });
-            return;
-        }
-
-        if (!reg.test(itemPrice)) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err:
-                    'Select a Valid price for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES upto TWO DECIMALS',
-            });
-            return;
-        }
-        if (!reg.test(itemCalories)) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err:
-                    'Select a Valid Calories for item. NO SPECIAL CHARACTERS ONLY NUMBERS OR POINT VALUES upto TWO DECIMALS',
-            });
-            return;
-        }
-
-        let keywordswithoutspaces = itemKeywords.replace(/ /g, '');
-        if (!/^[a-zA-Z]+$/.test(keywordswithoutspaces)) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err:
-                    'Provide Valid keywords for item. NO SPECIAL CHARACTERS Allowed, USE SPACE TO DISTINGUISH BETWEEN TWO WORDS. For Eg: bestdish spicy tangy',
-            });
-            return;
-        }
-        itemTitle = itemTitle.replace(/\s+/g, ' ').trim();
-        itemDescription = itemDescription.replace(/\s+/g, ' ').trim();
-        itemKeywords = itemKeywords.replace(/\s+/g, ' ').trim();
-        itemKeywords = itemKeywords.replace(/ /g, '');
-        itemCalories = parseFloat(itemCalories);
-        itemPrice = parseFloat(itemPrice);
-
-        let uploadpath = './public/images/Menu/' + uploadFile.name;
-        let ext = path.extname(uploadFile.name);
-
-        const allowedExtension = /png|jpg|jpeg|JPG|PNG/;
-        if (!allowedExtension.test(ext)) {
-            res.status(400).render('pages/newMenu', {
-                layout: 'adminhome',
-                data: getCategory,
-                err: 'Only these extensions allowed png|jpg|jpeg|JPG|PNG',
-            });
-            return;
-        }
-
-        let add = await userData.addMenu(
-            itemCategory,
-            itemTitle,
-            itemDescription,
-            itemPrice,
-            itemCalories,
-            itemImage,
-            itemKeywords,
-        );
-
-        if (add.menuInserted) {
-            uploadFile.mv(uploadpath, function (err) {
-                if (err) {
-                    return res.status(500).send(err);
-                }
-                sharp(`./public/images/Menu/${uploadFile.name}`)
-                    .resize(200, 200)
-                    .withMetadata()
-                    .toBuffer(function (err, buffer) {
-                        fs.writeFile(
-                            `./public/images/Menu/${uploadFile.name}`,
-                            buffer,
-                            function (e) {}
-                        );
-                    });
-                res.redirect('./viewMenu');
-            });
-        } else {
-        }
-    } catch (error) {
-        res.status(500).render('pages/newMenu', {
-            layout: 'adminhome',
-            data: getCategory,
-            err: error,
-        });
     }
-}
 });
 
 router.get('/ViewMenu', async (req, res) => {
     //res.render('pages/ViewMenu')
     //render view page
-    if (!req.session.admin)  res.sendFile(path.resolve('static/forbidden.html'));
+    if (!req.session.admin) res.sendFile(path.resolve('static/forbidden.html'));
     let error = req.query['updatefailed'];
 
     let AllMenu = await userData.getAllMenu();
-   // console.log(AllMenu.length);
+
     let json = AllMenu;
     if (error == 'AkjsSHD897') {
         res.render('pages/ViewMenu', {
@@ -375,22 +371,18 @@ router.get('/ViewMenu', async (req, res) => {
 router.post('/update', async (req, res) => {
     //res.render('pages/ViewMenu')
     //render view page
-    if (!req.session.admin)  res.sendFile(path.resolve('static/forbidden.html'));
+    if (!req.session.admin) res.sendFile(path.resolve('static/forbidden.html'));
     id = xss(req.body['updateid']);
     let userdetails = await userData.getMenuItem(id);
     let getCategory = await userData.getAllCategory();
     let catArray = [];
     for (let i = 0; i < getCategory.length; i++) {
-        console.log(getCategory[i]);
-        console.log(userdetails.itemCategory);
         if (getCategory[i].category == userdetails.itemCategory) {
-            
         } else {
-
             catArray.push(getCategory[i]);
         }
     }
-    
+
     res.render('pages/update', {
         layout: 'adminhome',
         data: catArray,
@@ -682,7 +674,6 @@ router.post('/updateMenu', async (req, res) => {
             if (uploadFile) {
                 let uploadpath = './public/images/Menu/' + uploadFile.name;
                 let ext = path.extname(uploadFile.name);
-                console.log(ext);
                 const allowedExtension = /png|jpg|jpeg|JPG|PNG/;
                 if (!allowedExtension.test(ext)) {
                     throw 'Only png|jpg|jpeg|JPG|PNG these extensions allowed';
@@ -781,7 +772,11 @@ router.get('/viewAdvertise', async (req, res) => {
     //render the page showing all advertisements added
     let advertisedata = await userData.getAdvertise();
     let json = advertisedata;
-    res.render('pages/viewAdvertise', { layout: 'adminhome', json,advertisedata });
+    res.render('pages/viewAdvertise', {
+        layout: 'adminhome',
+        json,
+        advertisedata,
+    });
 });
 
 router.get('/addAdd', async (req, res) => {
@@ -882,7 +877,6 @@ router.post('/addadvertise', async (req, res) => {
 router.post('/deleteadvertise', async (req, res) => {
     let advertiseId = req.body['deleteid'];
     let advertiseimage = req.body['image'];
-    console.log(advertiseId);
     let uploadpath = './public/images/Advertise/' + advertiseimage;
 
     let deleted = await userData.deleteAdvertise(advertiseId);
