@@ -20,10 +20,13 @@ router.get('/',async(req,res)=>{
             for(let i=0;i<cartdetails.length;i++){
                 total=parseFloat(total)+parseFloat(cartdetails[i].totalcost)
             }
+
             let tax=parseFloat(0.05*total)
-            res.render('pages/cart',{cartdetails,tax,total,getCategory}) 
+            tax=tax.toFixed(2)
+            total=total.toFixed(2)
+            res.render('pages/cart',{cartdetails,tax,total,getCategory,id:req.session.user.userId}) 
         }else{
-            res.render('pages/cart',{NoCart:'DANG!! Your Cart is Empty. Hurry Up!!',getCategory}) 
+            res.render('pages/cart',{NoCart:'DANG!! Your Cart is Empty. Hurry Up!!',getCategory,id:req.session.user.userId}) 
         }
     } else {
     res.render('pages/cart',{NoCart:'You must be logged-in to able to use the cart',getCategory}) 
@@ -32,6 +35,7 @@ router.get('/',async(req,res)=>{
 
 router.post('/delete',async(req,res)=>{
     let deleteid=xss(req.body['delete']);
+    console.log(deleteid)
     if(req.session.user){
     let cartdetails=await cartData.deleteCartItem(deleteid)
     if(cartdetails){
