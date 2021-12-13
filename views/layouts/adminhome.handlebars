@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>Everyday Brunch</title>
     <link rel="stylesheet" href="/public/css/backgrounds.css" />
     <link rel="stylesheet" href="/public/css/index.css" />
     <link rel="stylesheet" href="/public/css/buttons.css" />
@@ -24,10 +24,10 @@
     
     <!-- Start of Navigation -->
 
-    <section class="navigation-section">
+    <div class="navigation-section">
         <nav class="navbar navbar-expand-lg navbar-dark black-section-background fixed-top brunch-nav">
             <div class="container">
-                <a class="brunch-logo me-2" href="/"><img src="/public/images/Everyday_Brunch.gif" class="rounded img-fluid" /></a>
+                <a class="brunch-logo me-2" href="/"><img src="/public/images/Everyday_Brunch.gif" class="rounded img-fluid" alt="Brunch Logo" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -48,11 +48,11 @@
                         </ul> 
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Category Options
                         </a>
                         
-                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
                             <li><a class="dropdown-item" href="./addCategory">Add Category</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="./ViewCategory">View Category</a></li>
@@ -62,12 +62,12 @@
                     
                     <li class="nav-item dropdown">
                     
-                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                             Advertisements Options
                         </a>
                         
-                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
                             <li><a class="dropdown-item" href="./addAdd">Add Advertise</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="./viewAdvertise">View Advertise</a></li>
@@ -75,10 +75,10 @@
                         </ul> 
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown4" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Reviews
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
                             <li><a class="dropdown-item" href="/admin/viewreview">View Reviews</a></li>
                             <li><hr class="dropdown-divider"></li>
                         </ul> 
@@ -102,41 +102,40 @@
                    
                
                     
-                <button class="btn btn-outline-primary logout-btn" type="submit"><a class="logout-link" href="/logout">logout</a></button>
+                <a class="btn btn-outline-primary logout-btn logout-link" href="/logout">logout</a>
                     
            </div>
             </div>
         </nav>
-    </section>
+    </div>
 
     <!-- End of Navigation -->
 
     {{{body}}}
 
-    <section class="footer-section black-section-background text-white mt-auto">
+    <div class="footer-section black-section-background text-white mt-auto">
         <div class="container">
-                <div class="d-flex justify-content-around pt-5 pb-5">
-                    <div><a class="main-label" href="/menu">Menu</a></div>
-                    <div><a class="main-label" href="/advertisements">Advertisements</a></div>
-                    <div><a class="main-label" href="/reviews">Reviews</a></div>
-                    {{!-- <div><a class="main-label" href="/desserts">Desserts</a></div> --}}
-                </div>
-                <div class="d-flex justify-content-around pb-5">
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-twitter"></i><a href="https://twitter.com/" class="social-label">Twitter</a></div>
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-instagram"></i><a href="https://www.instagram.com/" class="social-label">Instagram</a></div>
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-facebook"></i><a href="https://www.facebook.com/" class="social-label">Facebook</a></div>
-                    <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-linkedin"></i><a href="https://www.linkedin.com/" class="social-label">LinkedIn</a></div>
-                </div>
+            <div class="d-flex justify-content-around pt-5 pb-5">
+                <div><a class="main-label" href="/menu">Menu</a></div>
+                <div><a class="main-label" href="/advertisements">Advertisements</a></div>
+                <div><a class="main-label" href="/reviews">Reviews</a></div>
+                {{!-- <div><a class="main-label" href="/desserts">Desserts</a></div> --}}
+            </div>
+            <div class="d-flex justify-content-around pb-5">
+                <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-twitter"></i><a href="https://twitter.com/" class="social-label">Twitter</a></div>
+                <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-instagram"></i><a href="https://www.instagram.com/" class="social-label">Instagram</a></div>
+                <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-facebook"></i><a href="https://www.facebook.com/" class="social-label">Facebook</a></div>
+                <div class="d-flex flex-column text-center"><i class="social-icon pb-2 fab fa-linkedin"></i><a href="https://www.linkedin.com/" class="social-label">LinkedIn</a></div>
             </div>
         </div>
-    </section>
+    </div>
                  
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+    <script  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script  src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
     
-    <script type="text/javascript">
+    <script >
         $(document).ready(function(){
 
             $('.slider-nav').slick({

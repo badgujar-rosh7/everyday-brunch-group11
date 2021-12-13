@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>Everyday Brunch</title>
     <link rel="stylesheet" href="/public/css/aboutus.css" />
     <link rel="stylesheet" href="/public/css/packagelist.css" />
     <link rel="stylesheet" href="/public/css/comment.css" />
@@ -27,7 +27,7 @@
     
     <!-- Start of Navigation -->
 
-    <section class="navigation-section">
+    <div class="navigation-section">
         <nav class="navbar navbar-expand-lg navbar-dark black-section-background fixed-top brunch-nav">
             <div class="container">
                 <a class="brunch-logo me-2" href="/"><img src="/public/images/Everyday_Brunch.gif" class="rounded img-fluid" alt="Brunch Logo" /></a>
@@ -91,19 +91,19 @@
                     <button class="btn btn-outline-primary me-2" type="submit">Search</button>
                 </form>
                     {{#unless id}}
-                <a class="btn btn-outline-primary login-btn login-link me-2" type="submit" name="lbtn" href="/login">login</a>
+                <a class="btn btn-outline-primary login-btn login-link me-2" id="lbtn" href="/login">login</a>
                     {{/unless}}
                     {{#if id}}
-                <a class="btn btn-outline-primary logout-btn logout-link" type="submit" href="/logout">logout</a>
+                <a class="btn btn-outline-primary logout-btn logout-link" href="/logout">logout</a>
                
                 <a class="btn position-relative user-profile-btn" href="/users/profile" role="button">
-                    <img src="/public/images/user_profile.png" class="rounded img-fluid user-img" />
+                    <img src="/public/images/user_profile.png" class="rounded img-fluid user-img" alt="user profile"/>
                 </a>
                 {{/if}}
                 </div>
             </div>
         </nav>
-    </section>
+    </div>
     <div class="container" id="errordiv" hidden>
         <p id="error"></p>
     </div>
@@ -112,7 +112,7 @@
 
     {{{body}}}
 
-    <section class="footer-section black-section-background text-white mt-auto">
+    <div class="footer-section black-section-background text-white mt-auto">
         <div class="container">
                 <div class="d-flex justify-content-around pt-5 pb-5">
                     <div><a class="main-label" href="/menu">Menu</a></div>
@@ -130,20 +130,19 @@
                     <div><a class="main-label" href="/terms-and-conditions">Terms & Conditions</a></div>
                     <div><a class="main-label" href="/privacy-policy">Privacy Policy</a></div>
                 </div>
-            </div>
         </div>
-    </section>
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+    <script  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script  src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
     <script src="/public/js/login.js"></script>
     <script src="/public/js/signup.js"></script>
         <script src="/public/js/AddToFav.js"></script>
                 <script src="/public/js/flipevent.js"></script>
     
-    <script type="text/javascript">
+    <script >
         $(document).ready(function(){
 
             $('.slider-nav').slick({
@@ -244,14 +243,14 @@
         });
     </script>
 
-    <script type="text/javascript">
+    <script >
         window.history.forward();
         function noBack() {
             window.history.forward();
         }
     </script>
 
-    {{!-- <script type="text/javascript">
+    {{!-- <script >
 function selectStar(e, rate) {
  for (let i = 0; i < e.currentTarget.parentNode.children.length; i++) {
 e.currentTarget.parentNode.children[i].src = './public/images/comment/star.png'

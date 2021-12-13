@@ -1,10 +1,10 @@
 {{!-- Start of Cart Section --}}
 <section class="section cart-section">
     <div class="container">
-        <h2 class="main-heading text-center pt-5 pb-5">My Cart</h2>
+        <h1 class="main-heading text-center pt-5 pb-5">My Cart</h1>
         
         {{#if failedtitle}}
-        <h4 class="main-heading text-center pt-5 pb-5">{{failedtitle}}</h4>
+        <p class="main-heading text-center pt-5 pb-5">{{failedtitle}}</p>
         {{/if}}
         {{#if cartdetails}}
         {{#each cartdetails}}
@@ -23,7 +23,7 @@
                 <div class="col-md-8">
                     <div class="card-body">
                         <div class="right-cart-box p-md-3 p-lg-5">
-                            <h5 class="card-title cart-item-title mb-3 mb-md-4">{{details.title}}</h5>
+                            <p class="card-title cart-item-title mb-3 mb-md-4">{{details.title}}</p>
                             <div class="row">
                                 <div class="col-sm-5"> 
                                     <div class="menu-quantity d-flex">
@@ -54,7 +54,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Alert</h5>
+                    <h1 class="modal-title" id="staticBackdropLabel">Alert</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -89,11 +89,11 @@
             </div>
         </div>
 
-        <div class="checkoutmodal modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="checkoutmodal modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Alert</h5>
+                    <h2 class="modal-title" id="staticBackdropLabel1">Alert</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -101,7 +101,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a type="submit" class="btn btn-primary" href="/payment">Checkout</a>
+                    <a class="btn btn-primary" href="/payment">Checkout</a>
                 </div>
                 </div>
             </div>
