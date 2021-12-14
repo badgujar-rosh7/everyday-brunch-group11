@@ -165,7 +165,6 @@ $(document).ready(function () {
                     },
                     error: function (xhr, status, error) {
                         var errorMessage = xhr.responseJSON.error;
-                        console.log(errorMessage);
                         let p = `<p>${errorMessage}</p>`;
                         errorshow.removeClass('d-none');
                         errorshow.append(p);

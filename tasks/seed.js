@@ -47,7 +47,7 @@ async function main() {
     const userD = await signup.createUser(
         'Tanay',
         'Tadas',
-        'TanayT@gmail.com',
+        'tanaysid97@gmail.com',
         '04/04/1998',
         'male',
         'Miami',
