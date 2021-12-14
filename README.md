@@ -33,6 +33,8 @@ For making payment "SUCCESSFUL", please use the card number given below
 
 For making payment "FAIL", please use the card number given below
 * Card Number: 4000 0000 0000 0002
+* Expiry date - any future date
+* cvc-any random 3 digit number
 
 For the email functionality, sometimes you may not get an email because load mailer API will throw an error and google blocks it for suspicious activity from third party application even though we have enabled less secure apps. 
 
