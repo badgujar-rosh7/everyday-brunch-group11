@@ -52,13 +52,17 @@ function reduce(event){
     let element = event.currentTarget;
     let idd=element.id
     let newvalue;
-   let currentvalue= $(`.${idd}`).val()
+    let string1=''
+           for(let i=0;i<idd.length-2;i++){
+               string1=string1+idd[i]
+           }
+   let currentvalue= $(`.${string1}34`).val()
    if(currentvalue==1){
        newvalue=1
    }else {
 
     newvalue=currentvalue - 1
-       $(`.${idd}`).val(newvalue)
+       $(`.${string1}34`).val(newvalue)
        
    }
                 var requestConfig = {
@@ -66,7 +70,7 @@ function reduce(event){
             url: '/cart/update',
             contentType: 'application/json',
             data: JSON.stringify({
-                updateid:idd,
+                updateid:string1,
                 quantity: newvalue,
             })
         };
@@ -93,17 +97,21 @@ function increase(event){
    
     let element = event.currentTarget;
     let idd=element.id
-   let currentvalue= $(`.${idd}`).val()
+    let string1=''
+    for(let i=0;i<idd.length-2;i++){
+        string1=string1+idd[i]
+    }
+   let currentvalue= $(`.${string1}34`).val()
    let newvalue=parseInt(currentvalue) + parseInt(1)
 
-       $(`.${idd}`).val(newvalue)
+       $(`.${string1}34`).val(newvalue)
 
          var requestConfig = {
             method: 'POST',
             url: '/cart/update',
             contentType: 'application/json',
             data: JSON.stringify({
-                updateid:idd,
+                updateid:string1,
                 quantity: newvalue,
             })
         };
@@ -124,7 +132,7 @@ function AddToCart(event){
     let element = event.currentTarget;
    
     let idd=element.id
-    let quantity=$(`.${idd}`).val();
+    let quantity=$(`.${idd}45`).val();
     let price=$(`#${idd}${idd}${idd}`).text()
     
     price=price.replace('$','')

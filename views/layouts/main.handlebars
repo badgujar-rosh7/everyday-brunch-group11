@@ -206,18 +206,27 @@
             //alert(77)
             let element = event.currentTarget;
             let idd=element.id
-           // alert(idd)
-           let currentvalue= $(`.${idd}`).val()
+           alert(idd)
+           let string1=''
+           for(let i=0;i<idd.length-2;i++){
+               string1=string1+idd[i]
+           }
+           let currentvalue= $(`.${string1}45`).val()
            let newvalue=parseInt(currentvalue) + parseInt(1)
 
-               $(`.${idd}`).val(newvalue)
+               $(`.${string1}45`).val(newvalue)
         }
          function decrement(event){
             
             let element = event.currentTarget;
             let idd=element.id
+            alert(idd)
+            let string1=''
+            for(let i=0;i<idd.length-2;i++){
+               string1=string1+idd[i]
+           }
             let newvalue;
-           let currentvalue= $(`.${idd}`).val()
+           let currentvalue= $(`.${string1}45`).val()
            if(currentvalue==1){
                newvalue=1
            }else {
@@ -226,7 +235,7 @@
               
              
            }
-            $(`.${idd}`).val(newvalue)
+            $(`.${string1}45`).val(newvalue)
          }
     </script> 
     <script>
@@ -250,7 +259,7 @@
         }
     </script>
 
-    <script type="text/javascript">
+    <script>
         function selectStar(e, rate) {
             for (let i = 0; i < e.currentTarget.parentNode.children.length; i++) {
                 e.currentTarget.parentNode.children[i].src = './public/images/comment/star.png'

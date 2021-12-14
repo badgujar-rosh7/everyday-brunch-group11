@@ -6,17 +6,16 @@ const review = data.reviews;
 
 router.get('/', async (req, res) => {
     const allreviews = await review.getAllReviews();
-    allreviews.forEach(item => {
-        item.activeStar = []
-        item.star = []
+    allreviews.forEach((item) => {
+        item.activeStar = [];
+        item.star = [];
         for (let i = 0; i < item.rating; i++) {
-            item.activeStar.push(true)
+            item.activeStar.push(true);
         }
         for (let i = 0; i < 5 - item.activeStar.length; i++) {
-            item.star.push(true)
+            item.star.push(true);
         }
-    })
-    console.log(allreviews)
+    });
     if (req.session.user) {
         res.render('pages/commentlist', {
             userId: req.session.user.userId,

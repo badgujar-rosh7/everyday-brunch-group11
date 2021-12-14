@@ -36,7 +36,6 @@ router.post('/', async (req, res) => {
 
         if (validatedUsername == 'admin' && validatedPassword == 'admin123') {
             req.session.admin = { name: 'admin' };
-           // console.log(req.session.admin);
             return res.redirect('/admin/dashboard');
         }
         if (req.session.user) {

@@ -12,16 +12,24 @@ router.get('/',async(req,res)=>{
 
     let getCategory = await userData.getAllCategory();
     let data=await orderData.getBestSeller();
+  
     if(req.session.user){
     //let data=await orderData.getBestSeller();
    
-    if(data.length==0){
-        res.render('pages/bestSeller',{data,pageHeading:'Top Best Sellers of our Website',getCategory,id:req.session.user.userId,error:'No Result Found'})
+    if(data==false){
+        res.render('pages/bestSeller',{pageHeading:'Top Best Sellers: NO RESULT FOUND',getCategory,id:req.session.user.userId})
     }else{
     
     res.render('pages/bestSeller',{data,pageHeading:'Top Best Sellers of our Website',getCategory,id:req.session.user.userId})
    } } else {
+   
+
+       if(data==false){
+           
+        res.render('pages/bestSeller',{pageHeading:'Top Best Seller: NO RESULT FOUND',getCategory})
+       }else {
         res.render('pages/bestSeller',{data,pageHeading:'Top Best Sellers of our Website',getCategory})
+       }
     }
 })
 

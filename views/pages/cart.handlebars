@@ -15,9 +15,10 @@
                 <div class="col-md-4">
                     <div class="left-cart-box">
                         <img src="./public/images/Menu/{{details.image}}" class="img-fluid rounded-start w-100" alt="...">
-                        
+                        <form method="post" action="cartpage/delete">
+            <input type="text" value="{{_id}}" id="deleteid" name="delete" hidden>
                         <button type="submit" class="btn btn-outline-danger remove-btn mb-3 mt-3" id="liveAlertBtn" data-bs-toggle="modal" data-bs-target=".cartmodal">Remove</button>
-        
+                 </form>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -28,9 +29,9 @@
                                 <div class="col-sm-5"> 
                                     <div class="menu-quantity d-flex">
                                         <p class="card-text cart-info me-2"><strong>quantity</strong></p>
-                                            <button type="button" class="btn btn-outline-primary quantity-btn" id="{{_id}}" onclick="reduce(event)">-</button>
-                                            <input class="form-control form-control-sm quantity-txtbox text-center {{_id}}" type="text" value="{{quantity}}" aria-label=".form-control-sm example" disabled>
-                                            <button type="button" class="btn btn-outline-primary quantity-btn" id="{{_id}}" onclick="increase(event)">+</button>
+                                            <button type="button" class="btn btn-outline-primary quantity-btn" id="{{_id}}78" onclick="reduce(event)">-</button>
+                                            <input class="form-control form-control-sm quantity-txtbox text-center {{_id}}34" type="text" value="{{quantity}}" aria-label=".form-control-sm example" disabled>
+                                            <button type="button" class="btn btn-outline-primary quantity-btn" id="{{_id}}56" onclick="increase(event)">+</button>
                                     </div>
                                     <p class="card-text cart-info {{_id}}{{_id}}"><strong>Price :</strong> {{priceOfItem}}</p>
                                     <p class="card-text cart-info mb-3"><strong>Cal (Individual) :</strong> {{details.cal}}</p>
@@ -46,28 +47,6 @@
             </div>
         </div>
 
-        
-        <!-- Modal -->
-        <form method="post" action="cartpage/delete">
-            <input type="text" value="{{_id}}" id="deleteid" name="delete" hidden>
-            <div class="cartmodal modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="staticBackdropLabel">Alert</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure to delete ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                </div>
-                </div>
-            </div>
-            </div>
-        </form>
 
         {{/each}}
         

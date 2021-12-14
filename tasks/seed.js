@@ -5,7 +5,7 @@ const menuData = data.menu;
 const cartData = data.cart;
 const usersinfo = data.user;
 const reviews = data.reviews;
-
+//ek min thamb
 async function main() {
     const db = await dbConnection();
     await db.dropDatabase();
@@ -16,7 +16,7 @@ async function main() {
         'Sahasrabuddhe',
         'AkshayS@gmail.com',
         '01/01/1995',
-        'Male',
+        'male',
         'LA',
         'CA',
         'AkshayS',
@@ -27,7 +27,7 @@ async function main() {
         'Li',
         'HaoyuL@gmail.com',
         '02/02/1996',
-        'Female',
+        'female',
         'Hoboken',
         'NJ',
         'HaoyuL',
@@ -38,7 +38,7 @@ async function main() {
         'Badhujar',
         'RoshanB@gmail.com',
         '03/03/1997',
-        'Male',
+        'male',
         'Boston',
         'MA',
         'RoshanB',
@@ -49,7 +49,7 @@ async function main() {
         'Tadas',
         'TanayT@gmail.com',
         '04/04/1998',
-        'Male',
+        'male',
         'Miami',
         'FL',
         'TanayT',
@@ -60,7 +60,7 @@ async function main() {
         'Zhang',
         'YongxiangZ@gmail.com',
         '05/05/1999',
-        'Male',
+        'male',
         'Philadelphia',
         'PA',
         'YongxiangZ',
@@ -86,8 +86,8 @@ async function main() {
     //caramel frappaccino
     //hot brew
     //hazelnu
-    //Naahi
-    //wait akshay ms
+    const catF = await menuData.addCategory('Combos', 'combo.jpg');
+
     const getallcat = await menuData.getAllCategory();
     //console.log(getallcat)
     const menu1 = await menuData.addMenu(
@@ -198,6 +198,33 @@ async function main() {
         'coffee2.png',
         'coffeedarkmidnightkicker'
     );
+    const menu13 = await menuData.addMenu(
+        getallcat[4].category,
+        'Pizza Mania',
+        'Perfect lunch alternative with garlic breads and pizza',
+        '25.99',
+        '600',
+        'combo1.jpg',
+        'combofriespizzacokegarlicbread'
+    );
+    const menu14 = await menuData.addMenu(
+        getallcat[4].category,
+        'French Fries and Chocolate Cold Brew',
+        'Best Combo fries and Chocolate',
+        '35.99',
+        '191',
+        'combo2.jpg',
+        'chocolatecoldfriessaucypotato'
+    );
+    // const menu15 = await menuData.addMenu(
+    //     getallcat[4].category,
+    //     'Pancake and Egg and Salad',
+    //     'Most bought item of ours Get a little of everything',
+    //     '49.99',
+    //     '591',
+    //     'combo3.jpg',
+    //     'saladpancakeeggbestitem'
+    // );
 
     const allmenu = await menuData.getAllMenu();
 
