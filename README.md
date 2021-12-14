@@ -18,27 +18,27 @@ This project aims to create a system to help users to order brunch from Everyday
 
 ## Instructions to use the website
 Please use the username given below for "USER" login 
-*Username: AkshayS
-+Password: AkshaySPW
+* Username: AkshayS
+* Password: AkshaySPW
 
 Please use the username given below for "ADMIN" login 
-*Username: admin
-*Password: admin123
+* Username: admin
+* Password: admin123
 
 You can create a user by using signup page and then also you can login to the system.
 
 For making payment "SUCCESSFUL", please use the card number given below
-Card Number: 4242 4242 4242 4242
+* Card Number: 4242 4242 4242 4242
 
 
 For making payment "FAIL", please use the card number given below
-*Card Number: 4000 0000 0000 0002
+* Card Number: 4000 0000 0000 0002
 
 For the email functionality, sometimes you may not get an email because load mailer API will throw an error and google blocks it for suspicious activity from third party application even though we have enabled less secure apps. 
 
 So, please use the credentials given below.
-*username: sudronikbusiness@gmail.com
-*password: 8454949819
+* username: sudronikbusiness@gmail.com
+* password: 8454949819
 
 Food items are dependent on the categories so, please add the categories before food items.
 
