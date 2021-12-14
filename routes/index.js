@@ -24,12 +24,6 @@ var isAdmin = false;
 const constructorMethod = (app) => {
     app.get('/', async (req, res) => {
         let getCategory = await userData.getAllCategory();
-        // let counterValue;
-        // if(req.session.userid){
-        //     counterValue = await cartData.getCounter(req.session.userid);
-        // } else{
-        //     counterValue=0
-        // }
         const allreviews = await reviewData.getAllReviews();
         if (req.session.user) {
             res.render('pages/index', {
@@ -49,13 +43,11 @@ const constructorMethod = (app) => {
 
     app.use('/cartpage', cartDetailRoutes);
 
-    /////////////////////////////////////////////////////Roshan
     app.use('/admin', adminRoutes);
     app.use('/search', searchRoutes);
     app.use('/category', categoryRoutes);
     app.use('/cart', cartRoutes);
     app.get('/getCounter', async (req, res) => {
-        //console.log(req.session.user.userId)
         if (req.session.user) {
             let counterValue = await cartData.getCounter(
                 req.session.user.userId
@@ -77,57 +69,59 @@ const constructorMethod = (app) => {
                     getCategory,
                     id: req.session.user.userId,
                 });
-            } 
-            else {
-    if(advertisement.length==1){
-        res.render('pages/advertisements', {
-            data1: advertisement,
-            getCategory,
-        });
-    } else {
-        if(advertisement.length>1){
-            //console.log('iui')
-            let advertisement2=advertisement.slice(1,advertisement.length)
-            let advertisement1=[]
-            advertisement1.push(advertisement[0])
-            console.log(advertisement1)
-            
-             res.render('pages/advertisements', {data1:advertisement1,data2:advertisement2,getCategory});
-        }
-
-    }
-
-
-}
-        } else {
-            let advertisement = await userData.getAdvertise();
-
-                        if (!advertisement) {
-                res.render('pages/advertisements', {
-                    error: 'No Advertisements Found',
-                    getCategory,
-                });
             } else {
-                if(advertisement.length==1){
-                    console.log('hiii')
+                if (advertisement.length == 1) {
                     res.render('pages/advertisements', {
                         data1: advertisement,
                         getCategory,
                     });
                 } else {
-                    if(advertisement.length>1){
-                        console.log('iui')
-                        let advertisement2=advertisement.slice(1,advertisement.length)
-                        let advertisement1=[]
-                        advertisement1.push(advertisement[0])
-                        console.log(advertisement1)
-                        
-                         res.render('pages/advertisements', {data1:advertisement1,data2:advertisement2,getCategory});
+                    if (advertisement.length > 1) {
+                        let advertisement2 = advertisement.slice(
+                            1,
+                            advertisement.length
+                        );
+                        let advertisement1 = [];
+                        advertisement1.push(advertisement[0]);
+
+                        res.render('pages/advertisements', {
+                            data1: advertisement1,
+                            data2: advertisement2,
+                            getCategory,
+                        });
                     }
-
                 }
+            }
+        } else {
+            let advertisement = await userData.getAdvertise();
 
-            
+            if (!advertisement) {
+                res.render('pages/advertisements', {
+                    error: 'No Advertisements Found',
+                    getCategory,
+                });
+            } else {
+                if (advertisement.length == 1) {
+                    res.render('pages/advertisements', {
+                        data1: advertisement,
+                        getCategory,
+                    });
+                } else {
+                    if (advertisement.length > 1) {
+                        let advertisement2 = advertisement.slice(
+                            1,
+                            advertisement.length
+                        );
+                        let advertisement1 = [];
+                        advertisement1.push(advertisement[0]);
+
+                        res.render('pages/advertisements', {
+                            data1: advertisement1,
+                            data2: advertisement2,
+                            getCategory,
+                        });
+                    }
+                }
             }
         }
     });
@@ -138,9 +132,7 @@ const constructorMethod = (app) => {
     app.use('/bestseller', bestRoutes);
     app.use('/menu', menuRoutes);
     app.use('/favourites', favRoutes);
-    /////////////////////////////////////////////////Roshan
 
-    /*******************************************************************************Tanay*/
     app.use('/users', userRoutes);
     app.use('/reviews', reviewsRoutes);
     app.use('/login', loginRoutes);
@@ -149,21 +141,19 @@ const constructorMethod = (app) => {
     app.use('/logout', async (req, res) => {
         if (req.session.admin) {
             req.session.destroy();
-            res.render('pages/logout')
+            res.render('pages/logout');
         } else {
             if (!req.session.user) {
                 return res.render('pages/errors', {
-                errors: 'Not Authorized to access this route' });
+                    errors: 'Not Authorized to access this route',
+                });
             } else {
                 req.session.destroy();
                 // res.render('pages/logout');
-                res.render('pages/logout')
+                res.render('pages/logout');
             }
         }
     });
-    /*******************************************************************************Tanay*/
-
-   
 
     app.get('/terms-and-conditions', async (req, res) => {
         res.render('pages/terms');
@@ -172,10 +162,6 @@ const constructorMethod = (app) => {
     app.get('/privacy-policy', async (req, res) => {
         res.render('pages/privacy');
     });
-
-    // app.get('/signup', async (req, res) => {
-    //     res.render('pages/signupform');
-    // });
 
     app.get('/admin', async (req, res) => {
         res.redirect('/admin/dashboard');
