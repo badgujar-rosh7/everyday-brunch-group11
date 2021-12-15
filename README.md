@@ -29,6 +29,8 @@ You can create a user by using signup page and then also you can login to the sy
 
 For making payment "SUCCESSFUL", please use the card number given below
 * Card Number: 4242 4242 4242 4242
+* Expiry date - any future date
+* cvc-any random 3 digit number
 
 
 For making payment "FAIL", please use the card number given below
@@ -38,7 +40,7 @@ For making payment "FAIL", please use the card number given below
 
 For the email functionality, sometimes you may not get an email because load mailer API will throw an error and google blocks it for suspicious activity from third party application even though we have enabled less secure apps. 
 
-So, please use the credentials given below.
+So, please use the credentials given below to login in your gmail account
 * username: sudronikbusiness@gmail.com
 * password: 8454949819
 
